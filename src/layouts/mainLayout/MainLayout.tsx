@@ -5,7 +5,7 @@ import Downside from "../../components/mainLayout/Downside";
 export default function MainLayout() {
   return (
     <>
-      <div className="px-10 py-4 flex flex-col gap-y-9">
+      <div className="px-14 py-6 flex flex-col gap-y-9">
         <Upside />
         <Downside />
       </div>
