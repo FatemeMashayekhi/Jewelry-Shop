@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 export default function Upside() {
   return (
     <div id="up-side" className="flex justify-between items-center">
@@ -16,7 +17,9 @@ export default function Upside() {
           icon="mingcute:search-line"
           style={{ color: "black" }}
         />
-        <Icon className="size-5" icon="mdi:user" style={{ color: "black" }} />
+        <Link to={"/login"}>
+          <Icon className="size-5" icon="mdi:user" style={{ color: "black" }} />
+        </Link>
         <p className="text-2xl h-5">|</p>
 
         <div className="indicator">
