@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
       <div className="bg-[#FEFAF6] p-10 flex justify-between rounded-b-full">
-        <div></div>
+        <div className="w-[105px]"></div>
 
         <p className="font-bold text-3xl">جواهری مشایخی</p>
 
