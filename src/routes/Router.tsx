@@ -23,6 +23,7 @@ export default function Router() {
           <Route path="orders" element={<Orders />} />
         </Route>
         <Route path="/login" element={<Login />} />
+
         <Route path="/management" element={<SecondaryLayout />}>
           <Route index element={<ProductsManagement />} />
           <Route path="inventory" element={<Inventory />} />
