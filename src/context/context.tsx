@@ -1,9 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext } from "react";
 import { ADMIN_LOGIN_URL, GENERATE_ACCESS_TOKEN_URL } from "../services/api";
 import { toast } from "react-toastify";
-import { Admin, DataContextType } from "../models/ContextModel";
+import { Admin, Category, DataContextType } from "../models/ContextModel";
 import axios from "../services/baseService";
+import dataService from "../services/DataService";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -49,8 +50,22 @@ export const DataContextProvider = ({
     },
   });
 
+  ///get all categories
+  const getAllCategories = useQuery<Category[], unknown>({
+    queryKey: ["getAllCategories"],
+    queryFn: async () => {
+      const allCategories = await dataService.getAllCategories();
+      console.log(allCategories.data.categories);
+      return allCategories.data.categories;
+    },
+  });
+
+  console.log(getAllCategories?.data);
+
   return (
-    <DataContext.Provider value={{ handleLogin, postGenerateAccessToken }}>
+    <DataContext.Provider
+      value={{ handleLogin, postGenerateAccessToken, getAllCategories }}
+    >
       {children}
     </DataContext.Provider>
   );
