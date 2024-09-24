@@ -13,7 +13,7 @@ export default function SecondaryLayout() {
       <div className="flex items-center justify-between px-14 py-10 bg-[#FEFAF6] shadow">
         <div className="flex items-center gap-x-2">
           <Icon icon="mdi:rhombus" style={{ color: "black" }} />
-          <p className="font-bold text-xl">پنل مدیریت جواهری مشایخی</p>
+          <p className="font-bold text-xl">پنل مدیریت طلای مشایخی</p>
         </div>
 
         <nav>

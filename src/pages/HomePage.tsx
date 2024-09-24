@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col gap-y-14">
       <div id="banner" className="px-14 py-4 flex justify-center">
-        <img src="./src/assets/images/Untitled-1 (2).png" alt="banner-pic" />
+        <img src="./src/assets/images/banner2.png" alt="banner-pic" />
       </div>
       <div id="categories" className="flex flex-col">
         <div className="flex justify-center gap-x-3 items-center font-bold text-2xl">

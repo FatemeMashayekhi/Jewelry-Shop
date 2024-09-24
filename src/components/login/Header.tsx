@@ -7,7 +7,7 @@ export default function Header() {
       <div className="bg-[#FEFAF6] p-10 flex justify-between rounded-b-full">
         <div className="w-[105px]"></div>
 
-        <p className="font-bold text-3xl">جواهری مشایخی</p>
+        <p className="font-bold text-3xl">طلای مشایخی</p>
 
         <Link
           to={"/"}

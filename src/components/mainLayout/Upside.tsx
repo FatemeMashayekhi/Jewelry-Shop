@@ -10,7 +10,7 @@ export default function Upside() {
           <p className="font-bold">60,000 ت</p>
         </div>
       </div>
-      <p className="font-bold text-2xl">جواهری مشایخی</p>
+      <p className="font-bold text-2xl">طلای مشایخی</p>
       <div id="left-side-icons" className="flex items-center gap-x-2">
         <Icon
           className="size-5"
