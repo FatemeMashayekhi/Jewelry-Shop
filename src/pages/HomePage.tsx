@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import CategoriesCards from "../components/home/CategoriesCards";
+import NameDivider from "../components/home/NameDivider";
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
         </div>
         <CategoriesCards />
       </div>
+      <NameDivider />
     </div>
   );
 }
