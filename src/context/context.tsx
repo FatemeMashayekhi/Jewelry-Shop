@@ -55,16 +55,28 @@ export const DataContextProvider = ({
     queryKey: ["getAllCategories"],
     queryFn: async () => {
       const allCategories = await dataService.getAllCategories();
-      console.log(allCategories.data.categories);
       return allCategories.data.categories;
     },
   });
 
-  console.log(getAllCategories?.data);
+  ///get all products
+  const getAllProducts = useQuery({
+    queryKey: ["getAllProducts"],
+    queryFn: async () => {
+      const allProducts = await dataService.getAllProducts();
+      console.log(allProducts.data.products);
+      return allProducts.data.products;
+    },
+  });
 
   return (
     <DataContext.Provider
-      value={{ handleLogin, postGenerateAccessToken, getAllCategories }}
+      value={{
+        handleLogin,
+        postGenerateAccessToken,
+        getAllCategories,
+        getAllProducts,
+      }}
     >
       {children}
     </DataContext.Provider>

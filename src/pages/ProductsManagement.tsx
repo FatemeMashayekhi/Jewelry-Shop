@@ -13,7 +13,7 @@ export default function ProductsManagement() {
         </div>
         <div className="bg-[#102C57] p-10 rounded-2xl">
           <div className="p-10 rounded-2xl">
-            <div className="bg-[#FEFAF6] p-10 rounded-2xl">
+            <div className="bg-[#FEFAF6] p-10 rounded-2xl flex flex-col gap-y-6">
               <Table />
               <div className="flex justify-center">
                 <Pagination />
