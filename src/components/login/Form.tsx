@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useContext } from "react";
+import { DataContext } from "../../context/context";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -16,6 +19,13 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function Form() {
+  const navigate = useNavigate();
+  const context = useContext(DataContext);
+  if (!context) {
+    throw new Error("DataContext must be used within a DataContextProvider");
+  }
+
+  const { handleLogin } = context;
   const {
     register,
     handleSubmit,
@@ -25,7 +35,8 @@ export default function Form() {
   });
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    handleLogin!(data);
+    navigate("/management");
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-6">

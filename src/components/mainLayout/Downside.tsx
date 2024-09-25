@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const menuItems = [
   { path: "/", label: "صفحه اصلی" },
   { path: "/products", label: "لیست محصولات" },
-  { path: "/about", label: "سفارش طراحی جواهر" },
+  { path: "/about", label: "سفارش طراحی طلا" },
   { path: "/cart", label: "پیشنهادات ویژه" },
   { path: "/login", label: "درباره ما" },
   { path: "/contact", label: "تماس با ما" },
