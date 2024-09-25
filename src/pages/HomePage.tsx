@@ -22,6 +22,12 @@ export default function HomePage() {
         <CategoriesCards />
       </div>
       <NameDivider />
+      <div id="offer" className="flex px-20 gap-x-14">
+        <div id="img" className="bg-gray-200 p-24">
+          offer
+        </div>
+        <div id="offer-products">products</div>
+      </div>
     </div>
   );
 }
