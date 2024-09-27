@@ -17,7 +17,7 @@ export default function CategoriesCards() {
       {Array.isArray(getAllCategories.data) &&
         getAllCategories?.data.map((item) => (
           <div key={item._id} className="flex flex-col gap-y-2">
-            <div className="bg-gray-100 rounded-lg">
+            <div className="bg-[#f6f3ee] rounded-lg">
               <img
                 src={`http://localhost:8000/images/categories/icons/${item.icon}`}
                 alt={item._id}
