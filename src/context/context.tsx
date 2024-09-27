@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { ADMIN_LOGIN_URL, GENERATE_ACCESS_TOKEN_URL } from "../services/api";
 import { toast } from "react-toastify";
 import { Admin, Category, DataContextType } from "../models/ContextModel";
@@ -69,6 +69,9 @@ export const DataContextProvider = ({
     },
   });
 
+  ///add product modal
+  const [openAdd, setOpenAdd] = useState(false);
+
   return (
     <DataContext.Provider
       value={{
@@ -76,6 +79,8 @@ export const DataContextProvider = ({
         postGenerateAccessToken,
         getAllCategories,
         getAllProducts,
+        openAdd,
+        setOpenAdd,
       }}
     >
       {children}
