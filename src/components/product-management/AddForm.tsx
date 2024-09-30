@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import Editor from "./Editor";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   FormDataTypes,
   InputFieldProps,
   SelectFieldProps,
 } from "../../models/AddFormModel";
+import { DataContext } from "../../context/context";
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
@@ -20,7 +21,7 @@ const InputField: React.FC<InputFieldProps> = ({
       {label}
       <input
         type={type}
-        className={`border-2 border-gray-300 p-2 rounded-lg focus:border-[#102C57] focus:outline-none grow ${
+        className={`border-[1px] border-gray-300 p-2 rounded-lg focus:border-[#102C57] focus:outline-none grow ${
           errors[name] ? "border-red-500" : "border-gray-300"
         }`}
         {...register(name, validation)}
@@ -60,6 +61,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
 export default function AddForm() {
   const [description, setDescription] = useState("");
+  const { handlePostNewProduct } = useContext(DataContext);
   const {
     register,
     handleSubmit,
@@ -87,98 +89,113 @@ export default function AddForm() {
     });
     formData.append("description", description);
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+    if (handlePostNewProduct) {
+      handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
+    } else {
+      console.error("handlePostNewProduct is undefined");
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-y-6 font-bold"
+      className="grid grid-cols-2 gap-x-8 gap-y-3 font-bold"
     >
-      <InputField
-        label="نام کالا"
-        type="text"
-        register={register}
-        errors={errors}
-        name="name"
-        validation={{ required: "name is required" }}
-      />
-      <SelectField
-        label="دسته بندی"
-        register={register}
-        errors={errors}
-        name="category"
-        options={["گردنبند", "دستبند", "انگشتر", "گوشواره"]}
-        validation={{ required: "category field is required" }}
-      />
-      <SelectField
-        label="زیر مجموعه"
-        register={register}
-        errors={errors}
-        name="subcategory"
-        options={["پنتره", "گرین", "ژوست", "لاو", "روند"]}
-        validation={{ required: "subcategory field is required" }}
-      />
-      <InputField
-        label="تعداد"
-        type="number"
-        register={register}
-        errors={errors}
-        name="quantity"
-        validation={{ required: "quantity is required" }}
-      />
-      <InputField
-        label="قیمت"
-        type="number"
-        register={register}
-        errors={errors}
-        name="price"
-        validation={{ required: "price is required" }}
-      />
-      <InputField
-        label="تخفیف"
-        type="number"
-        register={register}
-        errors={errors}
-        name="discount"
-        validation={{ required: "discount is required" }}
-      />
-      <InputField
-        label="برند"
-        type="text"
-        register={register}
-        errors={errors}
-        name="brand"
-        validation={{ required: "brand is required" }}
-      />
-      <input
-        type="file"
-        className="file-input file-input-bordered w-full max-w-xs bg-white rounded-lg"
-        {...register("thumbnail", { required: "thumbnail is required" })}
-      />
-      {errors.thumbnail && (
-        <p className="text-red-500 mt-3">{errors.thumbnail.message}</p>
-      )}
-      <input
-        type="file"
-        className="file-input file-input-bordered w-full max-w-xs bg-white rounded-lg"
-        multiple
-        {...register("images", { required: "images is required" })}
-      />
-      {errors.images && (
-        <p className="text-red-500 mt-3">{errors.images.message}</p>
-      )}
-      <Editor description={description} setDescription={setDescription} />
-      <div className="flex justify-center">
-        <button
-          type="submit"
-          className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
-        >
-          ذخیره
-        </button>
+      <div className="flex flex-col gap-y-2">
+        <InputField
+          label="نام کالا"
+          type="text"
+          register={register}
+          errors={errors}
+          name="name"
+          validation={{ required: "name is required" }}
+        />
+        <SelectField
+          label="دسته بندی"
+          register={register}
+          errors={errors}
+          name="category"
+          options={["گردنبند", "دستبند", "انگشتر", "گوشواره"]}
+          validation={{ required: "category field is required" }}
+        />
+        <SelectField
+          label="زیر مجموعه"
+          register={register}
+          errors={errors}
+          name="subcategory"
+          options={["پنتره", "گرین", "ژوست", "لاو", "روند"]}
+          validation={{ required: "subcategory field is required" }}
+        />
       </div>
+      <div className="flex flex-col gap-y-2">
+        <InputField
+          label="تعداد"
+          type="number"
+          register={register}
+          errors={errors}
+          name="quantity"
+          validation={{ required: "quantity is required" }}
+        />
+        <InputField
+          label="قیمت"
+          type="number"
+          register={register}
+          errors={errors}
+          name="price"
+          validation={{ required: "price is required" }}
+        />
+        <InputField
+          label="تخفیف"
+          type="number"
+          register={register}
+          errors={errors}
+          name="discount"
+          validation={{ required: "discount is required" }}
+        />
+        <InputField
+          label="برند"
+          type="text"
+          register={register}
+          errors={errors}
+          name="brand"
+          validation={{ required: "brand is required" }}
+        />
+      </div>
+      <div className="col-span-2 flex gap-3">
+        <label className="flex flex-col items-center gap-2">
+          تصویر بند انگشتی
+          <input
+            type="file"
+            className="file-input file-input-bordered w-full max-w-xs bg-white rounded-lg"
+            {...register("thumbnail", { required: "thumbnail is required" })}
+          />
+          {errors.thumbnail && (
+            <p className="text-red-500 mt-3">{errors.thumbnail.message}</p>
+          )}
+        </label>
+        <label className="flex flex-col items-center gap-2">
+          تصاویر
+          <input
+            type="file"
+            className="file-input file-input-bordered w-full max-w-xs bg-white rounded-lg"
+            multiple
+            {...register("images", { required: "images is required" })}
+          />
+          {errors.images && (
+            <p className="text-red-500 mt-3">{errors.images.message}</p>
+          )}
+        </label>
+      </div>
+      <div className="col-span-2 flex flex-col gap-y-3">
+        <Editor description={description} setDescription={setDescription} />
+      </div>
+
+      <button
+        type="submit"
+        className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
+      >
+        ذخیره
+      </button>
     </form>
   );
 }

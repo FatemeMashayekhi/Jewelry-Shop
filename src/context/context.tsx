@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { Admin, Category, DataContextType } from "../models/ContextModel";
 import axios from "../services/baseService";
 import dataService from "../services/DataService";
+import { queryClient } from "../main";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -72,6 +73,23 @@ export const DataContextProvider = ({
   ///add product modal
   const [openAdd, setOpenAdd] = useState(false);
 
+  ///post new product
+  const postNewProduct = useMutation({
+    mutationFn: async (product: FormData) => {
+      const newProduct = await dataService.PostProducts(product);
+      console.log(newProduct);
+      return newProduct;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+      toast.success("محصول جدید با موفقیت اضافه شد");
+    },
+  });
+
+  const handlePostNewProduct = (product: FormData) => {
+    postNewProduct.mutate(product);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -81,6 +99,7 @@ export const DataContextProvider = ({
         getAllProducts,
         openAdd,
         setOpenAdd,
+        handlePostNewProduct,
       }}
     >
       {children}

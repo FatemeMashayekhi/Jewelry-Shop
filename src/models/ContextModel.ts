@@ -31,4 +31,5 @@ export type DataContextType = {
   getAllProducts?: UseQueryResult<ProductsEntity[], unknown>;
   openAdd?: boolean;
   setOpenAdd?: React.Dispatch<React.SetStateAction<boolean>>;
+  handlePostNewProduct?: (product: FormData) => void;
 };
