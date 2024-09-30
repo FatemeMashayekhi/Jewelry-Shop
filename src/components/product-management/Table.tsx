@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { DataContext } from "../../context/context";
+
 export default function Table() {
+  const { getAllProducts } = useContext(DataContext);
   return (
     <div className="overflow-x-auto">
       <table className="table font-bold text-lg">
@@ -13,53 +17,30 @@ export default function Table() {
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <th></th>
-            <td>یرسریرسر</td>
-            <td>دستبند</td>
-            <td>
-              <div className="join rounded-lg">
-                <button className="btn join-item bg-blue-500 text-white">
-                  ویرایش
-                </button>
-                <button className="btn join-item bg-red-600 text-white">
-                  حذف
-                </button>
-              </div>
-            </td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th></th>
-            <td>یرسریرسر</td>
-            <td>دستبند</td>
-            <td>
-              <div className="join rounded-lg">
-                <button className="btn join-item bg-blue-500 text-white">
-                  ویرایش
-                </button>
-                <button className="btn join-item bg-red-600 text-white">
-                  حذف
-                </button>
-              </div>
-            </td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th></th>
-            <td>یرسریرسر</td>
-            <td>دستبند</td>
-            <td>
-              <div className="join rounded-lg">
-                <button className="btn join-item bg-blue-500 text-white">
-                  ویرایش
-                </button>
-                <button className="btn join-item bg-red-600 text-white">
-                  حذف
-                </button>
-              </div>
-            </td>
-          </tr>
+          {Array.isArray(getAllProducts?.data) &&
+            getAllProducts?.data.map((item) => (
+              <tr key={item._id}>
+                <th>
+                  <img
+                    src={`http://localhost:8000/images/products/thumbnails/${item.thumbnail}`}
+                    alt={item._id}
+                    className="size-20 rounded-lg"
+                  />
+                </th>
+                <td>{item.name}</td>
+                <td>{item.category.name}</td>
+                <td>
+                  <div className="join rounded-lg">
+                    <button className="btn join-item bg-blue-500 text-white">
+                      ویرایش
+                    </button>
+                    <button className="btn join-item bg-red-600 text-white">
+                      حذف
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

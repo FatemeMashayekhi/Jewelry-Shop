@@ -13,11 +13,11 @@ export default function CategoriesCards() {
     return <div>Error loading categories</div>;
   }
   return (
-    <div id="categories-cards" className="flex px-14 justify-center">
+    <div id="categories-cards" className="flex px-14 justify-center gap-x-20">
       {Array.isArray(getAllCategories.data) &&
         getAllCategories?.data.map((item) => (
           <div key={item._id} className="flex flex-col gap-y-2">
-            <div className="bg-gray-100 rounded-lg">
+            <div className="bg-[#f6f3ee] rounded-lg">
               <img
                 src={`http://localhost:8000/images/categories/icons/${item.icon}`}
                 alt={item._id}
