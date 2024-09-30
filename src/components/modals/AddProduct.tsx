@@ -13,7 +13,7 @@ export default function AddProduct() {
       >
         <div
           id="modal-content"
-          className="relative bg-white m-auto p-6 border border-gray-400 w-4/5 shadow-lg animate-slide-in rounded-lg"
+          className="relative bg-white m-auto p-6 border border-gray-400 w-2/5 shadow-lg animate-slide-in rounded-lg"
         >
           <div id="modal-header" className="flex justify-between">
             <div className="flex gap-x-2 font-bold">
@@ -34,7 +34,7 @@ export default function AddProduct() {
               />
             </button>
           </div>
-          <div id="modal-body" className="p-2">
+          <div id="modal-body" className="px-4 py-5">
             <AddForm />
           </div>
         </div>
