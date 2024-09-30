@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import Editor from "./Editor";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   FormDataTypes,
   InputFieldProps,
   SelectFieldProps,
 } from "../../models/AddFormModel";
+import { DataContext } from "../../context/context";
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
@@ -60,6 +61,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
 export default function AddForm() {
   const [description, setDescription] = useState("");
+  const { handlePostNewProduct } = useContext(DataContext);
   const {
     register,
     handleSubmit,
@@ -87,8 +89,10 @@ export default function AddForm() {
     });
     formData.append("description", description);
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+    if (handlePostNewProduct) {
+      handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
+    } else {
+      console.error("handlePostNewProduct is undefined");
     }
   };
 

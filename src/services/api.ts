@@ -7,3 +7,4 @@ export const PRODUCTS_URL =
 export const SUBCATEGORIES_URL = "/subcategories";
 export const ADMIN_LOGIN_URL = "/auth/login";
 export const GENERATE_ACCESS_TOKEN_URL = "/auth/token";
+export const POST_PRODUCTS = "/products";
