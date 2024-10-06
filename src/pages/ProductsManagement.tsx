@@ -3,6 +3,7 @@ import Pagination from "../components/product-management/Pagination";
 import Table from "../components/product-management/Table";
 import { DataContext } from "../context/context";
 import AddProduct from "../components/modals/AddProduct";
+import DeleteProduct from "../components/modals/DeleteProduct";
 
 export default function ProductsManagement() {
   const { setOpenAdd } = useContext(DataContext);
@@ -31,6 +32,7 @@ export default function ProductsManagement() {
           </div>
         </div>
         <AddProduct />
+        <DeleteProduct />
       </div>
     </>
   );

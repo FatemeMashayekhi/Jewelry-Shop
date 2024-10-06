@@ -46,4 +46,8 @@ export type DataContextType = {
   totalPages?: number;
   getAllSubCategories?: UseQueryResult<SubcategoriesEntity[], unknown>;
   handleDeleteProduct?: (id: string) => void;
+  openDelete?: boolean;
+  setOpenDelete?: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteBtnHandler?: (id: string) => void;
+  deletedProductId?: string;
 };

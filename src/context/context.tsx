@@ -83,6 +83,18 @@ export const DataContextProvider = ({
   ///add product modal
   const [openAdd, setOpenAdd] = useState(false);
 
+  ///delete product modal
+  const [openDelete, setOpenDelete] = useState(false);
+
+  ///deleted product id keeper
+  const [deletedProductId, setDeletedProductId] = useState("");
+
+  ///delete product btn handler
+  const deleteBtnHandler = (id: string) => {
+    setOpenDelete(true);
+    setDeletedProductId(id);
+  };
+
   ///post new product
   const postNewProduct = useMutation({
     mutationFn: async (product: FormData) => {
@@ -140,6 +152,10 @@ export const DataContextProvider = ({
         totalPages,
         getAllSubCategories,
         handleDeleteProduct,
+        openDelete,
+        setOpenDelete,
+        deleteBtnHandler,
+        deletedProductId,
       }}
     >
       {children}
