@@ -50,7 +50,7 @@ export type DataContextType = {
   setOpenDelete?: React.Dispatch<React.SetStateAction<boolean>>;
   deleteBtnHandler?: (id: string) => void;
   deletedProductId?: string;
-  handleEditProduct?: (id: string) => void;
+  handleEditProduct?: (id: string, product: FormData) => void;
   editBtnHandler?: (item: ProductsEntity) => void;
   editedProduct?: ProductsEntity;
 };

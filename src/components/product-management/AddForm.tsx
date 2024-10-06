@@ -146,7 +146,7 @@ export default function AddForm() {
     // });
 
     if (editedProduct && handleEditProduct) {
-      handleEditProduct(editedProduct._id); // Call handleEditProduct in edit mode
+      handleEditProduct(editedProduct._id, formData); // Call handleEditProduct in edit mode
     } else if (handlePostNewProduct) {
       handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
     } else {

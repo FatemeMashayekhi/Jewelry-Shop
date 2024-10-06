@@ -46,9 +46,9 @@ export const deleteProducts = async (id: string) => {
   }
 };
 
-export const editProduct = async (id: string) => {
+export const editProduct = async (id: string, product: FormData) => {
   try {
-    const res = await axios.patch(EDIT_PRODUCT_BY_ID(id));
+    const res = await axios.patch(EDIT_PRODUCT_BY_ID(id), product);
     return res.data;
   } catch (e) {
     console.log(e);

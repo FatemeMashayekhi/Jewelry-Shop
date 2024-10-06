@@ -150,8 +150,8 @@ export const DataContextProvider = ({
 
   ///edit product by id
   const editProductById = useMutation({
-    mutationFn: async (id: string) => {
-      const editedProduct = await dataService.editProduct(id);
+    mutationFn: async ({ id, product }: { id: string; product: FormData }) => {
+      const editedProduct = await dataService.editProduct(id, product);
       return editedProduct;
     },
     onSuccess: () => {
@@ -160,8 +160,8 @@ export const DataContextProvider = ({
     },
   });
 
-  const handleEditProduct = (id: string) => {
-    editProductById.mutate(id);
+  const handleEditProduct = (id: string, product: FormData) => {
+    editProductById.mutate({ id, product });
   };
 
   return (
