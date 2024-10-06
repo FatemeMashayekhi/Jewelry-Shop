@@ -54,3 +54,55 @@ axios.interceptors.response.use(
 );
 
 export default axios;
+
+import axios, { AxiosError } from "axios";
+import { baseURL } from "../Constant/BaseURLs/BaseURLs";
+import authRefreshToken from "../api/authRefreshToken";
+
+const authRefreshToken = (refresh: string) => {
+  try {
+    return httpService.post(ENDPOINTS.refreshToken, { refreshToken: refresh });
+  } catch (err: any) {
+    console.log(err?.message);
+  }
+};
+
+const httpService = axios.create({
+  baseURL,
+});
+
+httpService.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+httpService.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  (error: AxiosError) => {
+    const status = error?.response?.status;
+    const originResponse = error.config;
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (status === 401 && refreshToken && location.pathname !== "/login") {
+      authRefreshToken(refreshToken)!.then((res) => {
+        localStorage.setItem("accessToken", res.data.token.accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        originResponse!.headers[
+          "Authorization"
+        ] = `Bearer ${res.data.token.accessToken}`;
+        return httpService.request(originResponse!);
+      });
+      return Promise.reject(error);
+    }
+    return Promise.reject(error);
+  }
+);
+export default httpService;

@@ -27,14 +27,16 @@ export interface SelectFieldProps {
   register: UseFormRegister<FormDataTypes>;
   errors: FieldErrors<FormDataTypes>;
   name: keyof FormDataTypes;
-  options: string[];
-  validation: object;
+  options: { id: string; name: string }[];
+  validation?: object;
 }
 
 export type Category = {
   name: string;
+  id: string;
 };
 
 export type SubCategory = {
   name: string;
+  id: string;
 };

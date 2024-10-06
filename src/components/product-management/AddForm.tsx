@@ -2,13 +2,17 @@ import { useForm } from "react-hook-form";
 import Editor from "./Editor";
 import { useContext, useState, useEffect } from "react";
 import {
-  Category,
   FormDataTypes,
   InputFieldProps,
   SelectFieldProps,
   SubCategory,
 } from "../../models/AddFormModel";
 import { DataContext } from "../../context/context";
+import { Category as AddFormCategory } from "../../models/AddFormModel";
+import {
+  Category as ContextCategory,
+  SubcategoriesEntity,
+} from "../../models/ContextModel";
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
@@ -50,8 +54,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
       {...register(name, validation)}
     >
       {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
+        <option key={option.id} value={option.id}>
+          {option.name}
         </option>
       ))}
     </select>
@@ -71,24 +75,27 @@ export default function AddForm() {
     formState: { errors },
   } = useForm<FormDataTypes>();
 
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<AddFormCategory[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
 
   useEffect(() => {
-    if (getAllCategories?.data) {
+    if (Array.isArray(getAllCategories?.data)) {
       setCategories(
-        getAllCategories.data.map((category: Category) => category.name)
+        getAllCategories.data.map((category: ContextCategory) => ({
+          id: category._id,
+          name: category.name,
+        }))
       );
     }
   }, [getAllCategories]);
 
-  const [subCategories, setSubCategories] = useState<string[]>([]);
-
   useEffect(() => {
-    if (getAllSubCategories?.data) {
+    if (Array.isArray(getAllSubCategories?.data)) {
       setSubCategories(
-        getAllSubCategories.data.map(
-          (subCategory: SubCategory) => subCategory.name
-        )
+        getAllSubCategories.data.map((subCategory: SubcategoriesEntity) => ({
+          id: subCategory._id,
+          name: subCategory.name,
+        }))
       );
     }
   }, [getAllSubCategories]);
@@ -113,6 +120,10 @@ export default function AddForm() {
       }
     });
     formData.append("description", description);
+
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}: ${value}`);
+    // });
 
     if (handlePostNewProduct) {
       handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
