@@ -1,5 +1,6 @@
 import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import { ProductsEntity } from "./GetProductsModel";
+import { Dispatch, SetStateAction } from "react";
 
 export interface Admin {
   username: string;
@@ -32,4 +33,7 @@ export type DataContextType = {
   openAdd?: boolean;
   setOpenAdd?: React.Dispatch<React.SetStateAction<boolean>>;
   handlePostNewProduct?: (product: FormData) => void;
+  page?: string;
+  setPage?: Dispatch<SetStateAction<string>>;
+  totalPages?: number;
 };

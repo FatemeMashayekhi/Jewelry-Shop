@@ -10,9 +10,9 @@ export const getAllCategories = async () => {
   }
 };
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (page: string) => {
   try {
-    const res = await axios.get(PRODUCTS_URL);
+    const res = await axios.get(PRODUCTS_URL(page));
     return res.data;
   } catch (e) {
     console.log(e);

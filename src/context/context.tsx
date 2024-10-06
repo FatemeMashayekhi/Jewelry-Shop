@@ -60,12 +60,17 @@ export const DataContextProvider = ({
     },
   });
 
+  ///pagination
+  const [page, setPage] = useState<string>("1");
+  const [totalPages, setTotalPages] = useState<number>(0);
+
   ///get all products
   const getAllProducts = useQuery({
-    queryKey: ["getAllProducts"],
+    queryKey: ["getAllProducts", page],
     queryFn: async () => {
-      const allProducts = await dataService.getAllProducts();
-      console.log(allProducts.data.products);
+      const allProducts = await dataService.getAllProducts(page);
+      console.log(allProducts);
+      setTotalPages(allProducts.total_pages);
       return allProducts.data.products;
     },
   });
@@ -100,6 +105,9 @@ export const DataContextProvider = ({
         openAdd,
         setOpenAdd,
         handlePostNewProduct,
+        page,
+        setPage,
+        totalPages,
       }}
     >
       {children}
