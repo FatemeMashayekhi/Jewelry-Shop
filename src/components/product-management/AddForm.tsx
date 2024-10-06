@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import Editor from "./Editor";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
+  Category,
   FormDataTypes,
   InputFieldProps,
   SelectFieldProps,
@@ -61,12 +62,22 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
 export default function AddForm() {
   const [description, setDescription] = useState("");
-  const { handlePostNewProduct } = useContext(DataContext);
+  const { handlePostNewProduct, getAllCategories } = useContext(DataContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormDataTypes>();
+
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (getAllCategories?.data) {
+      setCategories(
+        getAllCategories.data.map((category: Category) => category.name)
+      );
+    }
+  }, [getAllCategories]);
 
   const onSubmit = (data: FormDataTypes) => {
     const formData = new FormData();
@@ -115,7 +126,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="category"
-          options={["گردنبند", "دستبند", "انگشتر", "گوشواره"]}
+          options={categories}
           validation={{ required: "category field is required" }}
         />
         <SelectField

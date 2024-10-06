@@ -30,3 +30,7 @@ export interface SelectFieldProps {
   options: string[];
   validation: object;
 }
+
+export type Category = {
+  name: string;
+};
