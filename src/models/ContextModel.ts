@@ -1,4 +1,4 @@
-import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
+import { UseQueryResult } from "@tanstack/react-query";
 import { ProductsEntity } from "./GetProductsModel";
 import { Dispatch, SetStateAction } from "react";
 
@@ -36,7 +36,6 @@ export interface SubcategoriesEntity {
 
 export type DataContextType = {
   handleLogin?: (admin: Admin) => void;
-  postGenerateAccessToken?: UseMutationResult<void, Error, void, unknown>;
   getAllCategories?: UseQueryResult<Category[], unknown>;
   getAllProducts?: UseQueryResult<ProductsEntity[], unknown>;
   openAdd?: boolean;

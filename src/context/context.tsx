@@ -26,6 +26,7 @@ export const DataContextProvider = ({
     },
     onSuccess: (data) => {
       if (data && data.token) {
+        console.log(data);
         localStorage.setItem("accessToken", data.token.accessToken);
         localStorage.setItem("refreshToken", data.token.refreshToken);
         toast.success("ورود شما با موفقیت انجام شد");
@@ -40,20 +41,20 @@ export const DataContextProvider = ({
     postLogin.mutate(admin);
   };
   ///generate access token
-  const postGenerateAccessToken = useMutation({
-    mutationFn: async (refreshToken: string) => {
-      try {
-        const res = await dataService.postGenerateAccessToken(refreshToken);
-        return res;
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    onSuccess: (data) => {
-      localStorage.setItem("accessToken", data.token.accessToken);
-      alert("Doneeee");
-    },
-  });
+  // const postGenerateAccessToken = useMutation({
+  //   mutationFn: async (refreshToken: string) => {
+  //     try {
+  //       const res = await dataService.postGenerateAccessToken(refreshToken);
+  //       return res;
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   },
+  //   onSuccess: (data) => {
+  //     localStorage.setItem("accessToken", data.token.accessToken);
+  //     alert("Doneeee");
+  //   },
+  // });
 
   ///get all categories
   const getAllCategories = useQuery<Category[], unknown>({
@@ -121,7 +122,6 @@ export const DataContextProvider = ({
         setPage,
         totalPages,
         getAllSubCategories,
-        postGenerateAccessToken,
       }}
     >
       {children}

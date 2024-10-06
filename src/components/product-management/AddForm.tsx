@@ -67,8 +67,12 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
 export default function AddForm() {
   const [description, setDescription] = useState("");
-  const { handlePostNewProduct, getAllCategories, getAllSubCategories } =
-    useContext(DataContext);
+  const {
+    handlePostNewProduct,
+    getAllCategories,
+    getAllSubCategories,
+    setOpenAdd,
+  } = useContext(DataContext);
   const {
     register,
     handleSubmit,
@@ -129,6 +133,9 @@ export default function AddForm() {
       handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
     } else {
       console.error("handlePostNewProduct is undefined");
+    }
+    if (setOpenAdd !== undefined) {
+      setOpenAdd(false);
     }
   };
 
