@@ -45,4 +45,5 @@ export type DataContextType = {
   setPage?: Dispatch<SetStateAction<string>>;
   totalPages?: number;
   getAllSubCategories?: UseQueryResult<SubcategoriesEntity[], unknown>;
+  handleDeleteProduct?: (id: string) => void;
 };

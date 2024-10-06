@@ -3,6 +3,7 @@ import axios from "../services/baseService";
 import {
   ADMIN_LOGIN_URL,
   CATEGORIES_URL,
+  DELETE_PRODUCT_BY_ID,
   POST_PRODUCTS,
   PRODUCTS_URL,
   SUBCATEGORIES_URL,
@@ -35,6 +36,15 @@ export const PostProducts = async (product: FormData) => {
   }
 };
 
+export const deleteProducts = async (id: string) => {
+  try {
+    const res = await axios.delete(DELETE_PRODUCT_BY_ID(id));
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const getAllSubCategories = async () => {
   try {
     const res = await axios.get(SUBCATEGORIES_URL);
@@ -59,6 +69,7 @@ const dataService = {
   PostProducts,
   getAllSubCategories,
   postLogin,
+  deleteProducts,
 };
 
 export default dataService;

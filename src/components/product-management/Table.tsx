@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { DataContext } from "../../context/context";
 
 export default function Table() {
-  const { getAllProducts } = useContext(DataContext);
+  const { getAllProducts, handleDeleteProduct } = useContext(DataContext);
   return (
     <div className="overflow-x-auto">
       <table className="table font-bold text-lg">
@@ -34,7 +34,12 @@ export default function Table() {
                     <button className="btn join-item bg-blue-500 text-white">
                       ویرایش
                     </button>
-                    <button className="btn join-item bg-red-600 text-white">
+                    <button
+                      className="btn join-item bg-red-600 text-white"
+                      onClick={() =>
+                        handleDeleteProduct && handleDeleteProduct(item._id)
+                      }
+                    >
                       حذف
                     </button>
                   </div>

@@ -109,6 +109,23 @@ export const DataContextProvider = ({
     },
   });
 
+  ///delete products by id
+  const deleteProductsById = useMutation({
+    mutationFn: async (id: string) => {
+      const deletedProduct = await dataService.deleteProducts(id);
+      console.log(deletedProduct);
+      return deletedProduct;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+      toast.success("محصول با موفقیت حذف شد");
+    },
+  });
+
+  const handleDeleteProduct = (id: string) => {
+    deleteProductsById.mutate(id);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -122,6 +139,7 @@ export const DataContextProvider = ({
         setPage,
         totalPages,
         getAllSubCategories,
+        handleDeleteProduct,
       }}
     >
       {children}
