@@ -9,3 +9,4 @@ export const ADMIN_LOGIN_URL = "/auth/login";
 export const GENERATE_ACCESS_TOKEN_URL = "/auth/token";
 export const POST_PRODUCTS = "/products";
 export const DELETE_PRODUCT_BY_ID = (id: string) => `/products/${id}`;
+export const EDIT_PRODUCT_BY_ID = (id: string) => `/products/${id}`;

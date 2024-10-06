@@ -4,6 +4,7 @@ import {
   ADMIN_LOGIN_URL,
   CATEGORIES_URL,
   DELETE_PRODUCT_BY_ID,
+  EDIT_PRODUCT_BY_ID,
   POST_PRODUCTS,
   PRODUCTS_URL,
   SUBCATEGORIES_URL,
@@ -45,6 +46,15 @@ export const deleteProducts = async (id: string) => {
   }
 };
 
+export const editProduct = async (id: string) => {
+  try {
+    const res = await axios.patch(EDIT_PRODUCT_BY_ID(id));
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const getAllSubCategories = async () => {
   try {
     const res = await axios.get(SUBCATEGORIES_URL);
@@ -70,6 +80,7 @@ const dataService = {
   getAllSubCategories,
   postLogin,
   deleteProducts,
+  editProduct,
 };
 
 export default dataService;

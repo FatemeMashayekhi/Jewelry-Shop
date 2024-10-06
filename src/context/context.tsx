@@ -5,6 +5,7 @@ import { Admin, Category, DataContextType } from "../models/ContextModel";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
 import { useNavigate } from "react-router-dom";
+import { ProductsEntity } from "../models/GetProductsModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -89,10 +90,19 @@ export const DataContextProvider = ({
   ///deleted product id keeper
   const [deletedProductId, setDeletedProductId] = useState("");
 
+  ///edited product id keeper
+  const [editedProduct, setEditedProduct] = useState<ProductsEntity>();
+
   ///delete product btn handler
   const deleteBtnHandler = (id: string) => {
     setOpenDelete(true);
     setDeletedProductId(id);
+  };
+
+  ///edit btn handler
+  const editBtnHandler = (item: ProductsEntity) => {
+    setOpenAdd(true);
+    setEditedProduct(item);
   };
 
   ///post new product
@@ -138,6 +148,22 @@ export const DataContextProvider = ({
     deleteProductsById.mutate(id);
   };
 
+  ///edit product by id
+  const editProductById = useMutation({
+    mutationFn: async (id: string) => {
+      const editedProduct = await dataService.editProduct(id);
+      return editedProduct;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+      toast.success("محصول با موفقیت ویرایش شد");
+    },
+  });
+
+  const handleEditProduct = (id: string) => {
+    editProductById.mutate(id);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -156,6 +182,9 @@ export const DataContextProvider = ({
         setOpenDelete,
         deleteBtnHandler,
         deletedProductId,
+        handleEditProduct,
+        editBtnHandler,
+        editedProduct,
       }}
     >
       {children}

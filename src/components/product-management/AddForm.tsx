@@ -72,15 +72,31 @@ export default function AddForm() {
     getAllCategories,
     getAllSubCategories,
     setOpenAdd,
+    editedProduct,
+    handleEditProduct,
   } = useContext(DataContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormDataTypes>();
 
   const [categories, setCategories] = useState<AddFormCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+
+  useEffect(() => {
+    if (editedProduct) {
+      setValue("name", editedProduct.name);
+      setValue("category", editedProduct.category._id);
+      setValue("subcategory", editedProduct.subcategory._id);
+      setValue("quantity", editedProduct.quantity);
+      setValue("price", editedProduct.price);
+      setValue("discount", editedProduct.discount);
+      setValue("brand", editedProduct.brand);
+      setDescription(editedProduct.description);
+    }
+  }, [editedProduct, setValue]);
 
   useEffect(() => {
     if (Array.isArray(getAllCategories?.data)) {
@@ -129,7 +145,9 @@ export default function AddForm() {
     //   console.log(`${key}: ${value}`);
     // });
 
-    if (handlePostNewProduct) {
+    if (editedProduct && handleEditProduct) {
+      handleEditProduct(editedProduct._id); // Call handleEditProduct in edit mode
+    } else if (handlePostNewProduct) {
       handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
     } else {
       console.error("handlePostNewProduct is undefined");
@@ -233,12 +251,21 @@ export default function AddForm() {
         <Editor description={description} setDescription={setDescription} />
       </div>
 
-      <button
-        type="submit"
-        className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
-      >
-        ذخیره
-      </button>
+      {editedProduct ? (
+        <button
+          type="submit"
+          className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
+        >
+          ویرایش
+        </button>
+      ) : (
+        <button
+          type="submit"
+          className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
+        >
+          ذخیره
+        </button>
+      )}
     </form>
   );
 }
