@@ -16,6 +16,15 @@ export interface Category {
   slugname: string;
 }
 
+export interface SubcategoriesEntity {
+  _id: string;
+  category: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  slugname: string;
+}
+
 // export const defaultContext: DataContextType = {
 //   handleLogin: () => {},
 //   postGenerateAccessToken: {} as UseMutationResult<void, Error, void, unknown>,
@@ -36,4 +45,5 @@ export type DataContextType = {
   page?: string;
   setPage?: Dispatch<SetStateAction<string>>;
   totalPages?: number;
+  getAllSubCategories?: UseQueryResult<SubcategoriesEntity[], unknown>;
 };

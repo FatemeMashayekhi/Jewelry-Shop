@@ -6,6 +6,7 @@ import {
   FormDataTypes,
   InputFieldProps,
   SelectFieldProps,
+  SubCategory,
 } from "../../models/AddFormModel";
 import { DataContext } from "../../context/context";
 
@@ -62,7 +63,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
 export default function AddForm() {
   const [description, setDescription] = useState("");
-  const { handlePostNewProduct, getAllCategories } = useContext(DataContext);
+  const { handlePostNewProduct, getAllCategories, getAllSubCategories } =
+    useContext(DataContext);
   const {
     register,
     handleSubmit,
@@ -78,6 +80,18 @@ export default function AddForm() {
       );
     }
   }, [getAllCategories]);
+
+  const [subCategories, setSubCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (getAllSubCategories?.data) {
+      setSubCategories(
+        getAllSubCategories.data.map(
+          (subCategory: SubCategory) => subCategory.name
+        )
+      );
+    }
+  }, [getAllSubCategories]);
 
   const onSubmit = (data: FormDataTypes) => {
     const formData = new FormData();
@@ -134,7 +148,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="subcategory"
-          options={["پنتره", "گرین", "ژوست", "لاو", "روند"]}
+          options={subCategories}
           validation={{ required: "subcategory field is required" }}
         />
       </div>

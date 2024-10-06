@@ -1,5 +1,10 @@
 import axios from "../services/baseService";
-import { CATEGORIES_URL, POST_PRODUCTS, PRODUCTS_URL } from "./api";
+import {
+  CATEGORIES_URL,
+  POST_PRODUCTS,
+  PRODUCTS_URL,
+  SUBCATEGORIES_URL,
+} from "./api";
 
 export const getAllCategories = async () => {
   try {
@@ -28,10 +33,20 @@ export const PostProducts = async (product: FormData) => {
   }
 };
 
+export const getAllSubCategories = async () => {
+  try {
+    const res = await axios.get(SUBCATEGORIES_URL);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
   PostProducts,
+  getAllSubCategories,
 };
 
 export default dataService;

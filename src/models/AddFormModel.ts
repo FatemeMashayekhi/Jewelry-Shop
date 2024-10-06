@@ -34,3 +34,7 @@ export interface SelectFieldProps {
 export type Category = {
   name: string;
 };
+
+export type SubCategory = {
+  name: string;
+};

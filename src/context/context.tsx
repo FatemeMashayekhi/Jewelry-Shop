@@ -95,6 +95,15 @@ export const DataContextProvider = ({
     postNewProduct.mutate(product);
   };
 
+  ///get all subcategories
+  const getAllSubCategories = useQuery({
+    queryKey: ["getAllSubCategories"],
+    queryFn: async () => {
+      const allSubCategories = await dataService.getAllSubCategories();
+      return allSubCategories.data.subcategories;
+    },
+  });
+
   return (
     <DataContext.Provider
       value={{
@@ -108,6 +117,7 @@ export const DataContextProvider = ({
         page,
         setPage,
         totalPages,
+        getAllSubCategories,
       }}
     >
       {children}
