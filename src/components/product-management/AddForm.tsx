@@ -1,12 +1,18 @@
 import { useForm } from "react-hook-form";
 import Editor from "./Editor";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   FormDataTypes,
   InputFieldProps,
   SelectFieldProps,
+  SubCategory,
 } from "../../models/AddFormModel";
 import { DataContext } from "../../context/context";
+import { Category as AddFormCategory } from "../../models/AddFormModel";
+import {
+  Category as ContextCategory,
+  SubcategoriesEntity,
+} from "../../models/ContextModel";
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
@@ -48,8 +54,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
       {...register(name, validation)}
     >
       {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
+        <option key={option.id} value={option.id}>
+          {option.name}
         </option>
       ))}
     </select>
@@ -61,12 +67,42 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
 export default function AddForm() {
   const [description, setDescription] = useState("");
-  const { handlePostNewProduct } = useContext(DataContext);
+  const {
+    handlePostNewProduct,
+    getAllCategories,
+    getAllSubCategories,
+    setOpenAdd,
+  } = useContext(DataContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormDataTypes>();
+
+  const [categories, setCategories] = useState<AddFormCategory[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+
+  useEffect(() => {
+    if (Array.isArray(getAllCategories?.data)) {
+      setCategories(
+        getAllCategories.data.map((category: ContextCategory) => ({
+          id: category._id,
+          name: category.name,
+        }))
+      );
+    }
+  }, [getAllCategories]);
+
+  useEffect(() => {
+    if (Array.isArray(getAllSubCategories?.data)) {
+      setSubCategories(
+        getAllSubCategories.data.map((subCategory: SubcategoriesEntity) => ({
+          id: subCategory._id,
+          name: subCategory.name,
+        }))
+      );
+    }
+  }, [getAllSubCategories]);
 
   const onSubmit = (data: FormDataTypes) => {
     const formData = new FormData();
@@ -89,10 +125,17 @@ export default function AddForm() {
     });
     formData.append("description", description);
 
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}: ${value}`);
+    // });
+
     if (handlePostNewProduct) {
       handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
     } else {
       console.error("handlePostNewProduct is undefined");
+    }
+    if (setOpenAdd !== undefined) {
+      setOpenAdd(false);
     }
   };
 
@@ -115,7 +158,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="category"
-          options={["گردنبند", "دستبند", "انگشتر", "گوشواره"]}
+          options={categories}
           validation={{ required: "category field is required" }}
         />
         <SelectField
@@ -123,7 +166,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="subcategory"
-          options={["پنتره", "گرین", "ژوست", "لاو", "روند"]}
+          options={subCategories}
           validation={{ required: "subcategory field is required" }}
         />
       </div>

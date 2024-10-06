@@ -1,56 +1,50 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ADMIN_LOGIN_URL, BASE_URL, GENERATE_ACCESS_TOKEN_URL } from "./api";
-import { useContext } from "react";
-import { DataContext } from "../context/context";
 
 axios.defaults.baseURL = BASE_URL;
 
 axios.interceptors.request.use((req) => {
-  if (req.url === GENERATE_ACCESS_TOKEN_URL) {
-    const token = localStorage.getItem("refreshToken");
-    req.headers.refreshToken = token;
-  } else if (req.url !== ADMIN_LOGIN_URL) {
+  if (req.url !== ADMIN_LOGIN_URL) {
     const token = localStorage.getItem("accessToken");
-    req.headers.token = token;
+    req.headers.Authorization = `Bearer ${token}`;
   }
-
   return req;
 });
 
 axios.interceptors.response.use(
-  (response) => {
-    return response;
+  (config) => {
+    return config;
   },
-  async (error) => {
-    if (error.response.status !== 401) {
-      return Promise.reject(error);
-    }
-
-    const originalRequest = error.config;
-
-    if (
-      error.response.status === 401 &&
-      originalRequest.url === GENERATE_ACCESS_TOKEN_URL
-    ) {
-      return Promise.reject(error);
-    }
-
-    if (!originalRequest._retry) {
-      originalRequest._retry = true;
+  async (error: AxiosError) => {
+    const status = error?.response?.status;
+    const originResponse = error.config;
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (status === 401 && refreshToken && location.pathname !== "/login") {
       try {
-        const { postGenerateAccessToken } = useContext(DataContext);
-        const newAccessToken = await postGenerateAccessToken?.mutateAsync();
-        originalRequest.headers.token = newAccessToken;
-        const res = await axios.request(originalRequest);
-        return Promise.resolve(res);
-      } catch (e) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        console.log(e);
-        return Promise.reject(e);
+        const res = await authRefreshToken(refreshToken);
+        if (res) {
+          localStorage.setItem("accessToken", res.data.token.accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          originResponse!.headers[
+            "Authorization"
+          ] = `Bearer ${res.data.token.accessToken}`;
+          return axios.request(originResponse!);
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
+    return Promise.reject(error);
   }
 );
 
 export default axios;
+
+const authRefreshToken = (refresh: string) => {
+  try {
+    return axios.post(GENERATE_ACCESS_TOKEN_URL, { refreshToken: refresh });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    console.log(err?.message);
+  }
+};

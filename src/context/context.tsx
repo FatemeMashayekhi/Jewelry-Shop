@@ -1,11 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext, useState } from "react";
-import { ADMIN_LOGIN_URL, GENERATE_ACCESS_TOKEN_URL } from "../services/api";
 import { toast } from "react-toastify";
 import { Admin, Category, DataContextType } from "../models/ContextModel";
-import axios from "../services/baseService";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
+import { useNavigate } from "react-router-dom";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -15,41 +14,47 @@ export const DataContextProvider = ({
   children: React.ReactNode;
 }) => {
   ///admin login
+  const navigate = useNavigate();
   const postLogin = useMutation({
     mutationFn: async (admin: Admin) => {
       try {
-        const res = await axios.post(ADMIN_LOGIN_URL, admin);
-        return res.data;
+        const res = await dataService.postLogin(admin);
+        return res;
       } catch (e) {
-        console.log(e);
+        console.log("Error:", e);
       }
     },
     onSuccess: (data) => {
-      localStorage.setItem("accessToken", data.token.accessToken);
-      localStorage.setItem("refreshToken", data.token.refreshToken);
-      toast.success("ورود شما با موفقیت انجام شد");
+      if (data && data.token) {
+        console.log(data);
+        localStorage.setItem("accessToken", data.token.accessToken);
+        localStorage.setItem("refreshToken", data.token.refreshToken);
+        toast.success("ورود شما با موفقیت انجام شد");
+        navigate("/management");
+      } else {
+        console.error("Token data is missing in the response");
+      }
     },
   });
 
   const handleLogin = (admin: Admin) => {
     postLogin.mutate(admin);
   };
-
   ///generate access token
-  const postGenerateAccessToken = useMutation({
-    mutationFn: async () => {
-      try {
-        const res = await axios.post(GENERATE_ACCESS_TOKEN_URL);
-        return res.data;
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    onSuccess: (data) => {
-      localStorage.setItem("accessToken", data.token.accessToken);
-      alert("Doneeee");
-    },
-  });
+  // const postGenerateAccessToken = useMutation({
+  //   mutationFn: async (refreshToken: string) => {
+  //     try {
+  //       const res = await dataService.postGenerateAccessToken(refreshToken);
+  //       return res;
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   },
+  //   onSuccess: (data) => {
+  //     localStorage.setItem("accessToken", data.token.accessToken);
+  //     alert("Doneeee");
+  //   },
+  // });
 
   ///get all categories
   const getAllCategories = useQuery<Category[], unknown>({
@@ -60,12 +65,17 @@ export const DataContextProvider = ({
     },
   });
 
+  ///pagination
+  const [page, setPage] = useState<string>("1");
+  const [totalPages, setTotalPages] = useState<number>(0);
+
   ///get all products
   const getAllProducts = useQuery({
-    queryKey: ["getAllProducts"],
+    queryKey: ["getAllProducts", page],
     queryFn: async () => {
-      const allProducts = await dataService.getAllProducts();
-      console.log(allProducts.data.products);
+      const allProducts = await dataService.getAllProducts(page);
+      console.log(allProducts);
+      setTotalPages(allProducts.total_pages);
       return allProducts.data.products;
     },
   });
@@ -90,16 +100,28 @@ export const DataContextProvider = ({
     postNewProduct.mutate(product);
   };
 
+  ///get all subcategories
+  const getAllSubCategories = useQuery({
+    queryKey: ["getAllSubCategories"],
+    queryFn: async () => {
+      const allSubCategories = await dataService.getAllSubCategories();
+      return allSubCategories.data.subcategories;
+    },
+  });
+
   return (
     <DataContext.Provider
       value={{
         handleLogin,
-        postGenerateAccessToken,
         getAllCategories,
         getAllProducts,
         openAdd,
         setOpenAdd,
         handlePostNewProduct,
+        page,
+        setPage,
+        totalPages,
+        getAllSubCategories,
       }}
     >
       {children}

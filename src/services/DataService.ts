@@ -1,5 +1,13 @@
+import { Admin } from "../models/ContextModel";
 import axios from "../services/baseService";
-import { CATEGORIES_URL, POST_PRODUCTS, PRODUCTS_URL } from "./api";
+import {
+  ADMIN_LOGIN_URL,
+  CATEGORIES_URL,
+  GENERATE_ACCESS_TOKEN_URL,
+  POST_PRODUCTS,
+  PRODUCTS_URL,
+  SUBCATEGORIES_URL,
+} from "./api";
 
 export const getAllCategories = async () => {
   try {
@@ -10,9 +18,9 @@ export const getAllCategories = async () => {
   }
 };
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (page: string) => {
   try {
-    const res = await axios.get(PRODUCTS_URL);
+    const res = await axios.get(PRODUCTS_URL(page));
     return res.data;
   } catch (e) {
     console.log(e);
@@ -28,10 +36,40 @@ export const PostProducts = async (product: FormData) => {
   }
 };
 
+export const getAllSubCategories = async () => {
+  try {
+    const res = await axios.get(SUBCATEGORIES_URL);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const postGenerateAccessToken = async (refreshToken: string) => {
+  try {
+    const res = await axios.post(GENERATE_ACCESS_TOKEN_URL, refreshToken);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const postLogin = async (admin: Admin) => {
+  try {
+    const res = await axios.post(ADMIN_LOGIN_URL, admin);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
   PostProducts,
+  getAllSubCategories,
+  postGenerateAccessToken,
+  postLogin,
 };
 
 export default dataService;
