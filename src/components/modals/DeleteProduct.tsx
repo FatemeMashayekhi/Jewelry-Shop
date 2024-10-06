@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import { useContext } from "react";
 import { DataContext } from "../../context/context";
 
@@ -15,23 +14,17 @@ export default function DeleteProduct() {
           id="modal-content"
           className="relative bg-white m-auto p-6 border border-gray-400 w-2/5 shadow-lg animate-slide-in rounded-lg"
         >
-          <div id="modal-header" className="flex justify-between">
-            <div className="flex gap-x-2 font-bold">
-              <p className="text-lg">حذف کالا</p>
-            </div>
-            <button id="close" className="text-2xl cursor-pointer">
-              <Icon
-                icon="material-symbols:cancel-outline"
-                className="text-black hover:text-red-500"
-                onClick={() => setOpenDelete && setOpenDelete(false)}
-              />
-            </button>
+          <div id="modal-header" className="flex justify-center">
+            <p className="text-xl font-bold">حذف کالا</p>
           </div>
-          <div id="modal-body" className="px-4 py-5">
-            <p>آیا از حذف محصول اطمینان دارید؟</p>
-            <div>
+          <div
+            id="modal-body"
+            className="px-4 py-5 flex flex-col gap-y-5 justify-center items-center"
+          >
+            <p className="font-semibold">آیا از حذف محصول اطمینان دارید؟</p>
+            <div className="flex gap-x-1">
               <button
-                className="btn btn-success"
+                className="btn bg-[#102C57] text-white rounded-lg w-60 hover:bg-red-600"
                 onClick={() => {
                   if (
                     deletedProductId &&
@@ -43,10 +36,10 @@ export default function DeleteProduct() {
                   }
                 }}
               >
-                بله
+                بله ، حذف شود
               </button>
               <button
-                className="btn btn-error"
+                className="btn btn-natural rounded-lg w-60"
                 onClick={() => setOpenDelete && setOpenDelete(false)}
               >
                 خیر
