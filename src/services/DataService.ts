@@ -3,7 +3,6 @@ import axios from "../services/baseService";
 import {
   ADMIN_LOGIN_URL,
   CATEGORIES_URL,
-  GENERATE_ACCESS_TOKEN_URL,
   POST_PRODUCTS,
   PRODUCTS_URL,
   SUBCATEGORIES_URL,
@@ -45,15 +44,6 @@ export const getAllSubCategories = async () => {
   }
 };
 
-export const postGenerateAccessToken = async (refreshToken: string) => {
-  try {
-    const res = await axios.post(GENERATE_ACCESS_TOKEN_URL, refreshToken);
-    return res.data;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export const postLogin = async (admin: Admin) => {
   try {
     const res = await axios.post(ADMIN_LOGIN_URL, admin);
@@ -68,7 +58,6 @@ const dataService = {
   getAllProducts,
   PostProducts,
   getAllSubCategories,
-  postGenerateAccessToken,
   postLogin,
 };
 
