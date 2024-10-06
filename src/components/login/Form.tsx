@@ -20,12 +20,8 @@ type FormData = z.infer<typeof schema>;
 
 export default function Form() {
   const navigate = useNavigate();
-  const context = useContext(DataContext);
-  if (!context) {
-    throw new Error("DataContext must be used within a DataContextProvider");
-  }
+  const { handleLogin } = useContext(DataContext);
 
-  const { handleLogin } = context;
   const {
     register,
     handleSubmit,
