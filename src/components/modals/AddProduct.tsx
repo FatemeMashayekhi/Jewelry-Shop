@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useContext } from "react";
-import { DataContext } from "../../context/context";
+import { DataContext } from "../../context/DataContext";
 import AddForm from "../product-management/AddForm";
 
 export default function AddProduct() {

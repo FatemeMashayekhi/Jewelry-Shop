@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { DataContext } from "../../context/context";
+import { DataContext } from "../../context/DataContext";
 
 export default function Pagination() {
   const { setPage, totalPages = 1 } = useContext(DataContext);

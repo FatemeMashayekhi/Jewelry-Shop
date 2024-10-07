@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useContext } from "react";
-import { DataContext } from "../../context/context";
+import { DataContext } from "../../context/DataContext";
 
 const schema = z.object({
   username: z.string().min(1, "Username is required"),

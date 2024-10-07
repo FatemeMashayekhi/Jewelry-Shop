@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Pagination from "../components/product-management/Pagination";
 import Table from "../components/product-management/Table";
-import { DataContext } from "../context/context";
+import { DataContext } from "../context/DataContext";
 import AddProduct from "../components/modals/AddProduct";
 import DeleteProduct from "../components/modals/DeleteProduct";
 

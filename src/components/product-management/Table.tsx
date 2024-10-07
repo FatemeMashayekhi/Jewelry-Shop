@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DataContext } from "../../context/context";
+import { DataContext } from "../../context/DataContext";
 
 export default function Table() {
   const { getAllProducts, deleteBtnHandler, editBtnHandler, editedProduct } =
