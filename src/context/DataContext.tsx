@@ -68,7 +68,7 @@ export const DataContextProvider = ({
 
   ///pagination
   const [page, setPage] = useState<string>("1");
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   ///get all products
   const getAllProducts = useQuery({

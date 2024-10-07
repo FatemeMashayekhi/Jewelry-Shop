@@ -1,16 +1,20 @@
 import { Icon } from "@iconify/react";
 import { useContext, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
 
 export default function Pagination() {
-  const { setPage, totalPages = 1 } = useContext(DataContext);
+  const { setPage, page, totalPages = 1 } = useContext(DataContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1");
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPage?.(currentPage.toString());
-  }, [currentPage, setPage]);
+    if (parseInt(page || "1") > totalPages || parseInt(page || "1") <= 0) {
+      navigate(`/management?page=${totalPages}`);
+    }
+  }, [currentPage, setPage, totalPages, page, navigate]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
