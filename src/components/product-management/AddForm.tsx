@@ -46,12 +46,14 @@ const SelectField: React.FC<SelectFieldProps> = ({
   name,
   options,
   validation,
+  watch,
 }) => (
   <div className="flex items-center gap-x-3">
     <label className="block mb-2 text-sm text-gray-900">{label}</label>
     <select
       className="select select-bordered w-full max-w-xs rounded-lg bg-white"
       {...register(name, validation)}
+      value={watch(name) as string}
     >
       {options.map((option) => (
         <option key={option.id} value={option.id}>
@@ -81,6 +83,7 @@ export default function AddForm() {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<FormDataTypes>();
 
   const [categories, setCategories] = useState<AddFormCategory[]>([]);
@@ -182,6 +185,7 @@ export default function AddForm() {
           name="category"
           options={categories}
           validation={{ required: "category field is required" }}
+          watch={watch}
         />
         <SelectField
           label="زیر مجموعه"
@@ -190,6 +194,7 @@ export default function AddForm() {
           name="subcategory"
           options={subCategories}
           validation={{ required: "subcategory field is required" }}
+          watch={watch}
         />
       </div>
       <div className="flex flex-col gap-y-2">
