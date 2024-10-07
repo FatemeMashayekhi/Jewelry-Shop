@@ -11,14 +11,12 @@ export default function Inventory() {
             ذخیره
           </button>
         </div>
-        <div className="bg-[#102C57] p-10 rounded-2xl">
-          <div className="p-10 rounded-2xl">
-            <div className="bg-[#FEFAF6] p-10 rounded-2xl">
-              <InventoryTable />
-              <div className="flex justify-center">
-                <InventoryPagination />
-              </div>
-            </div>
+        <div className="bg-[#102C57] p-5 rounded-2xl flex flex-col gap-y-3">
+          <div className="bg-[#FEFAF6] p-3 rounded-2xl">
+            <InventoryTable />
+          </div>
+          <div className="flex justify-center">
+            <InventoryPagination />
           </div>
         </div>
       </div>
