@@ -4,7 +4,8 @@ import { DataContext } from "../../context/DataContext";
 import AddForm from "../product-management/AddForm";
 
 export default function AddProduct() {
-  const { openAdd, setOpenAdd, editedProduct } = useContext(DataContext);
+  const { openAdd, setOpenAdd, editedProduct, setEditedProduct } =
+    useContext(DataContext);
   return (
     openAdd && (
       <div
@@ -27,6 +28,11 @@ export default function AddProduct() {
               onClick={() => {
                 if (setOpenAdd) {
                   setOpenAdd(false);
+                }
+                if (editedProduct) {
+                  if (setEditedProduct) {
+                    setEditedProduct(null);
+                  }
                 }
               }}
               id="close"

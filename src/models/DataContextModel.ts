@@ -52,5 +52,8 @@ export type DataContextType = {
   deletedProductId?: string;
   handleEditProduct?: (id: string, product: FormData) => void;
   editBtnHandler?: (item: ProductsEntity) => void;
-  editedProduct?: ProductsEntity;
+  editedProduct?: ProductsEntity | null;
+  setEditedProduct?: React.Dispatch<
+    React.SetStateAction<ProductsEntity | null>
+  >;
 };

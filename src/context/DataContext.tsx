@@ -91,7 +91,9 @@ export const DataContextProvider = ({
   const [deletedProductId, setDeletedProductId] = useState("");
 
   ///edited product id keeper
-  const [editedProduct, setEditedProduct] = useState<ProductsEntity>();
+  const [editedProduct, setEditedProduct] = useState<ProductsEntity | null>(
+    null
+  );
 
   ///delete product btn handler
   const deleteBtnHandler = (id: string) => {
@@ -185,6 +187,7 @@ export const DataContextProvider = ({
         handleEditProduct,
         editBtnHandler,
         editedProduct,
+        setEditedProduct,
       }}
     >
       {children}

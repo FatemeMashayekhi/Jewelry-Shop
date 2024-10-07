@@ -74,6 +74,7 @@ export default function AddForm() {
     setOpenAdd,
     editedProduct,
     handleEditProduct,
+    setEditedProduct,
   } = useContext(DataContext);
   const {
     register,
@@ -146,9 +147,12 @@ export default function AddForm() {
     // });
 
     if (editedProduct && handleEditProduct) {
-      handleEditProduct(editedProduct._id, formData); // Call handleEditProduct in edit mode
+      handleEditProduct(editedProduct._id, formData);
+      if (setEditedProduct) {
+        setEditedProduct(null);
+      }
     } else if (handlePostNewProduct) {
-      handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
+      handlePostNewProduct(formData);
     } else {
       console.error("handlePostNewProduct is undefined");
     }
