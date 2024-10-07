@@ -36,8 +36,6 @@ export default function Router() {
           <Route index element={<ProductsManagement />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="orders" element={<OrdersManagement />} />
-          <Route path=":page" element={<ProductsManagement />} />{" "}
-          {/* Dynamic page parameter */}
         </Route>
       </Routes>
     </>
