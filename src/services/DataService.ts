@@ -1,4 +1,4 @@
-import { Admin } from "../models/ContextModel";
+import { Admin } from "../models/DataContextModel";
 import axios from "../services/baseService";
 import {
   ADMIN_LOGIN_URL,

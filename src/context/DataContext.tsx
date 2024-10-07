@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Admin, Category, DataContextType } from "../models/ContextModel";
+import { Admin, Category, DataContextType } from "../models/DataContextModel";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
 import { useNavigate } from "react-router-dom";
