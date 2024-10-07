@@ -11,9 +11,9 @@ export default function Pagination() {
 
   useEffect(() => {
     setPage?.(currentPage.toString());
-    if (parseInt(page || "1") > totalPages || parseInt(page || "1") <= 0) {
-      navigate(`/management?page=${totalPages}`);
-    }
+    // if (parseInt(page || "1") > totalPages || parseInt(page || "1") <= 0) {
+    //   navigate(`/management?page=${totalPages}`);
+    // }
   }, [currentPage, setPage, totalPages, page, navigate]);
 
   const handleNextPage = () => {
