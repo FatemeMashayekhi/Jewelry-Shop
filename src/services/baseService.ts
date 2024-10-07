@@ -6,7 +6,9 @@ axios.defaults.baseURL = BASE_URL;
 axios.interceptors.request.use((req) => {
   if (req.url !== ADMIN_LOGIN_URL) {
     const token = localStorage.getItem("accessToken");
-    req.headers.Authorization = `Bearer ${token}`;
+    if (token) {
+      req.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return req;
 });
@@ -32,6 +34,9 @@ axios.interceptors.response.use(
         }
       } catch (err) {
         console.log(err);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "/login";
       }
     }
     return Promise.reject(error);
@@ -46,5 +51,6 @@ const authRefreshToken = (refresh: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     console.log(err?.message);
+    throw err;
   }
 };
