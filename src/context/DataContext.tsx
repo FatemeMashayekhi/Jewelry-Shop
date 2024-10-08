@@ -41,21 +41,6 @@ export const DataContextProvider = ({
   const handleLogin = (admin: Admin) => {
     postLogin.mutate(admin);
   };
-  ///generate access token
-  // const postGenerateAccessToken = useMutation({
-  //   mutationFn: async (refreshToken: string) => {
-  //     try {
-  //       const res = await dataService.postGenerateAccessToken(refreshToken);
-  //       return res;
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   },
-  //   onSuccess: (data) => {
-  //     localStorage.setItem("accessToken", data.token.accessToken);
-  //     alert("Doneeee");
-  //   },
-  // });
 
   ///get all categories
   const getAllCategories = useQuery<Category[], unknown>({
@@ -75,7 +60,6 @@ export const DataContextProvider = ({
     queryKey: ["getAllProducts", page],
     queryFn: async () => {
       const allProducts = await dataService.getAllProducts(page);
-      console.log(allProducts);
       setTotalPages(allProducts.total_pages);
       return allProducts.data.products;
     },

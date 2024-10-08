@@ -3,7 +3,7 @@ import { DataContext } from "../../context/DataContext";
 
 export default function InventoryTable() {
   const { getAllProducts } = useContext(DataContext);
-  console.log(getAllProducts?.data);
+
   return (
     <div className="overflow-x-auto">
       <table className="table font-bold text-lg">

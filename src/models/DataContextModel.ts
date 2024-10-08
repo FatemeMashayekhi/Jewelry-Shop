@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UseQueryResult } from "@tanstack/react-query";
 import { ProductsEntity } from "./GetProductsModel";
 import { Dispatch, SetStateAction } from "react";
@@ -25,14 +26,16 @@ export interface SubcategoriesEntity {
   slugname: string;
 }
 
-// export const defaultContext: DataContextType = {
-//   handleLogin: () => {},
-//   postGenerateAccessToken: {} as UseMutationResult<void, Error, void, unknown>,
-//   getAllCategories: {} as UseQueryResult<Category[], unknown>,
-//   getAllProducts: {} as UseQueryResult<ProductsEntity[], unknown>,
-//   openAdd: false,
-//   setOpenAdd: () => {},
-// };
+export type EditableProduct = {
+  id: string;
+  originalPrice?: number;
+  originalStock?: number;
+  [field: string]: any;
+};
+
+export type EditingCell = {
+  [key: string]: string | null;
+};
 
 export type DataContextType = {
   handleLogin?: (admin: Admin) => void;
