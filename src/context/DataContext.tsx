@@ -150,6 +150,15 @@ export const DataContextProvider = ({
     editProductById.mutate({ id, product });
   };
 
+  ///get discount products
+  const getDiscountProducts = useQuery({
+    queryKey: ["getDiscountProducts"],
+    queryFn: async () => {
+      const discountProducts = await dataService.getDiscountProducts();
+      return discountProducts.data.products;
+    },
+  });
+
   return (
     <DataContext.Provider
       value={{
@@ -172,6 +181,7 @@ export const DataContextProvider = ({
         editBtnHandler,
         editedProduct,
         setEditedProduct,
+        getDiscountProducts,
       }}
     >
       {children}

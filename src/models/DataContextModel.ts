@@ -59,4 +59,5 @@ export type DataContextType = {
   setEditedProduct?: React.Dispatch<
     React.SetStateAction<ProductsEntity | null>
   >;
+  getDiscountProducts?: UseQueryResult<ProductsEntity[], unknown>;
 };

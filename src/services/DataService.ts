@@ -4,7 +4,9 @@ import {
   ADMIN_LOGIN_URL,
   CATEGORIES_URL,
   DELETE_PRODUCT_BY_ID,
+  DISCOUNT_PRODUCT_URL,
   EDIT_PRODUCT_BY_ID,
+  GET_ALL_PRODUCTS_BY_ID,
   POST_PRODUCTS,
   PRODUCTS_URL,
   SUBCATEGORIES_URL,
@@ -22,6 +24,24 @@ export const getAllCategories = async () => {
 export const getAllProducts = async (page: string) => {
   try {
     const res = await axios.get(PRODUCTS_URL(page));
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getDiscountProducts = async () => {
+  try {
+    const res = await axios.get(DISCOUNT_PRODUCT_URL);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getAllProductsById = async (id: string) => {
+  try {
+    const res = await axios.get(GET_ALL_PRODUCTS_BY_ID(id));
     return res.data;
   } catch (e) {
     console.log(e);
@@ -81,6 +101,8 @@ const dataService = {
   postLogin,
   deleteProducts,
   editProduct,
+  getDiscountProducts,
+  getAllProductsById,
 };
 
 export default dataService;
