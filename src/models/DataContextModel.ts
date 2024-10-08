@@ -2,6 +2,7 @@
 import { UseQueryResult } from "@tanstack/react-query";
 import { ProductsEntity } from "./GetProductsModel";
 import { Dispatch, SetStateAction } from "react";
+import { OrdersEntity } from "./GetOrdersModel";
 
 export interface Admin {
   username: string;
@@ -60,4 +61,5 @@ export type DataContextType = {
     React.SetStateAction<ProductsEntity | null>
   >;
   getDiscountProducts?: UseQueryResult<ProductsEntity[], unknown>;
+  getAllOrders?: UseQueryResult<OrdersEntity[], unknown>;
 };
