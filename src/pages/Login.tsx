@@ -1,7 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import Form from "../components/login/Form";
 import Header from "../components/login/Header";
+import { useEffect } from "react";
 
 export default function Login() {
+  const accessToken = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/management");
+    }
+  }, [accessToken, navigate]);
+
   return (
     <div className="bg-[#EADBC8] min-h-screen flex flex-col gap-y-40">
       <Header />
