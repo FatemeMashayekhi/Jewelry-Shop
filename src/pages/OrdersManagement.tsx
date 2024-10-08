@@ -1,6 +1,6 @@
-import OrdersPagination from "../components/orders-management/OrdersPagination";
 import OrdersTable from "../components/orders-management/OrdersTable";
 import Radio from "../components/orders-management/Radio";
+import Pagination from "../components/pagination/Pagination";
 
 export default function OrdersManagement() {
   return (
@@ -10,14 +10,12 @@ export default function OrdersManagement() {
           <p className="font-semibold">مدیریت سفارش ها</p>
           <Radio />
         </div>
-        <div className="bg-[#102C57] p-10 rounded-2xl">
-          <div className="p-10 rounded-2xl">
-            <div className="bg-[#FEFAF6] p-10 rounded-2xl">
-              <OrdersTable />
-              <div className="flex justify-center">
-                <OrdersPagination />
-              </div>
-            </div>
+        <div className="bg-[#102C57] p-5 rounded-2xl flex flex-col gap-y-3">
+          <div className="bg-[#FEFAF6] p-3 rounded-2xl">
+            <OrdersTable />
+          </div>
+          <div className="flex justify-center">
+            <Pagination />
           </div>
         </div>
       </div>

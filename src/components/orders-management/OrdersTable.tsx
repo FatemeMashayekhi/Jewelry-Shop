@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { DataContext } from "../../context/DataContext";
+
 export default function OrdersTable() {
+  const { getAllOrders } = useContext(DataContext);
+  console.log(getAllOrders?.data);
   return (
     <div className="overflow-x-auto">
       <table className="table font-bold text-lg">
@@ -13,44 +18,23 @@ export default function OrdersTable() {
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <th>مارال مشایخی</th>
-            <td>920.000</td>
-            <td>1399.1.5</td>
-            <td>
-              <div className="join rounded-lg">
-                <button className="btn join-item bg-blue-500 text-white">
-                  بررسی سفارش
-                </button>
-              </div>
-            </td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th>مارال مشایخی</th>
-            <td>920.000</td>
-            <td>1399.1.5</td>
-            <td>
-              <div className="join rounded-lg">
-                <button className="btn join-item bg-blue-500 text-white">
-                  بررسی سفارش
-                </button>
-              </div>
-            </td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>مارال مشایخی</th>
-            <td>920.000</td>
-            <td>1399.1.5</td>
-            <td>
-              <div className="join rounded-lg">
-                <button className="btn join-item bg-blue-500 text-white">
-                  بررسی سفارش
-                </button>
-              </div>
-            </td>
-          </tr>
+          {Array.isArray(getAllOrders?.data) &&
+            getAllOrders?.data.map((item) => (
+              <tr key={item._id}>
+                <th>
+                  {item.user.lastname} {item.user.firstname}
+                </th>
+                <td>{item.totalPrice}</td>
+                <td>{new Date(item.createdAt).toISOString().slice(0, 10)}</td>
+                <td>
+                  <div className="join rounded-lg">
+                    <button className="btn join-item bg-blue-500 text-white">
+                      بررسی سفارش
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

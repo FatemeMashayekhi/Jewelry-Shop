@@ -6,6 +6,7 @@ import {
   DELETE_PRODUCT_BY_ID,
   DISCOUNT_PRODUCT_URL,
   EDIT_PRODUCT_BY_ID,
+  GET_ALL_ORDERS,
   GET_ALL_PRODUCTS_BY_ID,
   POST_PRODUCTS,
   PRODUCTS_URL,
@@ -93,6 +94,15 @@ export const postLogin = async (admin: Admin) => {
   }
 };
 
+export const getAllOrders = async () => {
+  try {
+    const res = await axios.get(GET_ALL_ORDERS);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -103,6 +113,7 @@ const dataService = {
   editProduct,
   getDiscountProducts,
   getAllProductsById,
+  getAllOrders,
 };
 
 export default dataService;
