@@ -3,7 +3,6 @@ import { DataContext } from "../../context/DataContext";
 
 export default function CategoriesCards() {
   const { getAllCategories } = useContext(DataContext);
-  console.log(getAllCategories?.data);
 
   if (!getAllCategories) {
     return <div>Loading...</div>;
