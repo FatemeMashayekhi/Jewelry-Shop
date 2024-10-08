@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Pagination from "../components/product-management/Pagination";
+import Pagination from "../components/pagination/Pagination";
 import Table from "../components/product-management/Table";
 import { DataContext } from "../context/DataContext";
 import AddProduct from "../components/modals/AddProduct";

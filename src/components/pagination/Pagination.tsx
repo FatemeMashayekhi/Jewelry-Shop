@@ -3,19 +3,14 @@ import { useContext, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
 
-export default function InventoryPagination() {
+export default function Pagination() {
   const { setPage, page, totalPages = 1 } = useContext(DataContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1");
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (page !== currentPage.toString()) {
-      setPage?.(currentPage.toString());
-    }
-    if (currentPage > totalPages || currentPage <= 0) {
-      navigate(`/management/inventory/?page=${totalPages}`);
-    }
+    setPage?.(currentPage.toString());
   }, [currentPage, setPage, totalPages, page, navigate]);
 
   const handleNextPage = () => {

@@ -1,5 +1,5 @@
-import InventoryPagination from "../components/inventory/InventoryPagination";
 import InventoryTable from "../components/inventory/InventoryTable";
+import Pagination from "../components/pagination/Pagination";
 
 export default function Inventory() {
   return (
@@ -16,7 +16,7 @@ export default function Inventory() {
             <InventoryTable />
           </div>
           <div className="flex justify-center">
-            <InventoryPagination />
+            <Pagination />
           </div>
         </div>
       </div>
