@@ -8,7 +8,8 @@ import { Action, Column } from "../models/TableModel";
 import { ProductsEntity } from "../models/GetProductsModel";
 
 export default function ProductsManagement() {
-  const { setOpenAdd, getAllProducts } = useContext(DataContext);
+  const { setOpenAdd, getAllProducts, deleteBtnHandler, editBtnHandler } =
+    useContext(DataContext);
 
   const productColumns: Column<ProductsEntity>[] = [
     {
@@ -34,12 +35,22 @@ export default function ProductsManagement() {
     {
       label: "ویرایش",
       className: "bg-blue-500 text-white",
-      handler: (item) => console.log("Edit product", item),
+      handler: (item) => {
+        console.log("Edit product", item);
+        if (editBtnHandler) {
+          editBtnHandler(item);
+        }
+      },
     },
     {
       label: "حذف",
       className: "bg-red-600 text-white",
-      handler: (item) => console.log("Delete product", item._id),
+      handler: (item) => {
+        console.log("Delete product", item._id);
+        if (deleteBtnHandler) {
+          deleteBtnHandler(item._id);
+        }
+      },
     },
   ];
 
