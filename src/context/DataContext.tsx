@@ -159,6 +159,19 @@ export const DataContextProvider = ({
     },
   });
 
+  ///get all orders
+  const getAllOrders = useQuery({
+    queryKey: ["getAllOrders"],
+    queryFn: async () => {
+      try {
+        const allOrders = await dataService.getAllOrders();
+        return allOrders?.data?.orders;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+
   return (
     <DataContext.Provider
       value={{
@@ -182,6 +195,7 @@ export const DataContextProvider = ({
         editedProduct,
         setEditedProduct,
         getDiscountProducts,
+        getAllOrders,
       }}
     >
       {children}
