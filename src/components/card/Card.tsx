@@ -32,7 +32,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
       ) : (
         <>
           {showDiscount && (item as ProductsEntity).discount && (
-            <span className="indicator-item indicator-top indicator-end badge bg-[#a29180] font-semibold text-xs text-white rounded-lg size-8">
+            <span className="indicator-item indicator-top indicator-end badge bg-[#a29180] font-semibold text-xs text-white rounded-lg size-10">
               {(item as ProductsEntity).discount} %
             </span>
           )}
@@ -41,7 +41,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
               (item as ProductsEntity).images?.[0] || "default-image.jpg"
             }`}
             alt={(item as ProductsEntity)._id}
-            className="w-72 h-80"
+            className="w-72 h-80 rounded-t-lg"
           />
           <div className="font-semibold text-sm flex flex-col py-2 px-4">
             <p>{(item as ProductsEntity).name}</p>
