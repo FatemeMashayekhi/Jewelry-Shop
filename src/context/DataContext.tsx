@@ -1,11 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Admin, Category, DataContextType } from "../models/DataContextModel";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
 import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../models/GetProductsModel";
+import { productById } from "../models/ProductByIdModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -78,6 +79,9 @@ export const DataContextProvider = ({
   const [editedProduct, setEditedProduct] = useState<ProductsEntity | null>(
     null
   );
+
+  ///product details(clicked product)
+  const [productId, setProductId] = useState<string | null>(null);
 
   ///delete product btn handler
   const deleteBtnHandler = (id: string) => {
@@ -198,6 +202,23 @@ export const DataContextProvider = ({
     },
   });
 
+  ///get product by id
+  const [singleProduct, setSingleProduct] = useState<productById>();
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (productId) {
+        try {
+          const product = await dataService.getAllProductsById(productId);
+          setSingleProduct(product.data.product);
+        } catch (error) {
+          console.error("Failed to fetch product:", error);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [productId]);
+
   return (
     <DataContext.Provider
       value={{
@@ -224,6 +245,9 @@ export const DataContextProvider = ({
         getAllOrders,
         getPopularProducts,
         getProducts,
+        setProductId,
+        productId,
+        singleProduct,
       }}
     >
       {children}

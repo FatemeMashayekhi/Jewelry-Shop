@@ -3,6 +3,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { ProductsEntity } from "./GetProductsModel";
 import { Dispatch, SetStateAction } from "react";
 import { OrdersEntity } from "./GetOrdersModel";
+import { ProductById } from "./ProductByIdModel";
 
 export interface Admin {
   username: string;
@@ -64,4 +65,8 @@ export type DataContextType = {
   getAllOrders?: UseQueryResult<OrdersEntity[], unknown>;
   getPopularProducts?: UseQueryResult<ProductsEntity[], unknown>;
   getProducts?: UseQueryResult<ProductsEntity[], unknown>;
+  setProductId?: React.Dispatch<React.SetStateAction<string | null>>;
+  getProductById?: UseQueryResult<ProductById[], unknown>;
+  productId?: string | null;
+  singleProduct?: ProductById | null;
 };

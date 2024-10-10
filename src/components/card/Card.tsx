@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../../models/GetProductsModel";
 import { Category } from "../../models/DataContextModel";
 import { CardComponentProps } from "../../models/CardModel";
+import { DataContext } from "../../context/DataContext";
 
 const CardComponent: React.FC<CardComponentProps> = ({
   item,
   isCategory,
   showDiscount = true,
 }) => {
-  const cardClassName = `flex flex-col gap-y-3 indicator ${
+  const cardClassName = `flex flex-col gap-y-3 indicator cursor-pointer ${
     isCategory ? "" : "shadow-lg rounded-lg"
   }`;
+  const { setProductId } = useContext(DataContext);
+  const navigate = useNavigate();
+
+  const linkTo = isCategory
+    ? `/categories/${(item as Category)._id}`
+    : `/${(item as ProductsEntity)._id}`;
+
+  const handleClick = () => {
+    if (!isCategory && setProductId) {
+      setProductId((item as ProductsEntity)._id);
+    }
+    navigate(linkTo);
+  };
 
   return (
-    <div id="card" className={cardClassName}>
+    <div id="card" className={cardClassName} onClick={handleClick}>
       {isCategory ? (
         <>
           <div className="bg-[#f6f3ee] rounded-lg">
