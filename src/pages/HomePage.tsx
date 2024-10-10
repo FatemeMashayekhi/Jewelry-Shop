@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
 import CategoriesCards from "../components/home/CategoriesCards";
-import NameDivider from "../components/home/NameDivider";
+import NameDivider from "../components/divider/NameDivider";
 import OfferSection from "../components/home/OfferSection";
+import PopularProductsDivider from "../components/divider/PopularProductsDivider";
 
 export default function HomePage() {
   return (
@@ -27,6 +28,7 @@ export default function HomePage() {
       <div className="flex justify-center">
         <img src="./src/assets/images/BannerSecond.png" alt="secondBanner" />
       </div>
+      <PopularProductsDivider />
     </div>
   );
 }
