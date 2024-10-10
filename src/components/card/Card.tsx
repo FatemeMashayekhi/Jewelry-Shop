@@ -8,8 +8,12 @@ const CardComponent: React.FC<CardComponentProps> = ({
   isCategory,
   showDiscount = true,
 }) => {
+  const cardClassName = `flex flex-col gap-y-3 indicator ${
+    isCategory ? "" : "shadow-lg rounded-lg"
+  }`;
+
   return (
-    <div id="card" className="flex flex-col gap-y-3 indicator">
+    <div id="card" className={cardClassName}>
       {isCategory ? (
         <>
           <div className="bg-[#f6f3ee] rounded-lg">
@@ -18,7 +22,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
                 (item as Category).icon
               }`}
               alt={(item as Category)._id}
-              className="mix-blend-darken"
+              className="mix-blend-darken size-20"
             />
           </div>
           <p className="font-bold text-xs text-center">
@@ -37,9 +41,9 @@ const CardComponent: React.FC<CardComponentProps> = ({
               (item as ProductsEntity).images?.[0] || "default-image.jpg"
             }`}
             alt={(item as ProductsEntity)._id}
-            className="size-40"
+            className="w-72 h-80"
           />
-          <div className="font-semibold text-sm flex flex-col gap-y-4">
+          <div className="font-semibold text-sm flex flex-col py-2 px-4">
             <p>{(item as ProductsEntity).name}</p>
             <div className="flex gap-x-2 justify-end">
               <p className="text-gray-400 text-xs">تومان</p>
