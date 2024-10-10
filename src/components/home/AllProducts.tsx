@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
-import CardComponent from "../card/Card";
 import { ProductsEntity } from "../../models/GetProductsModel";
+import CardComponent from "../card/Card";
 
 const AllProducts: React.FC = () => {
   const { getProducts } = useContext(DataContext);
@@ -9,7 +9,7 @@ const AllProducts: React.FC = () => {
     <>
       {Array.isArray(getProducts?.data) &&
         getProducts?.data.map((item: ProductsEntity) => (
-          <CardComponent key={item._id} item={item} />
+          <CardComponent key={item._id} item={item} showDiscount={false} />
         ))}
     </>
   );

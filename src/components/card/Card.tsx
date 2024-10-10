@@ -1,13 +1,13 @@
 import React from "react";
-import { ProductsEntity } from "../../models/GetProductsModel";
+import { CardComponentProps } from "../../models/CardModel";
 import { Category } from "../../models/DataContextModel";
+import { ProductsEntity } from "../../models/GetProductsModel";
 
-interface CardComponentProps {
-  item: ProductsEntity | Category;
-  isCategory?: boolean;
-}
-
-const CardComponent: React.FC<CardComponentProps> = ({ item, isCategory }) => {
+const CardComponent: React.FC<CardComponentProps> = ({
+  item,
+  isCategory,
+  showDiscount = true,
+}) => {
   return (
     <div id="card" className="flex flex-col gap-y-3 indicator">
       {isCategory ? (
@@ -27,7 +27,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ item, isCategory }) => {
         </>
       ) : (
         <>
-          {(item as ProductsEntity).discount && (
+          {showDiscount && (item as ProductsEntity).discount && (
             <span className="indicator-item indicator-top indicator-end badge bg-[#a29180] font-semibold text-xs text-white rounded-lg size-8">
               {(item as ProductsEntity).discount} %
             </span>
