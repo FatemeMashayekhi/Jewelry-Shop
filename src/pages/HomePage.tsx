@@ -31,6 +31,7 @@ export default function HomePage() {
       </div>
       <PopularProductsDivider />
       <PopularProductsSection />
+      <NameDivider />
     </div>
   );
 }
