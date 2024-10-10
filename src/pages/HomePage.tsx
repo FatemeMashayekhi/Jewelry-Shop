@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import CategoriesCards from "../components/home/CategoriesCards";
 import NameDivider from "../components/home/NameDivider";
+import OfferSection from "../components/home/OfferSection";
 
 export default function HomePage() {
   return (
@@ -22,11 +23,9 @@ export default function HomePage() {
         <CategoriesCards />
       </div>
       <NameDivider />
-      <div id="offer" className="flex px-20 gap-x-14">
-        <div id="img">
-          <img src="./src/assets/images/offer-pic.png" alt="offer-pic" />
-        </div>
-        <div id="offer-products">products</div>
+      <OfferSection />
+      <div className="flex justify-center">
+        <img src="./src/assets/images/BannerSecond.png" alt="secondBanner" />
       </div>
     </div>
   );

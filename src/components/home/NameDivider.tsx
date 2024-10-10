@@ -11,7 +11,7 @@ export default function NameDivider() {
       </div>
     ));
   return (
-    <div id="divider" className="bg-[#e5dbcc] flex justify-between p-2">
+    <div id="divider" className="bg-[#e5dfd7] flex justify-between p-2">
       {repeatedElements}
     </div>
   );

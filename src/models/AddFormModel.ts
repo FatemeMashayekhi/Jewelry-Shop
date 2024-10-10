@@ -1,4 +1,4 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
 
 export type FormDataTypes = {
   name: string;
@@ -29,6 +29,7 @@ export interface SelectFieldProps {
   name: keyof FormDataTypes;
   options: { id: string; name: string }[];
   validation?: object;
+  watch: UseFormWatch<FormDataTypes>;
 }
 
 export type Category = {

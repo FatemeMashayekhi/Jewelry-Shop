@@ -7,12 +7,12 @@ import {
   SelectFieldProps,
   SubCategory,
 } from "../../models/AddFormModel";
-import { DataContext } from "../../context/context";
+import { DataContext } from "../../context/DataContext";
 import { Category as AddFormCategory } from "../../models/AddFormModel";
 import {
   Category as ContextCategory,
   SubcategoriesEntity,
-} from "../../models/ContextModel";
+} from "../../models/DataContextModel";
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
@@ -46,12 +46,14 @@ const SelectField: React.FC<SelectFieldProps> = ({
   name,
   options,
   validation,
+  watch,
 }) => (
   <div className="flex items-center gap-x-3">
     <label className="block mb-2 text-sm text-gray-900">{label}</label>
     <select
       className="select select-bordered w-full max-w-xs rounded-lg bg-white"
       {...register(name, validation)}
+      value={watch(name) as string}
     >
       {options.map((option) => (
         <option key={option.id} value={option.id}>
@@ -72,15 +74,33 @@ export default function AddForm() {
     getAllCategories,
     getAllSubCategories,
     setOpenAdd,
+    editedProduct,
+    handleEditProduct,
+    setEditedProduct,
   } = useContext(DataContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<FormDataTypes>();
 
   const [categories, setCategories] = useState<AddFormCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+
+  useEffect(() => {
+    if (editedProduct) {
+      setValue("name", editedProduct.name);
+      setValue("category", editedProduct.category._id);
+      setValue("subcategory", editedProduct.subcategory._id);
+      setValue("quantity", editedProduct.quantity);
+      setValue("price", editedProduct.price);
+      setValue("discount", editedProduct.discount);
+      setValue("brand", editedProduct.brand);
+      setDescription(editedProduct.description);
+    }
+  }, [editedProduct, setValue]);
 
   useEffect(() => {
     if (Array.isArray(getAllCategories?.data)) {
@@ -129,8 +149,13 @@ export default function AddForm() {
     //   console.log(`${key}: ${value}`);
     // });
 
-    if (handlePostNewProduct) {
-      handlePostNewProduct(formData); // Pass formData to handlePostNewProduct
+    if (editedProduct && handleEditProduct) {
+      handleEditProduct(editedProduct._id, formData);
+      if (setEditedProduct) {
+        setEditedProduct(null);
+      }
+    } else if (handlePostNewProduct) {
+      handlePostNewProduct(formData);
     } else {
       console.error("handlePostNewProduct is undefined");
     }
@@ -160,6 +185,7 @@ export default function AddForm() {
           name="category"
           options={categories}
           validation={{ required: "category field is required" }}
+          watch={watch}
         />
         <SelectField
           label="زیر مجموعه"
@@ -168,6 +194,7 @@ export default function AddForm() {
           name="subcategory"
           options={subCategories}
           validation={{ required: "subcategory field is required" }}
+          watch={watch}
         />
       </div>
       <div className="flex flex-col gap-y-2">
@@ -233,12 +260,21 @@ export default function AddForm() {
         <Editor description={description} setDescription={setDescription} />
       </div>
 
-      <button
-        type="submit"
-        className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
-      >
-        ذخیره
-      </button>
+      {editedProduct ? (
+        <button
+          type="submit"
+          className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
+        >
+          ویرایش
+        </button>
+      ) : (
+        <button
+          type="submit"
+          className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
+        >
+          ذخیره
+        </button>
+      )}
     </form>
   );
 }

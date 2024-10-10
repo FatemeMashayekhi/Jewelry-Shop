@@ -10,6 +10,7 @@ import SecondaryLayout from "../layouts/secondaryLayout/SecondaryLayout";
 import ProductsManagement from "../pages/ProductsManagement";
 import Inventory from "../pages/Inventory";
 import OrdersManagement from "../pages/OrdersManagement";
+import ProtectedRoute from "../components/protected-route/ProtectedRoute";
 
 export default function Router() {
   return (
@@ -24,12 +25,17 @@ export default function Router() {
         </Route>
         <Route path="/login" element={<Login />} />
 
-        <Route path="/management" element={<SecondaryLayout />}>
+        <Route
+          path="/management"
+          element={
+            <ProtectedRoute>
+              <SecondaryLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<ProductsManagement />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="orders" element={<OrdersManagement />} />
-          <Route path=":page" element={<ProductsManagement />} />{" "}
-          {/* Dynamic page parameter */}
         </Route>
       </Routes>
     </>

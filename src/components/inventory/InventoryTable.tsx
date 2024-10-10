@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { DataContext } from "../../context/DataContext";
+
 export default function InventoryTable() {
+  const { getAllProducts } = useContext(DataContext);
+
   return (
     <div className="overflow-x-auto">
       <table className="table font-bold text-lg">
@@ -12,23 +17,14 @@ export default function InventoryTable() {
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <th>یریرسرر</th>
-            <td>20.000</td>
-            <td>100</td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th>یریرسرر</th>
-            <td>20.000</td>
-            <td>100</td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>یریرسرر</th>
-            <td>20.000</td>
-            <td>100</td>
-          </tr>
+          {Array.isArray(getAllProducts?.data) &&
+            getAllProducts?.data.map((item) => (
+              <tr key={item._id}>
+                <th>{item.name}</th>
+                <td>{item.price}</td>
+                <td>{item.quantity}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

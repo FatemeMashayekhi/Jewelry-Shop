@@ -1,24 +1,24 @@
 import { Icon } from "@iconify/react";
 import { useContext, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { DataContext } from "../../context/context";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { DataContext } from "../../context/DataContext";
 
 export default function Pagination() {
-  const { setPage, totalPages = 1 } = useContext(DataContext);
-  const { page: urlPage } = useParams<{ page: string }>();
+  const { setPage, page, totalPages = 1 } = useContext(DataContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1");
   const navigate = useNavigate();
-
-  const currentPage = parseInt(urlPage || "1");
 
   useEffect(() => {
     setPage?.(currentPage.toString());
-  }, [currentPage, setPage]);
+  }, [currentPage, setPage, totalPages, page, navigate]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       const nextPage = currentPage + 1;
       setPage?.(nextPage.toString());
-      navigate(`/management/${nextPage}`);
+      searchParams.set("page", nextPage.toString());
+      setSearchParams(searchParams);
     }
   };
 
@@ -26,7 +26,8 @@ export default function Pagination() {
     if (currentPage > 1) {
       const prevPage = currentPage - 1;
       setPage?.(prevPage.toString());
-      navigate(`/management/${prevPage}`);
+      searchParams.set("page", prevPage.toString());
+      setSearchParams(searchParams);
     }
   };
 

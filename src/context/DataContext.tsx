@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Admin, Category, DataContextType } from "../models/ContextModel";
+import { Admin, Category, DataContextType } from "../models/DataContextModel";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
 import { useNavigate } from "react-router-dom";
+import { ProductsEntity } from "../models/GetProductsModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -40,21 +41,6 @@ export const DataContextProvider = ({
   const handleLogin = (admin: Admin) => {
     postLogin.mutate(admin);
   };
-  ///generate access token
-  // const postGenerateAccessToken = useMutation({
-  //   mutationFn: async (refreshToken: string) => {
-  //     try {
-  //       const res = await dataService.postGenerateAccessToken(refreshToken);
-  //       return res;
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   },
-  //   onSuccess: (data) => {
-  //     localStorage.setItem("accessToken", data.token.accessToken);
-  //     alert("Doneeee");
-  //   },
-  // });
 
   ///get all categories
   const getAllCategories = useQuery<Category[], unknown>({
@@ -67,14 +53,13 @@ export const DataContextProvider = ({
 
   ///pagination
   const [page, setPage] = useState<string>("1");
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   ///get all products
   const getAllProducts = useQuery({
     queryKey: ["getAllProducts", page],
     queryFn: async () => {
       const allProducts = await dataService.getAllProducts(page);
-      console.log(allProducts);
       setTotalPages(allProducts.total_pages);
       return allProducts.data.products;
     },
@@ -82,6 +67,29 @@ export const DataContextProvider = ({
 
   ///add product modal
   const [openAdd, setOpenAdd] = useState(false);
+
+  ///delete product modal
+  const [openDelete, setOpenDelete] = useState(false);
+
+  ///deleted product id keeper
+  const [deletedProductId, setDeletedProductId] = useState("");
+
+  ///edited product id keeper
+  const [editedProduct, setEditedProduct] = useState<ProductsEntity | null>(
+    null
+  );
+
+  ///delete product btn handler
+  const deleteBtnHandler = (id: string) => {
+    setOpenDelete(true);
+    setDeletedProductId(id);
+  };
+
+  ///edit btn handler
+  const editBtnHandler = (item: ProductsEntity) => {
+    setOpenAdd(true);
+    setEditedProduct(item);
+  };
 
   ///post new product
   const postNewProduct = useMutation({
@@ -109,6 +117,61 @@ export const DataContextProvider = ({
     },
   });
 
+  ///delete products by id
+  const deleteProductsById = useMutation({
+    mutationFn: async (id: string) => {
+      const deletedProduct = await dataService.deleteProducts(id);
+      console.log(deletedProduct);
+      return deletedProduct;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+      toast.success("محصول با موفقیت حذف شد");
+    },
+  });
+
+  const handleDeleteProduct = (id: string) => {
+    deleteProductsById.mutate(id);
+  };
+
+  ///edit product by id
+  const editProductById = useMutation({
+    mutationFn: async ({ id, product }: { id: string; product: FormData }) => {
+      const editedProduct = await dataService.editProduct(id, product);
+      return editedProduct;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+      toast.success("محصول با موفقیت ویرایش شد");
+    },
+  });
+
+  const handleEditProduct = (id: string, product: FormData) => {
+    editProductById.mutate({ id, product });
+  };
+
+  ///get discount products
+  const getDiscountProducts = useQuery({
+    queryKey: ["getDiscountProducts"],
+    queryFn: async () => {
+      const discountProducts = await dataService.getDiscountProducts();
+      return discountProducts.data.products;
+    },
+  });
+
+  ///get all orders
+  const getAllOrders = useQuery({
+    queryKey: ["getAllOrders"],
+    queryFn: async () => {
+      try {
+        const allOrders = await dataService.getAllOrders();
+        return allOrders?.data?.orders;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+
   return (
     <DataContext.Provider
       value={{
@@ -122,6 +185,17 @@ export const DataContextProvider = ({
         setPage,
         totalPages,
         getAllSubCategories,
+        handleDeleteProduct,
+        openDelete,
+        setOpenDelete,
+        deleteBtnHandler,
+        deletedProductId,
+        handleEditProduct,
+        editBtnHandler,
+        editedProduct,
+        setEditedProduct,
+        getDiscountProducts,
+        getAllOrders,
       }}
     >
       {children}

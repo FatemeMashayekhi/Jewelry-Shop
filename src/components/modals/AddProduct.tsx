@@ -1,10 +1,11 @@
 import { Icon } from "@iconify/react";
 import { useContext } from "react";
-import { DataContext } from "../../context/context";
+import { DataContext } from "../../context/DataContext";
 import AddForm from "../product-management/AddForm";
 
 export default function AddProduct() {
-  const { openAdd, setOpenAdd } = useContext(DataContext);
+  const { openAdd, setOpenAdd, editedProduct, setEditedProduct } =
+    useContext(DataContext);
   return (
     openAdd && (
       <div
@@ -17,12 +18,21 @@ export default function AddProduct() {
         >
           <div id="modal-header" className="flex justify-between">
             <div className="flex gap-x-2 font-bold">
-              <p className="text-lg">افزودن کالا</p>
+              {editedProduct ? (
+                <p className="text-lg">ویرایش کالا</p>
+              ) : (
+                <p className="text-lg">افزودن کالا</p>
+              )}
             </div>
             <button
               onClick={() => {
                 if (setOpenAdd) {
                   setOpenAdd(false);
+                }
+                if (editedProduct) {
+                  if (setEditedProduct) {
+                    setEditedProduct(null);
+                  }
                 }
               }}
               id="close"
