@@ -4,9 +4,10 @@ import { toast } from "react-toastify";
 import { Admin, Category, DataContextType } from "../models/DataContextModel";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../models/GetProductsModel";
 import { productById } from "../models/ProductByIdModel";
+import { CategoryByID } from "../models/CategoryByIdModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -219,6 +220,24 @@ export const DataContextProvider = ({
     fetchProduct();
   }, [productId]);
 
+  ///get category by id
+  const [category, setCategory] = useState<CategoryByID | null>();
+  const [categoryId, setCategoryId] = useState<string>();
+  useEffect(() => {
+    const fetchCategory = async () => {
+      if (categoryId) {
+        try {
+          const category = await dataService.getCategoryById(categoryId);
+          setCategory(category.data.category);
+        } catch (error) {
+          console.error("Failed to fetch product:", error);
+        }
+      }
+    };
+
+    fetchCategory();
+  }, [categoryId]);
+
   return (
     <DataContext.Provider
       value={{
@@ -247,6 +266,8 @@ export const DataContextProvider = ({
         getProducts,
         setProductId,
         singleProduct,
+        setCategoryId,
+        category,
       }}
     >
       {children}

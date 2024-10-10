@@ -14,3 +14,4 @@ export const PRODUCTS_URL = (page: string) =>
 export const DISCOUNT_PRODUCT_URL = "/products?discount[gte]=50";
 export const POPULAR_PRODUCTS_URL = "/products?quantity[lte]=200";
 export const GET_ALL_PRODUCTS = "/products";
+export const GET_CATEGORY_BY_ID = (id: string) => `/categories/${id}`;

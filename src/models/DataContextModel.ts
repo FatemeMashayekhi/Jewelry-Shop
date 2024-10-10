@@ -4,6 +4,7 @@ import { ProductsEntity } from "./GetProductsModel";
 import { Dispatch, SetStateAction } from "react";
 import { OrdersEntity } from "./GetOrdersModel";
 import { ProductById } from "./ProductByIdModel";
+import { categoryById } from "./CategoryByIdModel";
 
 export interface Admin {
   username: string;
@@ -68,4 +69,6 @@ export type DataContextType = {
   setProductId?: React.Dispatch<React.SetStateAction<string | null>>;
   productId?: string | null;
   singleProduct?: ProductById | null;
+  setCategoryId?: React.Dispatch<React.SetStateAction<string | null>>;
+  category?: categoryById | null;
 };

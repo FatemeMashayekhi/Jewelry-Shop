@@ -16,7 +16,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
   const navigate = useNavigate();
 
   const linkTo = isCategory
-    ? `/categories/${(item as Category)._id}`
+    ? `/${(item as Category)._id}`
     : `/${(item as ProductsEntity)._id}`;
 
   const handleClick = () => {

@@ -9,6 +9,7 @@ import {
   GET_ALL_ORDERS,
   GET_ALL_PRODUCTS,
   GET_ALL_PRODUCTS_BY_ID,
+  GET_CATEGORY_BY_ID,
   POPULAR_PRODUCTS_URL,
   POST_PRODUCTS,
   PRODUCTS_URL,
@@ -123,6 +124,15 @@ export const getProducts = async () => {
   }
 };
 
+export const getCategoryById = async (id: string) => {
+  try {
+    const res = await axios.get(GET_CATEGORY_BY_ID(id));
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -136,6 +146,7 @@ const dataService = {
   getAllOrders,
   getPopularProducts,
   getProducts,
+  getCategoryById,
 };
 
 export default dataService;
