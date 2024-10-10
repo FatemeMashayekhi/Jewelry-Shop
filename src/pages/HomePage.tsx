@@ -24,6 +24,9 @@ export default function HomePage() {
       </div>
       <NameDivider />
       <OfferSection />
+      <div className="flex justify-center">
+        <img src="./src/assets/images/BannerSecond.png" alt="secondBanner" />
+      </div>
     </div>
   );
 }
