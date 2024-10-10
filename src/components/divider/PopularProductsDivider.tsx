@@ -13,7 +13,7 @@ export default function PopularProductsDivider() {
     <div className="flex font-semibold">
       <div
         id="right-side"
-        className="flex items-center gap-x-2 shadow-inner p-5 w-[12%]"
+        className="flex items-center gap-x-2 shadow p-5 w-[12%]"
       >
         <Icon icon="mdi:rhombus" style={{ color: "#bab19e" }} />
         <div className="flex gap-x-1 items-center">
