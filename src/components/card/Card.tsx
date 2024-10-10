@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../../models/GetProductsModel";
 import { Category } from "../../models/DataContextModel";
 import { CardComponentProps } from "../../models/CardModel";
-import { DataContext } from "../../context/DataContext";
 
 const CardComponent: React.FC<CardComponentProps> = ({
   item,
@@ -13,7 +12,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
   const cardClassName = `flex flex-col gap-y-3 indicator cursor-pointer ${
     isCategory ? "" : "shadow-lg rounded-lg"
   }`;
-  const { setProductId } = useContext(DataContext);
+  // const { setProductId } = useContext(DataContext);
   const navigate = useNavigate();
 
   const linkTo = isCategory
@@ -21,9 +20,9 @@ const CardComponent: React.FC<CardComponentProps> = ({
     : `/${(item as ProductsEntity)._id}`;
 
   const handleClick = () => {
-    if (!isCategory && setProductId) {
-      setProductId((item as ProductsEntity)._id);
-    }
+    // if (!isCategory && setProductId) {
+    //   setProductId((item as ProductsEntity)._id);
+    // }
     navigate(linkTo);
   };
 

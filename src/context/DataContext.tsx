@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Admin, Category, DataContextType } from "../models/DataContextModel";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ProductsEntity } from "../models/GetProductsModel";
 import { productById } from "../models/ProductByIdModel";
 
@@ -246,7 +246,6 @@ export const DataContextProvider = ({
         getPopularProducts,
         getProducts,
         setProductId,
-        productId,
         singleProduct,
       }}
     >

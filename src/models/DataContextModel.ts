@@ -66,7 +66,6 @@ export type DataContextType = {
   getPopularProducts?: UseQueryResult<ProductsEntity[], unknown>;
   getProducts?: UseQueryResult<ProductsEntity[], unknown>;
   setProductId?: React.Dispatch<React.SetStateAction<string | null>>;
-  getProductById?: UseQueryResult<ProductById[], unknown>;
   productId?: string | null;
   singleProduct?: ProductById | null;
 };
