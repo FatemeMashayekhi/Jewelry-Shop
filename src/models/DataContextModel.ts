@@ -62,4 +62,5 @@ export type DataContextType = {
   >;
   getDiscountProducts?: UseQueryResult<ProductsEntity[], unknown>;
   getAllOrders?: UseQueryResult<OrdersEntity[], unknown>;
+  getPopularProducts?: UseQueryResult<ProductsEntity[], unknown>;
 };

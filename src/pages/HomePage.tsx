@@ -3,6 +3,7 @@ import CategoriesCards from "../components/home/CategoriesCards";
 import NameDivider from "../components/divider/NameDivider";
 import OfferSection from "../components/home/OfferSection";
 import PopularProductsDivider from "../components/divider/PopularProductsDivider";
+import PopularProductsSection from "../components/home/PopularProductsSection";
 
 export default function HomePage() {
   return (
@@ -29,22 +30,7 @@ export default function HomePage() {
         <img src="./src/assets/images/BannerSecond.png" alt="secondBanner" />
       </div>
       <PopularProductsDivider />
-      <div id="popular-products-container" className="flex px-10">
-        <div id="card" key="id" className="flex flex-col gap-y-3">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="idd"
-            className="size-40"
-          />
-          <div className="font-semibold text-sm flex flex-col gap-y-4">
-            <p>name</p>
-            <div className="flex gap-x-2 justify-end">
-              <p className="text-gray-400 text-xs">تومان</p>
-              <p>price</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PopularProductsSection />
     </div>
   );
 }

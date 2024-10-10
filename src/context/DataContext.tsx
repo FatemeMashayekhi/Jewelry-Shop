@@ -172,6 +172,19 @@ export const DataContextProvider = ({
     },
   });
 
+  ///get popular products
+  const getPopularProducts = useQuery({
+    queryKey: ["getPopularProducts"],
+    queryFn: async () => {
+      try {
+        const allPopularProducts = await dataService.getPopularProducts();
+        return allPopularProducts.data.products;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+
   return (
     <DataContext.Provider
       value={{
@@ -196,6 +209,7 @@ export const DataContextProvider = ({
         setEditedProduct,
         getDiscountProducts,
         getAllOrders,
+        getPopularProducts,
       }}
     >
       {children}
