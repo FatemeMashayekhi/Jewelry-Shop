@@ -4,6 +4,7 @@ import NameDivider from "../components/divider/NameDivider";
 import OfferSection from "../components/home/OfferSection";
 import PopularProductsDivider from "../components/divider/PopularProductsDivider";
 import PopularProductsSection from "../components/home/PopularProductsSection";
+import AllProducts from "../components/home/AllProducts";
 
 export default function HomePage() {
   return (
@@ -32,6 +33,9 @@ export default function HomePage() {
       <PopularProductsDivider />
       <PopularProductsSection />
       <NameDivider />
+      <div id="products-card-container" className="grid grid-cols-4">
+        <AllProducts />
+      </div>
     </div>
   );
 }

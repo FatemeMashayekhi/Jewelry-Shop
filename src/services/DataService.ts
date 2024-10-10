@@ -7,6 +7,7 @@ import {
   DISCOUNT_PRODUCT_URL,
   EDIT_PRODUCT_BY_ID,
   GET_ALL_ORDERS,
+  GET_ALL_PRODUCTS,
   GET_ALL_PRODUCTS_BY_ID,
   POPULAR_PRODUCTS_URL,
   POST_PRODUCTS,
@@ -113,6 +114,15 @@ export const getPopularProducts = async () => {
   }
 };
 
+export const getProducts = async () => {
+  try {
+    const res = await axios.get(GET_ALL_PRODUCTS);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -125,6 +135,7 @@ const dataService = {
   getAllProductsById,
   getAllOrders,
   getPopularProducts,
+  getProducts,
 };
 
 export default dataService;

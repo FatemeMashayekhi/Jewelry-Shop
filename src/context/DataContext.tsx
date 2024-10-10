@@ -185,6 +185,19 @@ export const DataContextProvider = ({
     },
   });
 
+  ///get products with by id url
+  const getProducts = useQuery({
+    queryKey: ["getProducts"],
+    queryFn: async () => {
+      try {
+        const products = await dataService.getProducts();
+        return products.data.products;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+
   return (
     <DataContext.Provider
       value={{
@@ -210,6 +223,7 @@ export const DataContextProvider = ({
         getDiscountProducts,
         getAllOrders,
         getPopularProducts,
+        getProducts,
       }}
     >
       {children}
