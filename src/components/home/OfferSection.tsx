@@ -5,7 +5,7 @@ export default function OfferSection() {
   const { getDiscountProducts } = useContext(DataContext);
 
   return (
-    <div id="offer" className="flex px-20 gap-x-14 items-center">
+    <div id="offer" className="flex px-20 gap-x-14 justify-center items-center">
       <div id="img">
         <img src="./src/assets/images/offer-pic.png" alt="offer-pic" />
       </div>
@@ -18,7 +18,7 @@ export default function OfferSection() {
                 key={item._id}
                 className="flex flex-col gap-y-3 indicator"
               >
-                <span className="indicator-item indicator-top indicator-end badge bg-[#a09379] font-semibold text-xs text-white rounded-lg size-8">
+                <span className="indicator-item indicator-top indicator-end badge bg-[#a29180] font-semibold text-xs text-white rounded-lg size-8">
                   {item.discount} %
                 </span>
                 <img
