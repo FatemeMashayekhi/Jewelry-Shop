@@ -1,7 +1,7 @@
 import React from "react";
-import { CardComponentProps } from "../../models/CardModel";
-import { Category } from "../../models/DataContextModel";
 import { ProductsEntity } from "../../models/GetProductsModel";
+import { Category } from "../../models/DataContextModel";
+import { CardComponentProps } from "../../models/CardModel";
 
 const CardComponent: React.FC<CardComponentProps> = ({
   item,
