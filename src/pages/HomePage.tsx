@@ -33,7 +33,10 @@ export default function HomePage() {
       <PopularProductsDivider />
       <PopularProductsSection />
       <NameDivider />
-      <div id="products-card-container" className="grid grid-cols-4">
+      <div
+        id="products-card-container"
+        className="flex justify-center items-center"
+      >
         <AllProducts />
       </div>
     </div>
