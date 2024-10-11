@@ -16,7 +16,7 @@ const Sidebar = () => {
               getAllCategories?.data.map((item) => (
                 <li key={item._id} className="rounded-sm">
                   <Link
-                    to={`/${item._id}`}
+                    to={`/grouping/${item._id}`}
                     className="flex items-center p-2 space-x-3 rounded-md hover:bg-[#bab19e] font-semibold"
                   >
                     <span>{item.name}</span>
