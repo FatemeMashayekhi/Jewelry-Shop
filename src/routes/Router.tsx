@@ -18,8 +18,8 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="grouped" element={<Grouping />} />
-          <Route path="details" element={<ProductDetails />} />
+          <Route path="/grouping/:categoryId" element={<Grouping />} />
+          <Route path="/:productId" element={<ProductDetails />} />
           <Route path="cart" element={<Cart />} />
           <Route path="orders" element={<Orders />} />
         </Route>

@@ -1,11 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Admin, Category, DataContextType } from "../models/DataContextModel";
 import dataService from "../services/DataService";
 import { queryClient } from "../main";
 import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../models/GetProductsModel";
+import { productById } from "../models/ProductByIdModel";
+import { CategoryByID } from "../models/CategoryByIdModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -55,12 +57,16 @@ export const DataContextProvider = ({
   const [page, setPage] = useState<string>("1");
   const [totalPages, setTotalPages] = useState<number>(1);
 
+  ///update inventory table
+  const [allProducts, setAllProducts] = useState<ProductsEntity[]>([]);
+
   ///get all products
   const getAllProducts = useQuery({
     queryKey: ["getAllProducts", page],
     queryFn: async () => {
       const allProducts = await dataService.getAllProducts(page);
       setTotalPages(allProducts.total_pages);
+      setAllProducts(allProducts.data.products);
       return allProducts.data.products;
     },
   });
@@ -78,6 +84,9 @@ export const DataContextProvider = ({
   const [editedProduct, setEditedProduct] = useState<ProductsEntity | null>(
     null
   );
+
+  ///product details(clicked product)
+  const [productId, setProductId] = useState<string | null>(null);
 
   ///delete product btn handler
   const deleteBtnHandler = (id: string) => {
@@ -172,6 +181,67 @@ export const DataContextProvider = ({
     },
   });
 
+  ///get popular products
+  const getPopularProducts = useQuery({
+    queryKey: ["getPopularProducts"],
+    queryFn: async () => {
+      try {
+        const allPopularProducts = await dataService.getPopularProducts();
+        return allPopularProducts.data.products;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+
+  ///get products with by id url
+  const getProducts = useQuery({
+    queryKey: ["getProducts"],
+    queryFn: async () => {
+      try {
+        const products = await dataService.getProducts();
+        return products.data.products;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+
+  ///get product by id
+  const [singleProduct, setSingleProduct] = useState<productById>();
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (productId) {
+        try {
+          const product = await dataService.getAllProductsById(productId);
+          setSingleProduct(product.data.product);
+        } catch (error) {
+          console.error("Failed to fetch product:", error);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [productId]);
+
+  ///get category by id
+  const [category, setCategory] = useState<CategoryByID | null>();
+  const [categoryId, setCategoryId] = useState<string>();
+  useEffect(() => {
+    const fetchCategory = async () => {
+      if (categoryId) {
+        try {
+          const category = await dataService.getCategoryById(categoryId);
+          setCategory(category.data.category);
+        } catch (error) {
+          console.error("Failed to fetch product:", error);
+        }
+      }
+    };
+
+    fetchCategory();
+  }, [categoryId]);
+
   return (
     <DataContext.Provider
       value={{
@@ -196,6 +266,13 @@ export const DataContextProvider = ({
         setEditedProduct,
         getDiscountProducts,
         getAllOrders,
+        getPopularProducts,
+        getProducts,
+        setProductId,
+        singleProduct,
+        setCategoryId,
+        category,
+        setAllProducts,
       }}
     >
       {children}
