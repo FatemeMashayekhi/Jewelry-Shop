@@ -1,9 +1,8 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../utility/authUtils";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  const { accessToken } = useAuth();
+  const accessToken = localStorage.getItem("accessToken");
 
   if (!accessToken) {
     return <Navigate to="/login" />;
