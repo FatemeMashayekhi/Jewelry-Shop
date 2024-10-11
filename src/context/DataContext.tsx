@@ -6,7 +6,7 @@ import dataService from "../services/DataService";
 import { queryClient } from "../main";
 import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../models/GetProductsModel";
-import { productById } from "../models/ProductByIdModel";
+import { ProductById } from "../models/ProductByIdModel";
 import { CategoryByID } from "../models/CategoryByIdModel";
 
 export const DataContext = createContext<DataContextType>({});
@@ -208,7 +208,7 @@ export const DataContextProvider = ({
   });
 
   ///get product by id
-  const [singleProduct, setSingleProduct] = useState<productById>();
+  const [singleProduct, setSingleProduct] = useState<ProductById>();
   useEffect(() => {
     const fetchProduct = async () => {
       if (productId) {
