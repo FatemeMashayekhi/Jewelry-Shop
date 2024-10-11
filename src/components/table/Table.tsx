@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableProps } from "../../models/TableModel";
+import EditableCell from "../inventory/EditableCell";
 
 const Table = <T,>({ columns, data, actions }: TableProps<T>) => {
+  const handleSave = (rowIndex: number, key: keyof T, newValue: string) => {
+    // Find the row and update the specific key with the new value
+    const updatedData = [...data];
+    (updatedData[rowIndex] as any)[key] = newValue;
+    // Assuming you have a way to update the data context or state with the new values
+  };
+
   return (
     <div className="overflow-x-auto">
       <table className="table font-bold text-lg">
@@ -14,13 +22,24 @@ const Table = <T,>({ columns, data, actions }: TableProps<T>) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {data.map((item, rowIndex) => (
             <tr key={(item as any)._id}>
               {columns.map((column) => (
                 <td key={column.key as string}>
-                  {column.render
-                    ? column.render(item)
-                    : String(item[column.key])}
+                  {column.key === "price" || column.key === "quantity" ? (
+                    <EditableCell
+                      value={String(item[column.key])}
+                      onSave={(newValue) =>
+                        handleSave(rowIndex, column.key, newValue)
+                      }
+                      rowId={(item as any)._id}
+                      columnName={column.key as string}
+                    />
+                  ) : column.render ? (
+                    column.render(item)
+                  ) : (
+                    String(item[column.key])
+                  )}
                 </td>
               ))}
               {actions && (
