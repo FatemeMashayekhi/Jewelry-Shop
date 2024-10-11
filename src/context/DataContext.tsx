@@ -58,6 +58,7 @@ export const DataContextProvider = ({
   const [totalPages, setTotalPages] = useState<number>(1);
 
   ///update inventory table
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [allProducts, setAllProducts] = useState<ProductsEntity[]>([]);
 
   ///get all products
