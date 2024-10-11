@@ -7,7 +7,7 @@ import { Action, Column } from "../models/TableModel";
 import { OrdersEntity } from "../models/GetOrdersModel";
 
 export default function OrdersManagement() {
-  const { getAllOrders } = useContext(DataContext);
+  const { orders } = useContext(DataContext);
 
   const orderColumns: Column<OrdersEntity>[] = [
     {
@@ -42,7 +42,7 @@ export default function OrdersManagement() {
           <div className="bg-[#FEFAF6] p-3 rounded-2xl">
             <Table
               columns={orderColumns}
-              data={getAllOrders?.data || []}
+              data={orders || []}
               actions={orderActions}
             />
           </div>
