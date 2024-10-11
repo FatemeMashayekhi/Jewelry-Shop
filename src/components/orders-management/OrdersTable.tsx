@@ -2,8 +2,7 @@ import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 
 export default function OrdersTable() {
-  const { getAllOrders } = useContext(DataContext);
-  console.log(getAllOrders?.data);
+  const { orders } = useContext(DataContext);
   return (
     <div className="overflow-x-auto">
       <table className="table font-bold text-lg">
@@ -18,8 +17,8 @@ export default function OrdersTable() {
         </thead>
         <tbody>
           {/* row 1 */}
-          {Array.isArray(getAllOrders?.data) &&
-            getAllOrders?.data.map((item) => (
+          {Array.isArray(orders) &&
+            orders.map((item) => (
               <tr key={item._id}>
                 <th>
                   {item.user.lastname} {item.user.firstname}

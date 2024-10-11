@@ -4,7 +4,7 @@ import { ProductsEntity } from "./GetProductsModel";
 import { Dispatch, SetStateAction } from "react";
 import { OrdersEntity } from "./GetOrdersModel";
 import { ProductById } from "./ProductByIdModel";
-import { categoryById } from "./CategoryByIdModel";
+import { CategoryByID } from "./CategoryByIdModel";
 
 export interface Admin {
   username: string;
@@ -63,13 +63,14 @@ export type DataContextType = {
     React.SetStateAction<ProductsEntity | null>
   >;
   getDiscountProducts?: UseQueryResult<ProductsEntity[], unknown>;
-  getAllOrders?: UseQueryResult<OrdersEntity[], unknown>;
   getPopularProducts?: UseQueryResult<ProductsEntity[], unknown>;
   getProducts?: UseQueryResult<ProductsEntity[], unknown>;
   setProductId?: React.Dispatch<React.SetStateAction<string | null>>;
   productId?: string | null;
-  singleProduct?: ProductById | null;
-  setCategoryId?: React.Dispatch<React.SetStateAction<string | null>>;
-  category?: categoryById | null;
+  singleProduct?: ProductById;
+  setCategoryId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  category?: CategoryByID | null | undefined;
   setAllProducts?: React.Dispatch<React.SetStateAction<ProductsEntity[]>>;
+  setStatus?: React.Dispatch<React.SetStateAction<string>>;
+  orders?: OrdersEntity[] | undefined;
 };

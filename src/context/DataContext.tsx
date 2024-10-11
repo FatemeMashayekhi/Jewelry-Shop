@@ -6,8 +6,9 @@ import dataService from "../services/DataService";
 import { queryClient } from "../main";
 import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../models/GetProductsModel";
-import { productById } from "../models/ProductByIdModel";
+import { ProductById } from "../models/ProductByIdModel";
 import { CategoryByID } from "../models/CategoryByIdModel";
+import { OrdersEntity } from "../models/GetOrdersModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -58,6 +59,7 @@ export const DataContextProvider = ({
   const [totalPages, setTotalPages] = useState<number>(1);
 
   ///update inventory table
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [allProducts, setAllProducts] = useState<ProductsEntity[]>([]);
 
   ///get all products
@@ -168,19 +170,6 @@ export const DataContextProvider = ({
     },
   });
 
-  ///get all orders
-  const getAllOrders = useQuery({
-    queryKey: ["getAllOrders"],
-    queryFn: async () => {
-      try {
-        const allOrders = await dataService.getAllOrders();
-        return allOrders?.data?.orders;
-      } catch (e) {
-        console.log(e);
-      }
-    },
-  });
-
   ///get popular products
   const getPopularProducts = useQuery({
     queryKey: ["getPopularProducts"],
@@ -208,7 +197,7 @@ export const DataContextProvider = ({
   });
 
   ///get product by id
-  const [singleProduct, setSingleProduct] = useState<productById>();
+  const [singleProduct, setSingleProduct] = useState<ProductById>();
   useEffect(() => {
     const fetchProduct = async () => {
       if (productId) {
@@ -242,6 +231,24 @@ export const DataContextProvider = ({
     fetchCategory();
   }, [categoryId]);
 
+  ///get all orders
+  const [status, setStatus] = useState("true");
+  const [orders, setOrders] = useState<OrdersEntity[]>();
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (status) {
+        try {
+          const orders = await dataService.getAllOrders(String(status));
+          setOrders(orders.data.orders);
+        } catch (error) {
+          console.error("Failed to fetch orders:", error);
+        }
+      }
+    };
+
+    fetchOrders();
+  }, [status]);
+
   return (
     <DataContext.Provider
       value={{
@@ -265,7 +272,6 @@ export const DataContextProvider = ({
         editedProduct,
         setEditedProduct,
         getDiscountProducts,
-        getAllOrders,
         getPopularProducts,
         getProducts,
         setProductId,
@@ -273,6 +279,8 @@ export const DataContextProvider = ({
         setCategoryId,
         category,
         setAllProducts,
+        setStatus,
+        orders,
       }}
     >
       {children}

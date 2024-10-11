@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
-import Sidebar from "../components/grouping/SideBar";
 import { ProductsEntity } from "../models/GetProductsModel";
 import CardComponent from "../components/card/Card";
+import Sidebar from "../components/grouping/Sidebar";
 
 export default function Grouping() {
   const [products, setProducts] = useState<ProductsEntity[]>([]);

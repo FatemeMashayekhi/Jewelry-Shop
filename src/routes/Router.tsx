@@ -21,7 +21,7 @@ export default function Router() {
           <Route path="/grouping/:categoryId" element={<Grouping />} />
           <Route path="/:productId" element={<ProductDetails />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="orders" element={<Orders />} />
+          <Route path="user/orders" element={<Orders />} />
         </Route>
         <Route path="/login" element={<Login />} />
 
