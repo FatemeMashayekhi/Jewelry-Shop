@@ -31,7 +31,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   const handleCancel = () => {
     setIsEditing(false);
-    setInputValue(value); // Reset to initial value
+    setInputValue(value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

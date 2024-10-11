@@ -57,12 +57,16 @@ export const DataContextProvider = ({
   const [page, setPage] = useState<string>("1");
   const [totalPages, setTotalPages] = useState<number>(1);
 
+  ///update inventory table
+  const [allProducts, setAllProducts] = useState<ProductsEntity[]>([]);
+
   ///get all products
   const getAllProducts = useQuery({
     queryKey: ["getAllProducts", page],
     queryFn: async () => {
       const allProducts = await dataService.getAllProducts(page);
       setTotalPages(allProducts.total_pages);
+      setAllProducts(allProducts.data.products);
       return allProducts.data.products;
     },
   });
@@ -268,6 +272,7 @@ export const DataContextProvider = ({
         singleProduct,
         setCategoryId,
         category,
+        setAllProducts,
       }}
     >
       {children}

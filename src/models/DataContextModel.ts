@@ -71,4 +71,5 @@ export type DataContextType = {
   singleProduct?: ProductById | null;
   setCategoryId?: React.Dispatch<React.SetStateAction<string | null>>;
   category?: categoryById | null;
+  setAllProducts?: React.Dispatch<React.SetStateAction<ProductsEntity[]>>;
 };

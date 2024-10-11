@@ -1,13 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { TableProps } from "../../models/TableModel";
 import EditableCell from "../inventory/EditableCell";
 
 const Table = <T,>({ columns, data, actions }: TableProps<T>) => {
+  const [localData, setLocalData] = useState(data);
+
+  useEffect(() => {
+    setLocalData(data); ///sync local data with context data
+  }, [data]);
+
   const handleSave = (rowIndex: number, key: keyof T, newValue: string) => {
-    // Find the row and update the specific key with the new value
-    const updatedData = [...data];
+    const updatedData = [...localData];
     (updatedData[rowIndex] as any)[key] = newValue;
-    // Assuming you have a way to update the data context or state with the new values
+    setLocalData(updatedData); ///update local state to reflect changes in the UI
   };
 
   return (
@@ -22,7 +28,7 @@ const Table = <T,>({ columns, data, actions }: TableProps<T>) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, rowIndex) => (
+          {localData.map((item, rowIndex) => (
             <tr key={(item as any)._id}>
               {columns.map((column) => (
                 <td key={column.key as string}>

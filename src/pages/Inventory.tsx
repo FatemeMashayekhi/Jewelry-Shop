@@ -6,9 +6,10 @@ import Table from "../components/table/Table";
 import { Column } from "../models/TableModel";
 import { ProductsEntity } from "../models/GetProductsModel";
 import axios from "../services/baseService";
+import { toast } from "react-toastify";
 
 export default function Inventory() {
-  const { getAllProducts } = useContext(DataContext);
+  const { getAllProducts, setAllProducts } = useContext(DataContext);
 
   const inventoryColumns: Column<ProductsEntity>[] = [
     { key: "name", label: "کالا" },
@@ -38,8 +39,21 @@ export default function Inventory() {
       await editProduct(rowId, product);
     }
 
+    // Update state with new products data
+    if (setAllProducts) {
+      setAllProducts((prevProducts: ProductsEntity[]) =>
+        prevProducts.map((product: ProductsEntity) =>
+          editedData[product._id]
+            ? { ...product, ...editedData[product._id] }
+            : product
+        )
+      );
+    }
+
     localStorage.removeItem("editedData");
+    toast.success("محصول با موفقیت ویرایش شد");
   };
+
   return (
     <>
       <div className="flex flex-col px-14 py-12 gap-y-16">
