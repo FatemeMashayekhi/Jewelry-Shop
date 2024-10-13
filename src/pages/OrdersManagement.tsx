@@ -6,16 +6,24 @@ import Table from "../components/table/Table";
 import { Action, Column } from "../models/TableModel";
 import { OrdersEntity } from "../models/GetOrdersModel";
 
+const NumberConverter = (value: number): string => {
+  // Add your conversion logic here
+  return value.toLocaleString(); // Example: Convert number to locale string
+};
+
 export default function OrdersManagement() {
   const { orders } = useContext(DataContext);
-
   const orderColumns: Column<OrdersEntity>[] = [
     {
       key: "user",
       label: "نام کاربر",
       render: (item) => `${item.user.lastname} ${item.user.firstname}`,
     },
-    { key: "totalPrice", label: "مجموع مبلغ" },
+    {
+      key: "totalPrice",
+      label: "مجموع مبلغ",
+      render: (item) => NumberConverter(Number(item.totalPrice)), // Apply NumberConverter here
+    },
     {
       key: "createdAt",
       label: "زمان ثبت سفارش",

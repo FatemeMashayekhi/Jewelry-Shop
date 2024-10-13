@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import NumberConverter from "../number-converter/NumberConverter";
 export default function Upside() {
   return (
     <div id="up-side" className="flex justify-between items-center">
@@ -7,7 +8,7 @@ export default function Upside() {
         <Icon className="text-yellow-400 size-7" icon="tabler:coin-filled" />
         <div className="flex flex-col items-center">
           <p className="text-gray-400 text-sm">نرخ امروز طلا</p>
-          <p className="font-bold">3,905,100 ت</p>
+          <p className="font-bold">{NumberConverter(3905100)} ت</p>
         </div>
       </div>
       <p className="font-bold text-2xl">طلای مشایخی</p>
@@ -24,11 +25,13 @@ export default function Upside() {
 
         <div className="indicator">
           <span className="indicator-item badge badge-secondary size-3">0</span>
-          <Icon
-            icon="material-symbols:shopping-bag-outline"
-            style={{ color: "black" }}
-            className="size-5"
-          />
+          <Link to={"/checkout/cart"}>
+            <Icon
+              icon="material-symbols:shopping-bag-outline"
+              style={{ color: "black" }}
+              className="size-5"
+            />
+          </Link>
         </div>
       </div>
     </div>
