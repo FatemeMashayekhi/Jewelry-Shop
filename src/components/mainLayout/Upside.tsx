@@ -24,11 +24,13 @@ export default function Upside() {
 
         <div className="indicator">
           <span className="indicator-item badge badge-secondary size-3">0</span>
-          <Icon
-            icon="material-symbols:shopping-bag-outline"
-            style={{ color: "black" }}
-            className="size-5"
-          />
+          <Link to={"/checkout/cart"}>
+            <Icon
+              icon="material-symbols:shopping-bag-outline"
+              style={{ color: "black" }}
+              className="size-5"
+            />
+          </Link>
         </div>
       </div>
     </div>

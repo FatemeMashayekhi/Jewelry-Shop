@@ -4,13 +4,13 @@ import MainLayout from "../layouts/mainLayout/MainLayout";
 import Grouping from "../pages/Grouping";
 import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
-import Orders from "../pages/Orders";
 import Login from "../pages/Login";
 import SecondaryLayout from "../layouts/secondaryLayout/SecondaryLayout";
 import ProductsManagement from "../pages/ProductsManagement";
 import Inventory from "../pages/Inventory";
 import OrdersManagement from "../pages/OrdersManagement";
 import ProtectedRoute from "../components/protected-route/ProtectedRoute";
+import Shipping from "../pages/Shipping";
 
 export default function Router() {
   return (
@@ -20,8 +20,8 @@ export default function Router() {
           <Route index element={<HomePage />} />
           <Route path="/grouping/:categoryId" element={<Grouping />} />
           <Route path="/:productId" element={<ProductDetails />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="user/orders" element={<Orders />} />
+          <Route path="checkout/cart" element={<Cart />} />
+          <Route path="checkout/shipping" element={<Shipping />} />
         </Route>
         <Route path="/login" element={<Login />} />
 
