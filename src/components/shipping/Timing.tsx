@@ -1,8 +1,17 @@
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import DateObject from "react-date-object";
 export default function Timing() {
   const today = new Date();
+  const handleDateChange = (value: DateObject | null) => {
+    if (value) {
+      // Convert DateObject to native Date
+      const nativeDate = value.toDate();
+      const isoDate = nativeDate.toISOString();
+      localStorage.setItem("deliveryDate", isoDate);
+    }
+  };
   return (
     <div
       id="timing"
@@ -13,11 +22,14 @@ export default function Timing() {
         <p>تاریخ :</p>
         <div style={{ direction: "rtl" }}>
           <DatePicker
+            id="deliveryDate"
+            name="deliveryDate"
             inputClass="custom-input"
             calendar={persian}
             locale={persian_fa}
             calendarPosition="bottom-right"
             minDate={today}
+            onChange={handleDateChange}
           />
         </div>
       </div>
