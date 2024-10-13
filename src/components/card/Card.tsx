@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ProductsEntity } from "../../models/GetProductsModel";
 import { Category } from "../../models/DataContextModel";
 import { CardComponentProps } from "../../models/CardModel";
+import NumberConverter from "../number-converter/NumberConverter";
 
 const CardComponent: React.FC<CardComponentProps> = ({
   item,
@@ -61,7 +62,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
             <p>{(item as ProductsEntity).name}</p>
             <div className="flex gap-x-2 justify-end">
               <p className="text-gray-400 text-xs">تومان</p>
-              <p>{(item as ProductsEntity).price}</p>
+              <p>{NumberConverter((item as ProductsEntity).price)}</p>
             </div>
           </div>
         </>
