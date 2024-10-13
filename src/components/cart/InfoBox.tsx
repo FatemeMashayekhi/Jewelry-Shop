@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function InfoBox() {
+  const navigate = useNavigate();
   return (
     <div>
       <div
@@ -13,7 +16,12 @@ export default function InfoBox() {
           <p>سود شما از خرید</p>
           <p>53%</p>
         </div>
-        <button className="btn btn-wide rounded-lg">تایید و تکمیل سفارش</button>
+        <button
+          className="btn btn-wide rounded-lg"
+          onClick={() => navigate("/checkout/shipping")}
+        >
+          تایید و تکمیل سفارش
+        </button>
       </div>
     </div>
   );
