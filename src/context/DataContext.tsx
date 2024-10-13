@@ -33,6 +33,7 @@ export const DataContextProvider = ({
         console.log(data);
         localStorage.setItem("accessToken", data.token.accessToken);
         localStorage.setItem("refreshToken", data.token.refreshToken);
+        localStorage.setItem("user", data.data.user._id);
         toast.success("ورود شما با موفقیت انجام شد");
         navigate("/management");
       } else {
