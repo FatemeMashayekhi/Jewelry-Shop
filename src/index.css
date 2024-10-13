@@ -10,3 +10,18 @@
 * {
   font-family: "Doran";
 }
+
+.custom-input {
+  border-radius: 10px;
+  border: 1px rgb(221, 221, 221) solid;
+  padding: 4px 12px;
+  outline: none;
+  background-color: white;
+  height: 40px;
+}
+
+.custom-input:focus {
+  outline: none;
+  border: 1px solid #bab19e;
+  box-shadow: 0 0 10px 2px #bab19e;
+}
