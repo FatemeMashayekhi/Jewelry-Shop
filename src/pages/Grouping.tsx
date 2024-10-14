@@ -30,7 +30,6 @@ export default function Grouping() {
 
   return (
     <>
-      <div className="bg-[#e5dfd7] h-2"></div>
       <div className="flex gap-x-8">
         <Sidebar />
         <div id="category-group" className="flex flex-col gap-y-5 p-4 mt-4">

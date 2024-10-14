@@ -73,4 +73,6 @@ export type DataContextType = {
   setAllProducts?: React.Dispatch<React.SetStateAction<ProductsEntity[]>>;
   setStatus?: React.Dispatch<React.SetStateAction<string>>;
   orders?: OrdersEntity[] | undefined;
+  setUpdatedCart?: React.Dispatch<React.SetStateAction<ProductById[]>>;
+  updatedCart?: ProductById[];
 };

@@ -11,7 +11,15 @@ export default function PaymentForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<IFormInput>({
+    defaultValues: {
+      firstname: "مارال",
+      lastname: "مشایخی",
+      address: "تهران",
+      phoneNumber: "09126163965",
+    },
+  });
+
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
   return (
     <>

@@ -2,16 +2,23 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DateObject from "react-date-object";
+
 export default function Timing() {
   const today = new Date();
+
   const handleDateChange = (value: DateObject | null) => {
     if (value) {
-      // Convert DateObject to native Date
-      const nativeDate = value.toDate();
-      const isoDate = nativeDate.toISOString();
-      localStorage.setItem("deliveryDate", isoDate);
+      localStorage.setItem("deliveryDate", value.toDate().toISOString());
     }
   };
+
+  const timeSlots = [
+    "ساعت 9 تا 12",
+    "ساعت 12 تا 15",
+    "ساعت 15 تا 18",
+    "ساعت 18 تا 21",
+  ];
+
   return (
     <div
       id="timing"
@@ -34,45 +41,20 @@ export default function Timing() {
         </div>
       </div>
       <div className="flex flex-col gap-y-5">
-        <label className="flex items-center gap-x-3 cursor-pointer">
-          <input
-            type="radio"
-            name="radio-10"
-            className="radio checked:bg-black"
-            defaultChecked
-          />
-          <span className="label-text">ساعت 9 تا 12</span>
-        </label>
-
-        <label className="flex items-center gap-x-3 cursor-pointer">
-          <input
-            type="radio"
-            name="radio-10"
-            className="radio checked:bg-black"
-            defaultChecked
-          />
-          <span className="label-text">ساعت 12 تا 15</span>
-        </label>
-
-        <label className="flex items-center gap-x-3 cursor-pointer">
-          <input
-            type="radio"
-            name="radio-10"
-            className="radio checked:bg-black"
-            defaultChecked
-          />
-          <span className="label-text">ساعت 15 تا 18</span>
-        </label>
-
-        <label className="flex items-center gap-x-3 cursor-pointer">
-          <input
-            type="radio"
-            name="radio-10"
-            className="radio checked:bg-black"
-            defaultChecked
-          />
-          <span className="label-text">ساعت 18 تا 21</span>
-        </label>
+        {timeSlots.map((slot, index) => (
+          <label
+            key={index}
+            className="flex items-center gap-x-3 cursor-pointer"
+          >
+            <input
+              type="radio"
+              name="radio-10"
+              className="radio checked:bg-black"
+              defaultChecked={slot === "ساعت 9 تا 12"}
+            />
+            <span className="label-text">{slot}</span>
+          </label>
+        ))}
       </div>
     </div>
   );

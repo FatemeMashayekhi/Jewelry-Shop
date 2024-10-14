@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const menuItems = [
   { path: "/management", label: "محصولات" },
@@ -8,6 +8,15 @@ const menuItems = [
 ];
 
 export default function SecondaryLayout() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate("/login");
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    }
+  };
   return (
     <>
       <div className="flex items-center justify-between px-14 py-10 bg-[#FEFAF6] shadow">
@@ -34,10 +43,20 @@ export default function SecondaryLayout() {
             ))}
           </menu>
         </nav>
-        <Link to={"/"} className="flex items-center gap-x-2 hover:text-red-500">
-          <p className="font-bold">بازگشت به سایت</p>
-          <Icon icon="ic:sharp-arrow-back" style={{ color: "black" }} />
-        </Link>
+        <div className="flex gap-x-3">
+          <button onClick={handleLogout}>
+            <p className="font-bold hover:text-red-500">خروج از پنل</p>
+          </button>
+
+          <p className="text-2xl h-5">|</p>
+          <Link
+            to={"/"}
+            className="flex items-center gap-x-2 hover:text-red-500"
+          >
+            <p className="font-bold">بازگشت به سایت</p>
+            <Icon icon="ic:sharp-arrow-back" style={{ color: "black" }} />
+          </Link>
+        </div>
       </div>
       <Outlet />
     </>

@@ -5,7 +5,7 @@ import { DataContext } from "../../context/DataContext";
 const Sidebar = () => {
   const { getAllCategories } = useContext(DataContext);
   return (
-    <div className="flex flex-col h-screen px-10 py-6 bg-[#e5dfd7] shadow-lg">
+    <div className="flex flex-col min-h-[83vh] px-10 py-6 bg-[#e5dfd7] shadow-lg">
       <div className="space-y-3">
         <div className="flex items-center">
           <h2 className="text-xl font-bold">دسته بندی محصولات</h2>

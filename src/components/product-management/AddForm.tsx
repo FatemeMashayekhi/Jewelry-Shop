@@ -127,27 +127,17 @@ export default function AddForm() {
   const onSubmit = (data: FormDataTypes) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
-      if (
-        key === "thumbnail" &&
-        value instanceof FileList &&
-        value.length > 0
-      ) {
+      if (key === "thumbnail" && value.length > 0) {
         formData.append(key, value[0]);
-      } else if (
-        key === "images" &&
-        value instanceof FileList &&
-        value.length > 0
-      ) {
+      } else if (key === "images" && value.length > 0) {
         Array.from(value).forEach((image) => formData.append(key, image));
       } else {
-        formData.append(key, value.toString());
+        if (key !== "thumbnail" && key !== "images") {
+          formData.append(key, value.toString());
+        }
       }
     });
     formData.append("description", description);
-
-    // formData.forEach((value, key) => {
-    //   console.log(`${key}: ${value}`);
-    // });
 
     if (editedProduct && handleEditProduct) {
       handleEditProduct(editedProduct._id, formData);
@@ -237,7 +227,7 @@ export default function AddForm() {
           <input
             type="file"
             className="file-input file-input-bordered w-full max-w-xs bg-white rounded-lg"
-            {...register("thumbnail", { required: "thumbnail is required" })}
+            {...register("thumbnail")}
           />
           {errors.thumbnail && (
             <p className="text-red-500 mt-3">{errors.thumbnail.message}</p>
@@ -249,7 +239,7 @@ export default function AddForm() {
             type="file"
             className="file-input file-input-bordered w-full max-w-xs bg-white rounded-lg"
             multiple
-            {...register("images", { required: "images is required" })}
+            {...register("images")}
           />
           {errors.images && (
             <p className="text-red-500 mt-3">{errors.images.message}</p>
