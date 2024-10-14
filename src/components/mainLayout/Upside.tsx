@@ -14,7 +14,9 @@ export default function Upside() {
           <p className="font-bold">{NumberConverter(3905100)} ت</p>
         </div>
       </div>
-      <p className="font-bold text-2xl">طلای مشایخی</p>
+      <Link to={"/"} className="font-bold text-2xl">
+        طلای مشایخی
+      </Link>
       <div id="left-side-icons" className="flex items-center gap-x-2">
         <Icon
           className="size-5"
