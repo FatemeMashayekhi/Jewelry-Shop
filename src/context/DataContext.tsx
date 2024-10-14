@@ -252,6 +252,7 @@ export const DataContextProvider = ({
 
   ///update cart items in local storage
   const [updatedCart, setUpdatedCart] = useState<ProductById[]>([]);
+  console.log(updatedCart.length);
 
   return (
     <DataContext.Provider

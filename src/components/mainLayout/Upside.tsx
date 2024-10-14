@@ -1,7 +1,10 @@
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import NumberConverter from "../number-converter/NumberConverter";
+import { useContext } from "react";
+import { DataContext } from "../../context/DataContext";
 export default function Upside() {
+  const { updatedCart } = useContext(DataContext);
   return (
     <div id="up-side" className="flex justify-between items-center">
       <div className="flex items-center gap-x-2">
@@ -24,7 +27,9 @@ export default function Upside() {
         <p className="text-2xl h-5">|</p>
 
         <div className="indicator">
-          <span className="indicator-item badge badge-secondary size-3">0</span>
+          <span className="p-[2px] indicator-item indicator-top indicator-end badge badge-secondary">
+            {updatedCart?.length}
+          </span>
           <Link to={"/checkout/cart"}>
             <Icon
               icon="material-symbols:shopping-bag-outline"
