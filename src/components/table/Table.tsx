@@ -3,11 +3,6 @@ import { useEffect, useState } from "react";
 import { TableProps } from "../../models/TableModel";
 import EditableCell from "../inventory/EditableCell";
 
-const NumberConverter = (value: number): string => {
-  // Add your conversion logic here
-  return value.toLocaleString(); // Example: Convert number to locale string
-};
-
 const Table = <T,>({ columns, data, actions }: TableProps<T>) => {
   const [localData, setLocalData] = useState(data);
 
@@ -38,7 +33,14 @@ const Table = <T,>({ columns, data, actions }: TableProps<T>) => {
               {columns.map((column) => (
                 <td key={column.key as string}>
                   {column.key === "price" ? (
-                    NumberConverter(Number(item[column.key])) // Apply NumberConverter to price
+                    <EditableCell
+                      value={String(item[column.key])}
+                      onSave={(newValue) =>
+                        handleSave(rowIndex, column.key, newValue)
+                      }
+                      rowId={(item as any)._id}
+                      columnName={column.key as string}
+                    />
                   ) : column.key === "quantity" ? (
                     <EditableCell
                       value={String(item[column.key])}
