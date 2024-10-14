@@ -1,10 +1,29 @@
 import { Icon } from "@iconify/react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 
 export default function InformationSide() {
-  const { singleProduct } = useContext(DataContext);
-  console.log(singleProduct);
+  const { singleProduct, setUpdatedCart } = useContext(DataContext);
+  const [count, setCount] = useState(0);
+
+  const handlePlus = () => {
+    setCount((prev) => prev + 1);
+  };
+
+  const handleMinus = () => {
+    if (count >= 1) {
+      setCount((prev) => prev - 1);
+    }
+  };
+  const handleAddToCart = () => {
+    if (singleProduct && count > 0) {
+      const productWithCount = { ...singleProduct, count };
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cart.push(productWithCount);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setUpdatedCart?.(cart);
+    }
+  };
 
   if (!singleProduct) return <div>Loading...</div>;
 
@@ -43,7 +62,10 @@ export default function InformationSide() {
             <div className="flex gap-x-2 items-center">
               <p>تعداد :</p>
               <div className="join rounded-lg">
-                <button className="btn join-item bg-[#bab19e]">
+                <button
+                  className="btn join-item bg-[#bab19e]"
+                  onClick={handlePlus}
+                >
                   <Icon
                     icon="line-md:plus"
                     width="24"
@@ -51,8 +73,11 @@ export default function InformationSide() {
                     style={{ color: "white" }}
                   />
                 </button>
-                <p className="btn join-item bg-[#bab19e] text-white">0</p>
-                <button className="btn join-item bg-[#bab19e]">
+                <p className="btn join-item bg-[#bab19e] text-white">{count}</p>
+                <button
+                  className="btn join-item bg-[#bab19e]"
+                  onClick={handleMinus}
+                >
                   <Icon
                     icon="line-md:minus"
                     width="24"
@@ -63,7 +88,13 @@ export default function InformationSide() {
               </div>
             </div>
           </div>
-          <button className="btn bg-[#776c55] rounded-lg text-white">
+          <button
+            className={`btn bg-[#776c55] rounded-lg text-white ${
+              count === 0 ? "cursor-not-allowed opacity-50" : ""
+            }`}
+            onClick={handleAddToCart}
+            disabled={count === 0}
+          >
             افزودن به سبد خرید
           </button>
         </div>

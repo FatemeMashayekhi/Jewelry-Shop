@@ -250,6 +250,9 @@ export const DataContextProvider = ({
     fetchOrders();
   }, [status]);
 
+  ///update cart items in local storage
+  const [updatedCart, setUpdatedCart] = useState<ProductById[]>([]);
+
   return (
     <DataContext.Provider
       value={{
@@ -282,6 +285,8 @@ export const DataContextProvider = ({
         setAllProducts,
         setStatus,
         orders,
+        setUpdatedCart,
+        updatedCart,
       }}
     >
       {children}

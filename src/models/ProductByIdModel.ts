@@ -18,6 +18,7 @@ export interface ProductById {
   price: number;
   quantity: number;
   brand: string;
+  count?: number;
   discount: number;
   description: string;
   thumbnail: string;
