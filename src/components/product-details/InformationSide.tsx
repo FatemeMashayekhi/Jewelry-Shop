@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 
 export default function InformationSide() {
-  const { singleProduct, setUpdatedCart } = useContext(DataContext);
+  const { singleProduct } = useContext(DataContext);
   const [count, setCount] = useState(0);
 
   const handlePlus = () => {
@@ -15,13 +15,13 @@ export default function InformationSide() {
       setCount((prev) => prev - 1);
     }
   };
+
   const handleAddToCart = () => {
     if (singleProduct && count > 0) {
       const productWithCount = { ...singleProduct, count };
       const cart = JSON.parse(localStorage.getItem("cart") || "[]");
       cart.push(productWithCount);
       localStorage.setItem("cart", JSON.stringify(cart));
-      setUpdatedCart?.(cart);
     }
   };
 

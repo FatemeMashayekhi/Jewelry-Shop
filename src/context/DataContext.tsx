@@ -252,7 +252,12 @@ export const DataContextProvider = ({
 
   ///update cart items in local storage
   const [updatedCart, setUpdatedCart] = useState<ProductById[]>([]);
-  console.log(updatedCart.length);
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setUpdatedCart(JSON.parse(savedCart));
+    }
+  }, []);
 
   return (
     <DataContext.Provider

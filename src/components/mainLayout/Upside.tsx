@@ -27,7 +27,7 @@ export default function Upside() {
         <p className="text-2xl h-5">|</p>
 
         <div className="indicator">
-          <span className="p-[2px] indicator-item indicator-top indicator-end badge badge-secondary">
+          <span className="p-[2px] indicator-item indicator-top indicator-end badge badge-secondary font-semibold">
             {updatedCart?.length}
           </span>
           <Link to={"/checkout/cart"}>
