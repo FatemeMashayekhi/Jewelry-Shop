@@ -1,4 +1,13 @@
+import { useContext } from "react";
+import { DataContext } from "../../context/DataContext";
+import NumberConverter from "../number-converter/NumberConverter";
+
 export default function PriceInfo() {
+  const { updatedCart } = useContext(DataContext);
+  const totalPrice =
+    updatedCart?.reduce((acc, item) => {
+      return acc + item.price * (item.count ?? 1);
+    }, 0) ?? 0;
   return (
     <div
       id="price"
@@ -6,7 +15,7 @@ export default function PriceInfo() {
     >
       <div className="flex justify-between">
         <p>جمع سبد خرید</p>
-        <p>20000000 تومان</p>
+        <p>{NumberConverter(totalPrice)} تومان</p>
       </div>
       <div className="flex justify-between">
         <p>سود شما از خرید</p>

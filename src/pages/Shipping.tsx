@@ -16,7 +16,7 @@ export default function Shipping() {
           className="border-[1px] border-[#e5dfd7] flex flex-col p-4 bg-white"
         >
           <p className="text-gray-500">محصولات</p>
-          <div className="flex gap-x-4 p-4">
+          <div className="flex gap-x-4 p-4 justify-center">
             <ProductsCard />
           </div>
         </div>
