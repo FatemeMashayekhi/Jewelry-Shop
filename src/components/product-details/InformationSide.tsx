@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 
 export default function InformationSide() {
-  const { singleProduct } = useContext(DataContext);
+  const { singleProduct, setUpdatedCart } = useContext(DataContext);
   const [count, setCount] = useState(0);
 
   const handlePlus = () => {
@@ -16,12 +16,12 @@ export default function InformationSide() {
     }
   };
 
-  const handleAddToCart = () => {
-    if (singleProduct && count > 0) {
-      const productWithCount = { ...singleProduct, count };
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      cart.push(productWithCount);
-      localStorage.setItem("cart", JSON.stringify(cart));
+  const handleUpdateCart = () => {
+    if (setUpdatedCart && singleProduct) {
+      setUpdatedCart((prevCart) => {
+        const newCart = [...prevCart, { ...singleProduct, count: count }];
+        return newCart;
+      });
     }
   };
 
@@ -92,7 +92,7 @@ export default function InformationSide() {
             className={`btn bg-[#776c55] rounded-lg text-white ${
               count === 0 ? "cursor-not-allowed opacity-50" : ""
             }`}
-            onClick={handleAddToCart}
+            onClick={handleUpdateCart}
             disabled={count === 0}
           >
             افزودن به سبد خرید
