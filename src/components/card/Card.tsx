@@ -13,7 +13,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
   const cardClassName = `flex flex-col gap-y-3 indicator cursor-pointer ${
     isCategory ? "" : "shadow-lg rounded-lg"
   }`;
-  // const { setProductId } = useContext(DataContext);
+
   const navigate = useNavigate();
 
   const linkTo = isCategory
@@ -21,9 +21,6 @@ const CardComponent: React.FC<CardComponentProps> = ({
     : `/${(item as ProductsEntity)._id}`;
 
   const handleClick = () => {
-    // if (!isCategory && setProductId) {
-    //   setProductId((item as ProductsEntity)._id);
-    // }
     navigate(linkTo);
   };
 
@@ -47,7 +44,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
       ) : (
         <>
           {showDiscount && (item as ProductsEntity).discount && (
-            <span className="indicator-item indicator-top indicator-end badge bg-[#a29180] font-semibold text-xs text-white rounded-lg size-10">
+            <span className="indicator-item indicator-top indicator-start badge bg-[#a29180] font-semibold text-xs text-white rounded-lg size-10">
               {(item as ProductsEntity).discount} %
             </span>
           )}
