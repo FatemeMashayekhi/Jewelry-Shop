@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import removeHtmlTagsAndEntities from "../remove-tags/RemoveTags";
+import { toast } from "react-toastify";
 
 export default function InformationSide() {
   const { singleProduct, setUpdatedCart } = useContext(DataContext);
@@ -21,6 +22,7 @@ export default function InformationSide() {
     if (setUpdatedCart && singleProduct) {
       setUpdatedCart((prevCart) => {
         const newCart = [...prevCart, { ...singleProduct, count: count }];
+        toast.success("کالا با موفقیت به سبد خرید اضافه شد");
         return newCart;
       });
     }
