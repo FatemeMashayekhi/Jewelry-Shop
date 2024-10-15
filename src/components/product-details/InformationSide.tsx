@@ -1,9 +1,11 @@
 import { Icon } from "@iconify/react";
 import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
+import removeHtmlTagsAndEntities from "../remove-tags/RemoveTags";
+import { toast } from "react-toastify";
 
 export default function InformationSide() {
-  const { singleProduct } = useContext(DataContext);
+  const { singleProduct, setUpdatedCart } = useContext(DataContext);
   const [count, setCount] = useState(0);
 
   const handlePlus = () => {
@@ -16,12 +18,13 @@ export default function InformationSide() {
     }
   };
 
-  const handleAddToCart = () => {
-    if (singleProduct && count > 0) {
-      const productWithCount = { ...singleProduct, count };
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      cart.push(productWithCount);
-      localStorage.setItem("cart", JSON.stringify(cart));
+  const handleUpdateCart = () => {
+    if (setUpdatedCart && singleProduct) {
+      setUpdatedCart((prevCart) => {
+        const newCart = [...prevCart, { ...singleProduct, count: count }];
+        toast.success("کالا با موفقیت به سبد خرید اضافه شد");
+        return newCart;
+      });
     }
   };
 
@@ -57,7 +60,7 @@ export default function InformationSide() {
             </div>
             <div className="flex flex-col gap-y-2">
               <p>توضیحات :</p>
-              <p>{singleProduct.description}</p>
+              <p>{removeHtmlTagsAndEntities(singleProduct.description)}</p>
             </div>
             <div className="flex gap-x-2 items-center">
               <p>تعداد :</p>
@@ -92,7 +95,7 @@ export default function InformationSide() {
             className={`btn bg-[#776c55] rounded-lg text-white ${
               count === 0 ? "cursor-not-allowed opacity-50" : ""
             }`}
-            onClick={handleAddToCart}
+            onClick={handleUpdateCart}
             disabled={count === 0}
           >
             افزودن به سبد خرید

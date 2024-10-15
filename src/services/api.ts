@@ -16,3 +16,6 @@ export const DISCOUNT_PRODUCT_URL = "/products?discount[gte]=50";
 export const POPULAR_PRODUCTS_URL = "/products?quantity[lte]=200";
 export const GET_ALL_PRODUCTS = "/products";
 export const GET_CATEGORY_BY_ID = (id: string) => `/categories/${id}`;
+
+export const GET_GOLD_PRICE =
+  "https://call4.tgju.org/ajax.json?rev=OEBrXzqlu4551qHalU98a9A9BLH1fZlc1jRkettV1GoDP0TWVsRkWMNsXaTI";

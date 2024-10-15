@@ -1,10 +1,11 @@
 import { Icon } from "@iconify/react";
 import CategoriesCards from "../components/home/CategoriesCards";
-import NameDivider from "../components/divider/NameDivider";
 import OfferSection from "../components/home/OfferSection";
 import PopularProductsDivider from "../components/divider/PopularProductsDivider";
 import PopularProductsSection from "../components/home/PopularProductsSection";
 import AllProducts from "../components/home/AllProducts";
+import AllProductsDivider from "../components/divider/AllProductsDivider";
+import DiscountDivider from "../components/divider/DiscountDivider";
 
 export default function HomePage() {
   return (
@@ -25,14 +26,14 @@ export default function HomePage() {
         </div>
         <CategoriesCards />
       </div>
-      <NameDivider />
+      <DiscountDivider />
       <OfferSection />
       <div className="flex justify-center">
         <img src="./src/assets/images/BannerSecond.png" alt="secondBanner" />
       </div>
       <PopularProductsDivider />
       <PopularProductsSection />
-      <NameDivider />
+      <AllProductsDivider />
       <div
         id="products-card-container"
         className="flex justify-center items-center"

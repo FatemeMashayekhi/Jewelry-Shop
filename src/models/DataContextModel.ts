@@ -75,4 +75,5 @@ export type DataContextType = {
   orders?: OrdersEntity[] | undefined;
   setUpdatedCart?: React.Dispatch<React.SetStateAction<ProductById[]>>;
   updatedCart?: ProductById[];
+  goldPrice?: number | null;
 };

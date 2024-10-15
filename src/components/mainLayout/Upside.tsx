@@ -1,17 +1,18 @@
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
-import NumberConverter from "../number-converter/NumberConverter";
 import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 export default function Upside() {
-  const { updatedCart } = useContext(DataContext);
+  const { updatedCart, goldPrice } = useContext(DataContext);
   return (
     <div id="up-side" className="flex justify-between items-center">
       <div className="flex items-center gap-x-2">
         <Icon className="text-yellow-400 size-7" icon="tabler:coin-filled" />
         <div className="flex flex-col items-center">
           <p className="text-gray-400 text-sm">نرخ امروز طلا</p>
-          <p className="font-bold">{NumberConverter(3905100)} ت</p>
+          <p className="font-bold">
+            {goldPrice ? `${goldPrice} ریال` : "در حال بارگذاری..."}
+          </p>
         </div>
       </div>
       <Link to={"/"} className="font-bold text-2xl">

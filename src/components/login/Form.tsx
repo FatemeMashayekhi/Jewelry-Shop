@@ -5,14 +5,12 @@ import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 
 const schema = z.object({
-  username: z.string().min(1, "Username is required"),
+  username: z.string().min(1, "وارد کردن نام کاربری الزامی است"),
   password: z
     .string()
-    .min(6, "Password must be at least 6 characters long")
-    .regex(
-      /^(?=.*[a-zA-Z])(?=.*\d)/,
-      "Password must contain both letters and numbers"
-    ),
+    .min(1, "وارد کردن رمز عبور الزامی است")
+    .min(6, "رمز عبور باید حداقل 6 کاراکتر باشد")
+    .regex(/^(?=.*[a-zA-Z])(?=.*\d)/, "رمز عبور باید شامل عدد و حروف باشد"),
 });
 
 type FormData = z.infer<typeof schema>;

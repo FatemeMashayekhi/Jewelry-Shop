@@ -69,6 +69,9 @@ const SelectField: React.FC<SelectFieldProps> = ({
 
 export default function AddForm() {
   const [description, setDescription] = useState("");
+  const [categories, setCategories] = useState<AddFormCategory[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+
   const {
     handlePostNewProduct,
     getAllCategories,
@@ -85,9 +88,6 @@ export default function AddForm() {
     setValue,
     watch,
   } = useForm<FormDataTypes>();
-
-  const [categories, setCategories] = useState<AddFormCategory[]>([]);
-  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
 
   useEffect(() => {
     if (editedProduct) {
@@ -127,9 +127,17 @@ export default function AddForm() {
   const onSubmit = (data: FormDataTypes) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
-      if (key === "thumbnail" && value.length > 0) {
+      if (
+        key === "thumbnail" &&
+        value instanceof FileList &&
+        value.length > 0
+      ) {
         formData.append(key, value[0]);
-      } else if (key === "images" && value.length > 0) {
+      } else if (
+        key === "images" &&
+        value instanceof FileList &&
+        value.length > 0
+      ) {
         Array.from(value).forEach((image) => formData.append(key, image));
       } else {
         if (key !== "thumbnail" && key !== "images") {
@@ -156,7 +164,9 @@ export default function AddForm() {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data) => {
+        onSubmit(data);
+      })}
       className="grid grid-cols-2 gap-x-8 gap-y-3 font-bold"
     >
       <div className="flex flex-col gap-y-2">
@@ -166,7 +176,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="name"
-          validation={{ required: "name is required" }}
+          validation={{ required: "وارد کردن نام کالا الزامی است" }}
         />
         <SelectField
           label="دسته بندی"
@@ -174,7 +184,7 @@ export default function AddForm() {
           errors={errors}
           name="category"
           options={categories}
-          validation={{ required: "category field is required" }}
+          validation={{ required: "وارد کردن دسته بندی الزامی است" }}
           watch={watch}
         />
         <SelectField
@@ -183,7 +193,7 @@ export default function AddForm() {
           errors={errors}
           name="subcategory"
           options={subCategories}
-          validation={{ required: "subcategory field is required" }}
+          validation={{ required: "وارد کردن زیر مجموعه الزامی است" }}
           watch={watch}
         />
       </div>
@@ -194,7 +204,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="quantity"
-          validation={{ required: "quantity is required" }}
+          validation={{ required: "وارد کردن تعداد الزامی است" }}
         />
         <InputField
           label="قیمت"
@@ -202,7 +212,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="price"
-          validation={{ required: "price is required" }}
+          validation={{ required: "وارد کردن قیمت الزامی است" }}
         />
         <InputField
           label="تخفیف"
@@ -210,7 +220,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="discount"
-          validation={{ required: "discount is required" }}
+          validation={{ required: "وارد کردن تخفیف الزامی است" }}
         />
         <InputField
           label="برند"
@@ -218,7 +228,7 @@ export default function AddForm() {
           register={register}
           errors={errors}
           name="brand"
-          validation={{ required: "brand is required" }}
+          validation={{ required: "وارد کردن برند الزامی است" }}
         />
       </div>
       <div className="col-span-2 flex gap-3">
@@ -247,24 +257,19 @@ export default function AddForm() {
         </label>
       </div>
       <div className="col-span-2 flex flex-col gap-y-3">
-        <Editor description={description} setDescription={setDescription} />
+        <Editor
+          description={description}
+          setDescription={setDescription}
+          required={true}
+        />
       </div>
 
-      {editedProduct ? (
-        <button
-          type="submit"
-          className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
-        >
-          ویرایش
-        </button>
-      ) : (
-        <button
-          type="submit"
-          className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
-        >
-          ذخیره
-        </button>
-      )}
+      <button
+        type="submit"
+        className="btn bg-[#102C57] text-white rounded-lg w-[90%] hover:bg-[#305fac] focus:ring-2 focus:ring-[#102C57]"
+      >
+        {editedProduct ? "ویرایش" : "ذخیره"}
+      </button>
     </form>
   );
 }
