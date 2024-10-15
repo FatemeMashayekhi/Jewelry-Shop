@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
+import removeHtmlTagsAndEntities from "../remove-tags/RemoveTags";
 
 export default function InformationSide() {
   const { singleProduct, setUpdatedCart } = useContext(DataContext);
@@ -57,7 +58,7 @@ export default function InformationSide() {
             </div>
             <div className="flex flex-col gap-y-2">
               <p>توضیحات :</p>
-              <p>{singleProduct.description}</p>
+              <p>{removeHtmlTagsAndEntities(singleProduct.description)}</p>
             </div>
             <div className="flex gap-x-2 items-center">
               <p>تعداد :</p>
