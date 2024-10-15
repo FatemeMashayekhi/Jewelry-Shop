@@ -5,6 +5,7 @@ import OfferSection from "../components/home/OfferSection";
 import PopularProductsDivider from "../components/divider/PopularProductsDivider";
 import PopularProductsSection from "../components/home/PopularProductsSection";
 import AllProducts from "../components/home/AllProducts";
+import AllProductsDivider from "../components/divider/AllProductsDivider";
 
 export default function HomePage() {
   return (
@@ -32,7 +33,7 @@ export default function HomePage() {
       </div>
       <PopularProductsDivider />
       <PopularProductsSection />
-      <NameDivider />
+      <AllProductsDivider />
       <div
         id="products-card-container"
         className="flex justify-center items-center"
