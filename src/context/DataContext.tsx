@@ -260,6 +260,16 @@ export const DataContextProvider = ({
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   }, [updatedCart]);
 
+  ///get gold price
+  const { data: goldPrice } = useQuery({
+    queryKey: ["getGoldPrice"],
+    queryFn: async () => {
+      const goldPrice = await dataService.fetchGoldPrice();
+      return goldPrice;
+    },
+    refetchInterval: 5 * 60 * 1000,
+  });
+
   return (
     <DataContext.Provider
       value={{
@@ -294,6 +304,7 @@ export const DataContextProvider = ({
         orders,
         setUpdatedCart,
         updatedCart,
+        goldPrice,
       }}
     >
       {children}

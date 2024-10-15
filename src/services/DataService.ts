@@ -10,6 +10,7 @@ import {
   GET_ALL_PRODUCTS,
   GET_ALL_PRODUCTS_BY_ID,
   GET_CATEGORY_BY_ID,
+  GET_GOLD_PRICE,
   POPULAR_PRODUCTS_URL,
   POST_PRODUCTS,
   PRODUCTS_URL,
@@ -133,6 +134,12 @@ export const getCategoryById = async (id: string) => {
   }
 };
 
+const fetchGoldPrice = async () => {
+  const response = await fetch(GET_GOLD_PRICE);
+  const data = await response.json();
+  return data.current.geram18.p;
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -147,6 +154,7 @@ const dataService = {
   getPopularProducts,
   getProducts,
   getCategoryById,
+  fetchGoldPrice,
 };
 
 export default dataService;
