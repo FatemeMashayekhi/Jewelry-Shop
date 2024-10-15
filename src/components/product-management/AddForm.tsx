@@ -127,9 +127,17 @@ export default function AddForm() {
   const onSubmit = (data: FormDataTypes) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
-      if (key === "thumbnail" && value.length > 0) {
+      if (
+        key === "thumbnail" &&
+        value instanceof FileList &&
+        value.length > 0
+      ) {
         formData.append(key, value[0]);
-      } else if (key === "images" && value.length > 0) {
+      } else if (
+        key === "images" &&
+        value instanceof FileList &&
+        value.length > 0
+      ) {
         Array.from(value).forEach((image) => formData.append(key, image));
       } else {
         if (key !== "thumbnail" && key !== "images") {
