@@ -71,7 +71,6 @@ export default function AddForm() {
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<AddFormCategory[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
-  const [showErrors, setShowErrors] = useState(false);
 
   const {
     handlePostNewProduct,
@@ -158,7 +157,6 @@ export default function AddForm() {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        setShowErrors(true);
         onSubmit(data);
       })}
       className="grid grid-cols-2 gap-x-8 gap-y-3 font-bold"
@@ -255,7 +253,6 @@ export default function AddForm() {
           description={description}
           setDescription={setDescription}
           required={true}
-          showError={showErrors}
         />
       </div>
 
