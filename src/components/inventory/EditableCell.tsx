@@ -1,73 +1,42 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 
 interface EditableCellProps {
   value: string | number;
-  onSave: (newValue: string) => void;
-  rowId: string;
-  columnName: string;
+  onSave: (newValue: string | number) => void;
 }
 
-const EditableCell: React.FC<EditableCellProps> = ({
-  value,
-  onSave,
-  rowId,
-  columnName,
-}) => {
+const EditableCell: React.FC<EditableCellProps> = ({ value, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isEditing]);
 
   const handleSave = () => {
-    setIsEditing(false);
-    onSave(String(inputValue));
-    saveToLocalStorage(rowId, columnName, String(inputValue));
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    setInputValue(value);
+    onSave(inputValue);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleSave();
+      setIsEditing(true); // Keep it in edit mode
     } else if (e.key === "Escape") {
-      handleCancel();
+      setInputValue(value);
     }
   };
 
-  return isEditing ? (
-    <input
-      ref={inputRef}
-      type="text"
-      value={inputValue}
-      onChange={(e) => setInputValue(e.target.value)}
-      onBlur={handleCancel}
-      onKeyDown={handleKeyDown}
-      className="border border-gray-300 rounded p-1"
-    />
-  ) : (
-    <div onClick={() => setIsEditing(true)}>{value}</div>
+  return (
+    <td className="p-2 border border-gray-300">
+      {isEditing ? (
+        <input
+          type="text"
+          value={String(inputValue)}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="w-full p-1 border rounded"
+        />
+      ) : (
+        <div onClick={() => setIsEditing(true)}>{value}</div>
+      )}
+    </td>
   );
-};
-
-const saveToLocalStorage = (
-  rowId: string,
-  columnName: string,
-  value: string
-) => {
-  const data = JSON.parse(localStorage.getItem("editedData") || "{}");
-  if (!data[rowId]) {
-    data[rowId] = {};
-  }
-  data[rowId][columnName] = value;
-  localStorage.setItem("editedData", JSON.stringify(data));
 };
 
 export default EditableCell;
