@@ -298,6 +298,13 @@ export const DataContextProvider = ({
     postOrder.mutate(order);
   };
 
+  ///handle inventory edit
+  const [editedInventory, setEditedInventory] = useState<{
+    [id: string]: FormData;
+  }>({});
+  const [editedInventoryIds, setEditedInventoryIds] = useState<string[]>([]);
+  const [flag, setFlag] = useState(false);
+
   return (
     <DataContext.Provider
       value={{
@@ -337,6 +344,12 @@ export const DataContextProvider = ({
         orderTotalPages,
         setOrderPage,
         orderPage,
+        editedInventory,
+        setEditedInventory,
+        editedInventoryIds,
+        setEditedInventoryIds,
+        flag,
+        setFlag,
       }}
     >
       {children}

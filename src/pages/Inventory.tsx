@@ -1,57 +1,29 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext } from "react";
+import InventoryTable from "../components/inventory/InventoryTable";
 import Pagination from "../components/pagination/Pagination";
 import { DataContext } from "../context/DataContext";
-import Table from "../components/table/Table";
-import { Column } from "../models/TableModel";
-import { ProductsEntity } from "../models/GetProductsModel";
-import axios from "../services/baseService";
-import { toast } from "react-toastify";
 
 export default function Inventory() {
-  const { getAllProducts, setAllProducts } = useContext(DataContext);
+  const {
+    handleEditProduct,
+    editedInventory,
+    editedInventoryIds,
+    setFlag,
+    setEditedInventoryIds,
+  } = useContext(DataContext);
 
-  const inventoryColumns: Column<ProductsEntity>[] = [
-    { key: "name", label: "کالا" },
-    { key: "price", label: "قیمت" },
-    { key: "quantity", label: "موجودی" },
-  ];
-
-  const EDIT_PRODUCT_BY_ID = (id: string) => `/products/${id}`;
-
-  const editProduct = async (id: string, product: any) => {
-    try {
-      const res = await axios.patch(EDIT_PRODUCT_BY_ID(id), product);
-      return res.data;
-    } catch (e) {
-      console.log(e);
+  const handleSave = () => {
+    if (editedInventory && editedInventoryIds) {
+      editedInventoryIds.forEach((id) => {
+        const formData = editedInventory[id];
+        if (formData) {
+          handleEditProduct?.(id, formData);
+        }
+      });
+      ///set btn disable and inputs become table cells
+      setFlag?.(true);
+      setEditedInventoryIds?.([]);
     }
-  };
-
-  const handleSaveAll = async () => {
-    const editedData = JSON.parse(localStorage.getItem("editedData") || "{}");
-
-    for (const rowId in editedData) {
-      const product = new FormData();
-      for (const columnName in editedData[rowId]) {
-        product.append(columnName, editedData[rowId][columnName]);
-      }
-      await editProduct(rowId, product);
-    }
-
-    // Update state with new products data
-    if (setAllProducts) {
-      setAllProducts((prevProducts: ProductsEntity[]) =>
-        prevProducts.map((product: ProductsEntity) =>
-          editedData[product._id]
-            ? { ...product, ...editedData[product._id] }
-            : product
-        )
-      );
-    }
-
-    localStorage.removeItem("editedData");
-    toast.success("محصول با موفقیت ویرایش شد");
   };
 
   return (
@@ -61,17 +33,15 @@ export default function Inventory() {
           <p className="font-semibold">مدیریت موجودی و قیمت ها</p>
           <button
             className="btn btn-wide rounded-lg bg-green-600 text-white"
-            onClick={handleSaveAll}
+            onClick={handleSave}
+            disabled={editedInventoryIds?.length === 0}
           >
             ذخیره
           </button>
         </div>
         <div className="bg-[#102C57] p-5 rounded-2xl flex flex-col gap-y-3">
           <div className="bg-[#FEFAF6] p-3 rounded-2xl">
-            <Table
-              columns={inventoryColumns}
-              data={getAllProducts?.data || []}
-            />
+            <InventoryTable />
           </div>
           <div className="flex justify-center">
             <Pagination />

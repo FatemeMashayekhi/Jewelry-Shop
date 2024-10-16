@@ -81,4 +81,13 @@ export type DataContextType = {
   orderTotalPages?: string;
   setOrderPage?: React.Dispatch<React.SetStateAction<string>>;
   orderPage?: string;
+  updateProduct?: (id: string, key: string, value: string | number) => void;
+  editedInventory?: { [id: string]: FormData };
+  setEditedInventory?: React.Dispatch<
+    React.SetStateAction<{ [id: string]: FormData }>
+  >;
+  editedInventoryIds?: string[];
+  setEditedInventoryIds?: React.Dispatch<React.SetStateAction<string[]>>;
+  flag?: boolean;
+  setFlag?: React.Dispatch<React.SetStateAction<boolean>>;
 };
