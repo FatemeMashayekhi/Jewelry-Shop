@@ -78,4 +78,7 @@ export type DataContextType = {
   updatedCart?: ProductById[];
   goldPrice?: number | null;
   handlePostOrder?: (order: Order) => void;
+  orderTotalPages?: string;
+  setOrderPage?: React.Dispatch<React.SetStateAction<string>>;
+  orderPage?: string;
 };

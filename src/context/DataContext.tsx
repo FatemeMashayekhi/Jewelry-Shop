@@ -236,12 +236,18 @@ export const DataContextProvider = ({
   ///get all orders
   const [status, setStatus] = useState("true");
   const [orders, setOrders] = useState<OrdersEntity[]>();
+  const [orderPage, setOrderPage] = useState<string>("1");
+  const [orderTotalPages, setOrderTotalPages] = useState<string>("1");
   useEffect(() => {
     const fetchOrders = async () => {
       if (status) {
         try {
-          const orders = await dataService.getAllOrders(String(status));
+          const orders = await dataService.getAllOrders(
+            String(status),
+            orderPage
+          );
           setOrders(orders.data.orders);
+          setOrderTotalPages(orders.total_pages);
         } catch (error) {
           console.error("Failed to fetch orders:", error);
         }
@@ -249,7 +255,7 @@ export const DataContextProvider = ({
     };
 
     fetchOrders();
-  }, [status]);
+  }, [status, orderPage]);
 
   ///update cart items in local storage
   const [updatedCart, setUpdatedCart] = useState<ProductById[]>(() => {
@@ -328,6 +334,9 @@ export const DataContextProvider = ({
         updatedCart,
         goldPrice,
         handlePostOrder,
+        orderTotalPages,
+        setOrderPage,
+        orderPage,
       }}
     >
       {children}

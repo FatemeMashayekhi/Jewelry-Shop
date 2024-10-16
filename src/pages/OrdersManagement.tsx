@@ -55,7 +55,7 @@ export default function OrdersManagement() {
             />
           </div>
           <div className="flex justify-center">
-            <Pagination />
+            <Pagination isOrderPagination={true} />
           </div>
         </div>
       </div>

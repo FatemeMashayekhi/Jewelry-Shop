@@ -100,9 +100,9 @@ export const postLogin = async (admin: Admin) => {
   }
 };
 
-export const getAllOrders = async (status: string) => {
+export const getAllOrders = async (status: string, orderPage: string) => {
   try {
-    const res = await axios.get(GET_ALL_ORDERS(status));
+    const res = await axios.get(GET_ALL_ORDERS(status, orderPage));
     return res.data;
   } catch (e) {
     console.log(e);
