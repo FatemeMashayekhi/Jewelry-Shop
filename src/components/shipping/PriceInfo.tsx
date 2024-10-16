@@ -27,7 +27,12 @@ export default function PriceInfo() {
         <p>مبلغ قابل پرداخت</p>
         <p>{NumberConverter(totalDiscount)} تومان</p>
       </div>
-      <button className="btn btn-wide rounded-lg">پرداخت</button>
+      <button
+        className="btn btn-wide rounded-lg"
+        onClick={() => (window.location.href = "http://localhost:7000/")}
+      >
+        پرداخت
+      </button>
     </div>
   );
 }
