@@ -9,6 +9,7 @@ import { ProductsEntity } from "../models/GetProductsModel";
 import { ProductById } from "../models/ProductByIdModel";
 import { CategoryByID } from "../models/CategoryByIdModel";
 import { OrdersEntity } from "../models/GetOrdersModel";
+import { Order } from "../models/OrdersModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -270,6 +271,27 @@ export const DataContextProvider = ({
     refetchInterval: 5 * 60 * 1000,
   });
 
+  ///post order
+  const postOrder = useMutation({
+    mutationFn: async (order: Order) => {
+      const newOrder = await dataService.postOrder(order);
+      return newOrder.data.orders;
+    },
+    onSuccess: () => {
+      toast.success("سفارش شما با موفقیت ثبت شد");
+
+      setUpdatedCart([]);
+    },
+    onError: (error) => {
+      toast.error("خطا در ثبت سفارش. لطفا دوباره تلاش کنید");
+      console.error("Order submission error:", error);
+    },
+  });
+
+  const handlePostOrder = (order: Order) => {
+    postOrder.mutate(order);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -305,6 +327,7 @@ export const DataContextProvider = ({
         setUpdatedCart,
         updatedCart,
         goldPrice,
+        handlePostOrder,
       }}
     >
       {children}

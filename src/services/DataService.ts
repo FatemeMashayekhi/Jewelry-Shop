@@ -1,4 +1,5 @@
 import { Admin } from "../models/DataContextModel";
+import { Order } from "../models/OrdersModel";
 import axios from "../services/baseService";
 import {
   ADMIN_LOGIN_URL,
@@ -12,6 +13,7 @@ import {
   GET_CATEGORY_BY_ID,
   GET_GOLD_PRICE,
   POPULAR_PRODUCTS_URL,
+  POST_ORDER,
   POST_PRODUCTS,
   PRODUCTS_URL,
   SUBCATEGORIES_URL,
@@ -140,6 +142,15 @@ const fetchGoldPrice = async () => {
   return data.current.geram18.p;
 };
 
+export const postOrder = async (order: Order) => {
+  try {
+    const res = await axios.post(POST_ORDER, order);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -155,6 +166,7 @@ const dataService = {
   getProducts,
   getCategoryById,
   fetchGoldPrice,
+  postOrder,
 };
 
 export default dataService;

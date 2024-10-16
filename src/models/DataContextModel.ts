@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import { OrdersEntity } from "./GetOrdersModel";
 import { ProductById } from "./ProductByIdModel";
 import { CategoryByID } from "./CategoryByIdModel";
+import { Order } from "./OrdersModel";
 
 export interface Admin {
   username: string;
@@ -76,4 +77,5 @@ export type DataContextType = {
   setUpdatedCart?: React.Dispatch<React.SetStateAction<ProductById[]>>;
   updatedCart?: ProductById[];
   goldPrice?: number | null;
+  handlePostOrder?: (order: Order) => void;
 };
