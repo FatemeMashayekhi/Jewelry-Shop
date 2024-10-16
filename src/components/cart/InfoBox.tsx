@@ -10,6 +10,11 @@ export default function InfoBox() {
     updatedCart?.reduce((acc, item) => {
       return acc + item.price * (item.count ?? 1);
     }, 0) ?? 0;
+
+  const totalDiscount =
+    updatedCart?.reduce((acc, item) => {
+      return acc + ((item.price * item.discount) / 100) * (item.count || 1);
+    }, 0) ?? 0;
   return (
     <div>
       <div
@@ -21,8 +26,8 @@ export default function InfoBox() {
           <p>{NumberConverter(totalPrice)} تومان</p>
         </div>
         <div className="flex justify-between">
-          <p>سود شما از خرید</p>
-          <p>53%</p>
+          <p>مبلغ قابل پرداخت</p>
+          <p>{NumberConverter(totalDiscount)} تومان</p>
         </div>
         <button
           className="btn btn-wide rounded-lg"

@@ -80,8 +80,16 @@ export default function ProductCard() {
               </button>
             </div>
             <div className="flex flex-col gap-y-1">
-              <p>{item.discount}% تخفیف</p>
               <p>{NumberConverter(item.price * (item.count || 1))} تومان</p>
+              <div className="flex gap-x-2">
+                <p>{item.discount}% تخفیف :</p>
+                <p>
+                  {NumberConverter(
+                    ((item.price * item.discount) / 100) * (item.count || 1)
+                  )}
+                  تومان
+                </p>
+              </div>
             </div>
           </div>
         </div>
