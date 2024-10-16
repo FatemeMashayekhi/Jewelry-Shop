@@ -1,22 +1,26 @@
-import { Icon } from "@iconify/react";
 import { useContext, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
+import { Icon } from "@iconify/react";
 
-export default function Pagination() {
-  const { setPage, page, totalPages = 1 } = useContext(DataContext);
+export default function OrdersPagination() {
+  const {
+    orderTotalPages = 1,
+    setOrderPage,
+    orderPage,
+  } = useContext(DataContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1");
   const navigate = useNavigate();
 
   useEffect(() => {
-    setPage?.(currentPage.toString());
-  }, [currentPage, setPage, totalPages, page, navigate]);
+    setOrderPage?.(currentPage.toString());
+  }, [currentPage, setOrderPage, orderTotalPages, orderPage, navigate]);
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
+    if (currentPage < Number(orderTotalPages)) {
       const nextPage = currentPage + 1;
-      setPage?.(nextPage.toString());
+      setOrderPage?.(nextPage.toString());
       searchParams.set("page", nextPage.toString());
       setSearchParams(searchParams);
     }
@@ -25,7 +29,7 @@ export default function Pagination() {
   const handlePrevPage = () => {
     if (currentPage > 1) {
       const prevPage = currentPage - 1;
-      setPage?.(prevPage.toString());
+      setOrderPage?.(prevPage.toString());
       searchParams.set("page", prevPage.toString());
       setSearchParams(searchParams);
     }
