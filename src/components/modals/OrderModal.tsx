@@ -5,7 +5,13 @@ import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 
 export default function OrderModal() {
-  const { openOrderModal, setOpenOrderModal } = useContext(DataContext);
+  const {
+    openOrderModal,
+    setOpenOrderModal,
+    handleUpdateOrderStatus,
+    orderModalItem,
+  } = useContext(DataContext);
+
   return (
     openOrderModal && (
       <div
@@ -31,7 +37,14 @@ export default function OrderModal() {
           <div id="modal-body" className="px-4 py-5 flex flex-col gap-y-6">
             <OrderDetails />
             <OrderModalTable />
-            <button className="btn btn-xs rounded-lg bg-green-700 text-white sm:btn-sm md:btn-md lg:btn-lg">
+            <button
+              className="btn btn-xs rounded-lg bg-green-700 text-white sm:btn-sm md:btn-md lg:btn-lg"
+              onClick={() =>
+                orderModalItem?._id &&
+                handleUpdateOrderStatus &&
+                handleUpdateOrderStatus(orderModalItem._id)
+              }
+            >
               تحویل شد
             </button>
           </div>

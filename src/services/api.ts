@@ -21,3 +21,5 @@ export const GET_GOLD_PRICE =
   "https://call4.tgju.org/ajax.json?rev=OEBrXzqlu4551qHalU98a9A9BLH1fZlc1jRkettV1GoDP0TWVsRkWMNsXaTI";
 
 export const POST_ORDER = "http://localhost:8000/api/orders";
+
+export const UPDATE_ORDER_STATUS = (id: string) => `/orders/${id}`;

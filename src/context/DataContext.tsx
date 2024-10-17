@@ -315,6 +315,23 @@ export const DataContextProvider = ({
     console.log(item);
   };
 
+  ///update order status
+  const updateOrderStatus = useMutation({
+    mutationFn: async (id: string) => {
+      const updatedOrder = await dataService.updateOrderStatus(id);
+      return updatedOrder;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getAllOrders"] });
+      toast.success("وضعیت سفارش با موفقیت به روز شد");
+    },
+  });
+
+  const handleUpdateOrderStatus = (id: string) => {
+    updateOrderStatus.mutate(id);
+    setOpenOrderModal(false);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -364,6 +381,7 @@ export const DataContextProvider = ({
         openOrderModal,
         setOpenOrderModal,
         orderModalItem,
+        handleUpdateOrderStatus,
       }}
     >
       {children}

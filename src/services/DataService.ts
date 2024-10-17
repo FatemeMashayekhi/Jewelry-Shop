@@ -17,6 +17,7 @@ import {
   POST_PRODUCTS,
   PRODUCTS_URL,
   SUBCATEGORIES_URL,
+  UPDATE_ORDER_STATUS,
 } from "./api";
 
 export const getAllCategories = async () => {
@@ -151,6 +152,18 @@ export const postOrder = async (order: Order) => {
   }
 };
 
+export const updateOrderStatus = async (id: string) => {
+  try {
+    const updateData = {
+      deliveryStatus: true,
+    };
+    const res = await axios.patch(UPDATE_ORDER_STATUS(id), updateData);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -167,6 +180,7 @@ const dataService = {
   getCategoryById,
   fetchGoldPrice,
   postOrder,
+  updateOrderStatus,
 };
 
 export default dataService;
