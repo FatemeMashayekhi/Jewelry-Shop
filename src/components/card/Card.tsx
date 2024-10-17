@@ -25,7 +25,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
   };
 
   const calculateDiscountedPrice = (price: number, discount: number) => {
-    return (price * (100 - discount)) / 100;
+    return (discount / 100) * price;
   };
 
   return (

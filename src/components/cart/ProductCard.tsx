@@ -85,7 +85,7 @@ export default function ProductCard() {
                 <p>{item.discount}% تخفیف :</p>
                 <p>
                   {NumberConverter(
-                    ((item.price * item.discount) / 100) * (item.count || 1)
+                    (item.discount / 100) * item.price * (item.count || 1)
                   )}
                   تومان
                 </p>

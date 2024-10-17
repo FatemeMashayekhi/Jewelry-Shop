@@ -63,7 +63,7 @@ export default function InformationSide() {
               <p>قیمت کالا با تخفیف :</p>
               <p>
                 {NumberConverter(
-                  (singleProduct.price * singleProduct.discount) / 100
+                  (singleProduct.discount / 100) * singleProduct.price
                 )}
               </p>
               <p>تومان</p>

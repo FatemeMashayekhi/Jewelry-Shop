@@ -11,7 +11,7 @@ export default function PriceInfo() {
 
   const totalDiscount =
     updatedCart?.reduce((acc, item) => {
-      return acc + ((item.price * item.discount) / 100) * (item.count || 1);
+      return acc + (item.discount / 100) * item.price * (item.count || 1);
     }, 0) ?? 0;
 
   return (
