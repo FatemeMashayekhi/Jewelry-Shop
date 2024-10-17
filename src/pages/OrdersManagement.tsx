@@ -6,9 +6,11 @@ import { Action, Column } from "../models/TableModel";
 import { OrdersEntity } from "../models/GetOrdersModel";
 import OrdersPagination from "../components/pagination/OrdersPagination";
 import NumberConverter from "../components/number-converter/NumberConverter";
+import OrderModal from "../components/modals/OrderModal";
+import DateConverter from "../components/dateConverter/DateConverter";
 
 export default function OrdersManagement() {
-  const { orders } = useContext(DataContext);
+  const { orders, checkOrderHandler } = useContext(DataContext);
   const orderColumns: Column<OrdersEntity>[] = [
     {
       key: "user",
@@ -23,7 +25,7 @@ export default function OrdersManagement() {
     {
       key: "createdAt",
       label: "زمان ثبت سفارش",
-      render: (item) => new Date(item.createdAt).toISOString().slice(0, 10),
+      render: (item) => DateConverter(item.createdAt),
     },
   ];
 
@@ -31,7 +33,7 @@ export default function OrdersManagement() {
     {
       label: "بررسی سفارش",
       className: "bg-blue-500 text-white",
-      handler: (item) => console.log("Review order", item),
+      handler: (item) => checkOrderHandler && checkOrderHandler(item),
     },
   ];
 
@@ -54,6 +56,7 @@ export default function OrdersManagement() {
             <OrdersPagination />
           </div>
         </div>
+        <OrderModal />
       </div>
     </>
   );

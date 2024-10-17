@@ -90,4 +90,8 @@ export type DataContextType = {
   setEditedInventoryIds?: React.Dispatch<React.SetStateAction<string[]>>;
   flag?: boolean;
   setFlag?: React.Dispatch<React.SetStateAction<boolean>>;
+  checkOrderHandler?: (item: OrdersEntity) => void;
+  openOrderModal?: boolean;
+  setOpenOrderModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  orderModalItem?: OrdersEntity;
 };

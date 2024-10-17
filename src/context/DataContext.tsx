@@ -305,6 +305,16 @@ export const DataContextProvider = ({
   const [editedInventoryIds, setEditedInventoryIds] = useState<string[]>([]);
   const [flag, setFlag] = useState(false);
 
+  ///orders management modal
+  const [openOrderModal, setOpenOrderModal] = useState(false);
+  const [orderModalItem, setOrderModalItem] = useState<OrdersEntity>();
+
+  const checkOrderHandler = (item: OrdersEntity) => {
+    setOpenOrderModal(true);
+    setOrderModalItem(item);
+    console.log(item);
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -350,6 +360,10 @@ export const DataContextProvider = ({
         setEditedInventoryIds,
         flag,
         setFlag,
+        checkOrderHandler,
+        openOrderModal,
+        setOpenOrderModal,
+        orderModalItem,
       }}
     >
       {children}
