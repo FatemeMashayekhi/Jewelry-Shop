@@ -40,10 +40,15 @@ export default function InfoBox() {
         <button
           className="btn btn-wide rounded-lg"
           onClick={() => navigate("/checkout/shipping")}
+          disabled={!updatedCart || updatedCart.length === 0}
         >
           تایید و تکمیل سفارش
         </button>
-        <button className="btn btn-wide rounded-lg" onClick={handleCancelOrder}>
+        <button
+          className="btn btn-wide rounded-lg"
+          onClick={handleCancelOrder}
+          disabled={!updatedCart || updatedCart.length === 0}
+        >
           انصراف از خرید
         </button>
       </div>
