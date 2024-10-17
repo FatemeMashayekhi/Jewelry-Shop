@@ -5,7 +5,7 @@ import NumberConverter from "../number-converter/NumberConverter";
 
 export default function InfoBox() {
   const navigate = useNavigate();
-  const { updatedCart } = useContext(DataContext);
+  const { updatedCart, setUpdatedCart } = useContext(DataContext);
   const totalPrice =
     updatedCart?.reduce((acc, item) => {
       return acc + item.price * (item.count ?? 1);
@@ -15,6 +15,14 @@ export default function InfoBox() {
     updatedCart?.reduce((acc, item) => {
       return acc + (item.discount / 100) * item.price * (item.count || 1);
     }, 0) ?? 0;
+
+  const handleCancelOrder = () => {
+    if (setUpdatedCart) {
+      setUpdatedCart([]);
+    }
+    navigate("/");
+  };
+
   return (
     <div>
       <div
@@ -34,6 +42,9 @@ export default function InfoBox() {
           onClick={() => navigate("/checkout/shipping")}
         >
           تایید و تکمیل سفارش
+        </button>
+        <button className="btn btn-wide rounded-lg" onClick={handleCancelOrder}>
+          انصراف از خرید
         </button>
       </div>
     </div>
