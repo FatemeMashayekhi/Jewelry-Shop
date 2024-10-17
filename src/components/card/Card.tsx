@@ -24,6 +24,10 @@ const CardComponent: React.FC<CardComponentProps> = ({
     navigate(linkTo);
   };
 
+  const calculateDiscountedPrice = (price: number, discount: number) => {
+    return (discount / 100) * price;
+  };
+
   return (
     <div id="card" className={cardClassName} onClick={handleClick}>
       {isCategory ? (
@@ -56,10 +60,33 @@ const CardComponent: React.FC<CardComponentProps> = ({
             className="w-72 h-80 rounded-t-lg"
           />
           <div className="font-semibold text-sm flex flex-col py-2 px-4">
-            <p>{(item as ProductsEntity).name}</p>
-            <div className="flex gap-x-2 justify-end">
-              <p className="text-gray-400 text-xs">تومان</p>
-              <p>{NumberConverter((item as ProductsEntity).price)}</p>
+            <p className="text-right">{(item as ProductsEntity).name}</p>
+            <div className="flex flex-col">
+              <div className="flex gap-x-2">
+                <p
+                  className={
+                    (item as ProductsEntity).discount
+                      ? "line-through text-gray-400"
+                      : ""
+                  }
+                >
+                  {NumberConverter((item as ProductsEntity).price)}
+                </p>
+                <p className="text-gray-400 text-xs">تومان</p>
+              </div>
+              {(item as ProductsEntity).discount > 0 && (
+                <div className="flex gap-x-2">
+                  <p>
+                    {NumberConverter(
+                      calculateDiscountedPrice(
+                        (item as ProductsEntity).price,
+                        (item as ProductsEntity).discount
+                      )
+                    )}
+                  </p>
+                  <p className="text-gray-400 text-xs">تومان</p>
+                </div>
+              )}
             </div>
           </div>
         </>

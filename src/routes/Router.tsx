@@ -11,6 +11,7 @@ import Inventory from "../pages/Inventory";
 import OrdersManagement from "../pages/OrdersManagement";
 import ProtectedRoute from "../components/protected-route/ProtectedRoute";
 import Shipping from "../pages/Shipping";
+import PaymentResult from "../pages/PaymentResult";
 
 export default function Router() {
   return (
@@ -22,6 +23,7 @@ export default function Router() {
           <Route path="/:productId" element={<ProductDetails />} />
           <Route path="checkout/cart" element={<Cart />} />
           <Route path="checkout/shipping" element={<Shipping />} />
+          <Route path="payment/result" element={<PaymentResult />} />
         </Route>
         <Route path="/login" element={<Login />} />
 

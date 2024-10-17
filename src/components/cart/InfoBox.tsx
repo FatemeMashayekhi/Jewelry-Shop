@@ -5,11 +5,24 @@ import NumberConverter from "../number-converter/NumberConverter";
 
 export default function InfoBox() {
   const navigate = useNavigate();
-  const { updatedCart } = useContext(DataContext);
+  const { updatedCart, setUpdatedCart } = useContext(DataContext);
   const totalPrice =
     updatedCart?.reduce((acc, item) => {
       return acc + item.price * (item.count ?? 1);
     }, 0) ?? 0;
+
+  const totalDiscount =
+    updatedCart?.reduce((acc, item) => {
+      return acc + (item.discount / 100) * item.price * (item.count || 1);
+    }, 0) ?? 0;
+
+  const handleCancelOrder = () => {
+    if (setUpdatedCart) {
+      setUpdatedCart([]);
+    }
+    navigate("/");
+  };
+
   return (
     <div>
       <div
@@ -21,14 +34,22 @@ export default function InfoBox() {
           <p>{NumberConverter(totalPrice)} تومان</p>
         </div>
         <div className="flex justify-between">
-          <p>سود شما از خرید</p>
-          <p>53%</p>
+          <p>مبلغ قابل پرداخت</p>
+          <p>{NumberConverter(totalDiscount)} تومان</p>
         </div>
         <button
           className="btn btn-wide rounded-lg"
           onClick={() => navigate("/checkout/shipping")}
+          disabled={!updatedCart || updatedCart.length === 0}
         >
           تایید و تکمیل سفارش
+        </button>
+        <button
+          className="btn btn-wide rounded-lg"
+          onClick={handleCancelOrder}
+          disabled={!updatedCart || updatedCart.length === 0}
+        >
+          انصراف از خرید
         </button>
       </div>
     </div>

@@ -8,7 +8,8 @@ export default function Timing() {
 
   const handleDateChange = (value: DateObject | null) => {
     if (value) {
-      localStorage.setItem("deliveryDate", value.toDate().toISOString());
+      const deliveryDate = value.toDate().toISOString();
+      localStorage.setItem("deliveryDate", deliveryDate);
     }
   };
 

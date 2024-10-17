@@ -8,6 +8,12 @@ export default function PriceInfo() {
     updatedCart?.reduce((acc, item) => {
       return acc + item.price * (item.count ?? 1);
     }, 0) ?? 0;
+
+  const totalDiscount =
+    updatedCart?.reduce((acc, item) => {
+      return acc + (item.discount / 100) * item.price * (item.count || 1);
+    }, 0) ?? 0;
+
   return (
     <div
       id="price"
@@ -18,10 +24,15 @@ export default function PriceInfo() {
         <p>{NumberConverter(totalPrice)} تومان</p>
       </div>
       <div className="flex justify-between">
-        <p>سود شما از خرید</p>
-        <p>53%</p>
+        <p>مبلغ قابل پرداخت</p>
+        <p>{NumberConverter(totalDiscount)} تومان</p>
       </div>
-      <button className="btn btn-wide rounded-lg">پرداخت</button>
+      <button
+        className="btn btn-wide rounded-lg"
+        onClick={() => (window.location.href = "http://localhost:7000/")}
+      >
+        پرداخت
+      </button>
     </div>
   );
 }

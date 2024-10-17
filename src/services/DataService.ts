@@ -1,4 +1,5 @@
 import { Admin } from "../models/DataContextModel";
+import { Order } from "../models/OrdersModel";
 import axios from "../services/baseService";
 import {
   ADMIN_LOGIN_URL,
@@ -11,10 +12,13 @@ import {
   GET_ALL_PRODUCTS_BY_ID,
   GET_CATEGORY_BY_ID,
   GET_GOLD_PRICE,
+  GET_PRODUCTS,
   POPULAR_PRODUCTS_URL,
+  POST_ORDER,
   POST_PRODUCTS,
   PRODUCTS_URL,
   SUBCATEGORIES_URL,
+  UPDATE_ORDER_STATUS,
 } from "./api";
 
 export const getAllCategories = async () => {
@@ -98,9 +102,9 @@ export const postLogin = async (admin: Admin) => {
   }
 };
 
-export const getAllOrders = async (status: string) => {
+export const getAllOrders = async (status: string, orderPage: string) => {
   try {
-    const res = await axios.get(GET_ALL_ORDERS(status));
+    const res = await axios.get(GET_ALL_ORDERS(status, orderPage));
     return res.data;
   } catch (e) {
     console.log(e);
@@ -140,6 +144,36 @@ const fetchGoldPrice = async () => {
   return data.current.geram18.p;
 };
 
+export const postOrder = async (order: Order) => {
+  try {
+    const res = await axios.post(POST_ORDER, order);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const updateOrderStatus = async (id: string) => {
+  try {
+    const updateData = {
+      deliveryStatus: true,
+    };
+    const res = await axios.patch(UPDATE_ORDER_STATUS(id), updateData);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const GetProducts = async () => {
+  try {
+    const res = await axios.get(GET_PRODUCTS);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -155,6 +189,9 @@ const dataService = {
   getProducts,
   getCategoryById,
   fetchGoldPrice,
+  postOrder,
+  updateOrderStatus,
+  GetProducts,
 };
 
 export default dataService;

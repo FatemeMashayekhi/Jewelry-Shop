@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import { OrdersEntity } from "./GetOrdersModel";
 import { ProductById } from "./ProductByIdModel";
 import { CategoryByID } from "./CategoryByIdModel";
+import { Order } from "./OrdersModel";
 
 export interface Admin {
   username: string;
@@ -76,4 +77,23 @@ export type DataContextType = {
   setUpdatedCart?: React.Dispatch<React.SetStateAction<ProductById[]>>;
   updatedCart?: ProductById[];
   goldPrice?: number | null;
+  handlePostOrder?: (order: Order) => void;
+  orderTotalPages?: string;
+  setOrderPage?: React.Dispatch<React.SetStateAction<string>>;
+  orderPage?: string;
+  updateProduct?: (id: string, key: string, value: string | number) => void;
+  editedInventory?: { [id: string]: FormData };
+  setEditedInventory?: React.Dispatch<
+    React.SetStateAction<{ [id: string]: FormData }>
+  >;
+  editedInventoryIds?: string[];
+  setEditedInventoryIds?: React.Dispatch<React.SetStateAction<string[]>>;
+  flag?: boolean;
+  setFlag?: React.Dispatch<React.SetStateAction<boolean>>;
+  checkOrderHandler?: (item: OrdersEntity) => void;
+  openOrderModal?: boolean;
+  setOpenOrderModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  orderModalItem?: OrdersEntity;
+  handleUpdateOrderStatus?: (id: string, status: string) => void;
+  GetProducts?: UseQueryResult<ProductsEntity[], unknown>;
 };

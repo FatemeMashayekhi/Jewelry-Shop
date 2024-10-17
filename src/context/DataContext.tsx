@@ -9,6 +9,7 @@ import { ProductsEntity } from "../models/GetProductsModel";
 import { ProductById } from "../models/ProductByIdModel";
 import { CategoryByID } from "../models/CategoryByIdModel";
 import { OrdersEntity } from "../models/GetOrdersModel";
+import { Order } from "../models/OrdersModel";
 
 export const DataContext = createContext<DataContextType>({});
 
@@ -235,12 +236,18 @@ export const DataContextProvider = ({
   ///get all orders
   const [status, setStatus] = useState("true");
   const [orders, setOrders] = useState<OrdersEntity[]>();
+  const [orderPage, setOrderPage] = useState<string>("1");
+  const [orderTotalPages, setOrderTotalPages] = useState<string>("1");
   useEffect(() => {
     const fetchOrders = async () => {
       if (status) {
         try {
-          const orders = await dataService.getAllOrders(String(status));
+          const orders = await dataService.getAllOrders(
+            String(status),
+            orderPage
+          );
           setOrders(orders.data.orders);
+          setOrderTotalPages(orders.total_pages);
         } catch (error) {
           console.error("Failed to fetch orders:", error);
         }
@@ -248,7 +255,7 @@ export const DataContextProvider = ({
     };
 
     fetchOrders();
-  }, [status]);
+  }, [status, orderPage]);
 
   ///update cart items in local storage
   const [updatedCart, setUpdatedCart] = useState<ProductById[]>(() => {
@@ -269,6 +276,72 @@ export const DataContextProvider = ({
     },
     refetchInterval: 5 * 60 * 1000,
   });
+
+  ///post order
+  const postOrder = useMutation({
+    mutationFn: async (order: Order) => {
+      const newOrder = await dataService.postOrder(order);
+      return newOrder.data.orders;
+    },
+    onSuccess: () => {
+      toast.success("سفارش شما با موفقیت ثبت شد");
+
+      setUpdatedCart([]);
+    },
+    onError: (error) => {
+      toast.error("خطا در ثبت سفارش. لطفا دوباره تلاش کنید");
+      console.error("Order submission error:", error);
+    },
+  });
+
+  const handlePostOrder = (order: Order) => {
+    postOrder.mutate(order);
+  };
+
+  ///handle inventory edit
+  const [editedInventory, setEditedInventory] = useState<{
+    [id: string]: FormData;
+  }>({});
+  const [editedInventoryIds, setEditedInventoryIds] = useState<string[]>([]);
+  const [flag, setFlag] = useState(false);
+
+  ///orders management modal
+  const [openOrderModal, setOpenOrderModal] = useState(false);
+  const [orderModalItem, setOrderModalItem] = useState<OrdersEntity>();
+
+  const checkOrderHandler = (item: OrdersEntity) => {
+    setOpenOrderModal(true);
+    setOrderModalItem(item);
+  };
+
+  ///update order status
+  const updateOrderStatus = useMutation({
+    mutationFn: async (id: string) => {
+      const updatedOrder = await dataService.updateOrderStatus(id);
+      return updatedOrder;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getAllOrders"] });
+      toast.success("وضعیت سفارش با موفقیت به روز شد");
+    },
+  });
+
+  const handleUpdateOrderStatus = (id: string) => {
+    updateOrderStatus.mutate(id);
+    setOpenOrderModal(false);
+  };
+
+  ///get products
+  const { data: GetProducts } = useQuery({
+    queryKey: ["GetProducts"],
+    queryFn: async () => {
+      const products = await dataService.GetProducts();
+      console.log(products.data.products);
+      return products.data.products;
+    },
+  });
+  console.log(GetProducts);
+  console.log(getAllProducts.data);
 
   return (
     <DataContext.Provider
@@ -305,6 +378,22 @@ export const DataContextProvider = ({
         setUpdatedCart,
         updatedCart,
         goldPrice,
+        handlePostOrder,
+        orderTotalPages,
+        setOrderPage,
+        orderPage,
+        editedInventory,
+        setEditedInventory,
+        editedInventoryIds,
+        setEditedInventoryIds,
+        flag,
+        setFlag,
+        checkOrderHandler,
+        openOrderModal,
+        setOpenOrderModal,
+        orderModalItem,
+        handleUpdateOrderStatus,
+        GetProducts,
       }}
     >
       {children}

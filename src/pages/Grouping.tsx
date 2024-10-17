@@ -26,7 +26,6 @@ export default function Grouping() {
       }
     }
   }, [categoryId, getProducts]);
-  console.log(category);
 
   return (
     <>

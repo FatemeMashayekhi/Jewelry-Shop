@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import removeHtmlTagsAndEntities from "../remove-tags/RemoveTags";
 import { toast } from "react-toastify";
+import NumberConverter from "../number-converter/NumberConverter";
 
 export default function InformationSide() {
   const { singleProduct, setUpdatedCart } = useContext(DataContext);
@@ -35,7 +36,7 @@ export default function InformationSide() {
       {singleProduct && (
         <div
           key={singleProduct._id}
-          className="bg-white h-full w-[500px] p-4 flex flex-col gap-y-28 font-semibold"
+          className="bg-white h-full p-4 flex flex-col gap-y-28 font-semibold"
         >
           <div className="flex flex-col gap-y-5">
             <div className="flex gap-x-2">
@@ -55,7 +56,16 @@ export default function InformationSide() {
             </div>
             <div className="flex gap-x-2">
               <p>قیمت کالا :</p>
-              <p>{singleProduct.price}</p>
+              <p>{NumberConverter(singleProduct.price)}</p>
+              <p>تومان</p>
+            </div>
+            <div className="flex gap-x-2">
+              <p>قیمت کالا با تخفیف :</p>
+              <p>
+                {NumberConverter(
+                  (singleProduct.discount / 100) * singleProduct.price
+                )}
+              </p>
               <p>تومان</p>
             </div>
             <div className="flex flex-col gap-y-2">

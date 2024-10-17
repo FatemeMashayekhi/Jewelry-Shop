@@ -10,7 +10,7 @@ export default function Slider() {
   const { singleProduct } = useContext(DataContext);
 
   return (
-    <div id="app" className="h-full w-[500px]">
+    <div id="app" className="h-full w-[600px]">
       <Swiper
         cssMode={true}
         navigation={true}
