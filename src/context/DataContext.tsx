@@ -312,7 +312,6 @@ export const DataContextProvider = ({
   const checkOrderHandler = (item: OrdersEntity) => {
     setOpenOrderModal(true);
     setOrderModalItem(item);
-    console.log(item);
   };
 
   ///update order status

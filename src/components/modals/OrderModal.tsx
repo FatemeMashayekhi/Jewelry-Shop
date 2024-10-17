@@ -3,6 +3,7 @@ import OrderDetails from "../orders-management/OrderDetails";
 import OrderModalTable from "../orders-management/OrderModalTable";
 import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
+import DateConverter from "../dateConverter/DateConverter";
 
 export default function OrderModal() {
   const {
@@ -11,6 +12,8 @@ export default function OrderModal() {
     handleUpdateOrderStatus,
     orderModalItem,
   } = useContext(DataContext);
+
+  const status = !!orderModalItem?.deliveryStatus;
 
   return (
     openOrderModal && (
@@ -37,16 +40,27 @@ export default function OrderModal() {
           <div id="modal-body" className="px-4 py-5 flex flex-col gap-y-6">
             <OrderDetails />
             <OrderModalTable />
-            <button
-              className="btn btn-xs rounded-lg bg-green-700 text-white sm:btn-sm md:btn-md lg:btn-lg"
-              onClick={() =>
-                orderModalItem?._id &&
-                handleUpdateOrderStatus &&
-                handleUpdateOrderStatus(orderModalItem._id)
-              }
-            >
-              تحویل شد
-            </button>
+            {status ? (
+              <div className="flex gap-x-2 font-semibold justify-center items-center">
+                <p>تاریخ تحویل :</p>
+                <p>
+                  {orderModalItem?.deliveryDate
+                    ? DateConverter(orderModalItem.deliveryDate)
+                    : ""}
+                </p>
+              </div>
+            ) : (
+              <button
+                className="btn btn-xs rounded-lg bg-green-700 text-white sm:btn-sm md:btn-md lg:btn-lg"
+                onClick={() =>
+                  orderModalItem?._id &&
+                  handleUpdateOrderStatus &&
+                  handleUpdateOrderStatus(orderModalItem._id)
+                }
+              >
+                تحویل شد
+              </button>
+            )}
           </div>
         </div>
       </div>

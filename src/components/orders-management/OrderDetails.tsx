@@ -4,7 +4,7 @@ import DateConverter from "../dateConverter/DateConverter";
 
 export default function OrderDetails() {
   const { orderModalItem } = useContext(DataContext);
-  console.log(orderModalItem);
+
   return (
     <div className="font-semibold flex flex-col gap-y-3">
       <div className="flex gap-x-2">
