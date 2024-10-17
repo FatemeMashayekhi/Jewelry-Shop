@@ -12,6 +12,7 @@ import {
   GET_ALL_PRODUCTS_BY_ID,
   GET_CATEGORY_BY_ID,
   GET_GOLD_PRICE,
+  GET_PRODUCTS,
   POPULAR_PRODUCTS_URL,
   POST_ORDER,
   POST_PRODUCTS,
@@ -164,6 +165,15 @@ export const updateOrderStatus = async (id: string) => {
   }
 };
 
+export const GetProducts = async () => {
+  try {
+    const res = await axios.get(GET_PRODUCTS);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const dataService = {
   getAllCategories,
   getAllProducts,
@@ -181,6 +191,7 @@ const dataService = {
   fetchGoldPrice,
   postOrder,
   updateOrderStatus,
+  GetProducts,
 };
 
 export default dataService;

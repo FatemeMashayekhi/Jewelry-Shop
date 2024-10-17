@@ -95,4 +95,5 @@ export type DataContextType = {
   setOpenOrderModal?: React.Dispatch<React.SetStateAction<boolean>>;
   orderModalItem?: OrdersEntity;
   handleUpdateOrderStatus?: (id: string, status: string) => void;
+  GetProducts?: UseQueryResult<ProductsEntity[], unknown>;
 };

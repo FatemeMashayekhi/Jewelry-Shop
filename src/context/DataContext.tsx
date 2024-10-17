@@ -331,6 +331,18 @@ export const DataContextProvider = ({
     setOpenOrderModal(false);
   };
 
+  ///get products
+  const { data: GetProducts } = useQuery({
+    queryKey: ["GetProducts"],
+    queryFn: async () => {
+      const products = await dataService.GetProducts();
+      console.log(products.data.products);
+      return products.data.products;
+    },
+  });
+  console.log(GetProducts);
+  console.log(getAllProducts.data);
+
   return (
     <DataContext.Provider
       value={{
@@ -381,6 +393,7 @@ export const DataContextProvider = ({
         setOpenOrderModal,
         orderModalItem,
         handleUpdateOrderStatus,
+        GetProducts,
       }}
     >
       {children}

@@ -23,3 +23,5 @@ export const GET_GOLD_PRICE =
 export const POST_ORDER = "http://localhost:8000/api/orders";
 
 export const UPDATE_ORDER_STATUS = (id: string) => `/orders/${id}`;
+
+export const GET_PRODUCTS = "/products";
