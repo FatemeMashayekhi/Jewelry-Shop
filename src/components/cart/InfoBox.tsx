@@ -38,14 +38,14 @@ export default function InfoBox() {
           <p>{NumberConverter(totalDiscount)} تومان</p>
         </div>
         <button
-          className="btn btn-wide rounded-lg"
+          className="btn btn-wide rounded-lg bg-green-700 text-white"
           onClick={() => navigate("/checkout/shipping")}
           disabled={!updatedCart || updatedCart.length === 0}
         >
           تایید و تکمیل سفارش
         </button>
         <button
-          className="btn btn-wide rounded-lg"
+          className="btn btn-wide rounded-lg bg-red-700 text-white"
           onClick={handleCancelOrder}
           disabled={!updatedCart || updatedCart.length === 0}
         >

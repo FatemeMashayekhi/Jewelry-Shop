@@ -5,6 +5,8 @@ import DateObject from "react-date-object";
 
 export default function Timing() {
   const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
   const handleDateChange = (value: DateObject | null) => {
     if (value) {
@@ -23,7 +25,7 @@ export default function Timing() {
   return (
     <div
       id="timing"
-      className="border-[1px] border-[#e5dfd7] p-4 flex flex-col gap-y-4 bg-white"
+      className="border-[1px] border-[#e5dfd7] p-4 flex flex-col gap-y-4"
     >
       <p className="text-gray-500">زمان ارسال</p>
       <div className="flex gap-x-3 items-center">
@@ -37,6 +39,7 @@ export default function Timing() {
             locale={persian_fa}
             calendarPosition="bottom-right"
             minDate={today}
+            value={tomorrow}
             onChange={handleDateChange}
           />
         </div>
