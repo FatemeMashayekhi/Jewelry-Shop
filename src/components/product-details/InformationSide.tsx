@@ -22,6 +22,13 @@ export default function InformationSide() {
   const handleUpdateCart = () => {
     if (setUpdatedCart && singleProduct) {
       setUpdatedCart((prevCart) => {
+        const existingItem = prevCart.find(
+          (item) => item._id === singleProduct._id
+        );
+        if (existingItem) {
+          toast.error("این کالا قبلاً به سبد خرید اضافه شده است.");
+          return prevCart;
+        }
         const newCart = [...prevCart, { ...singleProduct, count: count }];
         toast.success("کالا با موفقیت به سبد خرید اضافه شد");
         return newCart;
