@@ -13,10 +13,10 @@ export default function PaymentForm() {
     formState: { errors },
   } = useForm<IFormInput>({
     defaultValues: {
-      firstname: "مارال",
-      lastname: "مشایخی",
-      address: "تهران",
-      phoneNumber: "09126163965",
+      firstname: "admin",
+      lastname: "admin",
+      address: "Tehran-tehran",
+      phoneNumber: "09122211111",
     },
   });
 
@@ -82,13 +82,6 @@ export default function PaymentForm() {
             <span className="text-red-500">{errors.phoneNumber.message}</span>
           )}
         </div>
-
-        <button
-          type="submit"
-          className="btn bg-green-700 text-white py-2 px-4 w-60 rounded-lg"
-        >
-          پرداخت
-        </button>
       </form>
     </>
   );
