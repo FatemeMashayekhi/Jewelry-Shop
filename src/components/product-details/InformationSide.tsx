@@ -26,7 +26,7 @@ export default function InformationSide() {
           (item) => item._id === singleProduct._id
         );
         if (existingItem) {
-          toast.error("این کالا قبلاً به سبد خرید اضافه شده است.");
+          toast.error("این کالا قبلاً به سبد خرید اضافه شده است");
           return prevCart;
         }
         const newCart = [...prevCart, { ...singleProduct, count: count }];
