@@ -1,5 +1,4 @@
-import { useContext, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 import { Icon } from "@iconify/react";
 
@@ -9,20 +8,14 @@ export default function OrdersPagination() {
     setOrderPage,
     orderPage,
   } = useContext(DataContext);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = parseInt(searchParams.get("page") || "1");
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    setOrderPage?.(currentPage.toString());
-  }, [currentPage, setOrderPage, orderTotalPages, orderPage, navigate]);
+  const currentPage = parseInt(orderPage || "1");
+  const totalPages = parseInt(orderTotalPages.toString());
 
   const handleNextPage = () => {
-    if (currentPage < Number(orderTotalPages)) {
+    if (currentPage < totalPages) {
       const nextPage = currentPage + 1;
       setOrderPage?.(nextPage.toString());
-      searchParams.set("page", nextPage.toString());
-      setSearchParams(searchParams);
     }
   };
 
@@ -30,8 +23,6 @@ export default function OrdersPagination() {
     if (currentPage > 1) {
       const prevPage = currentPage - 1;
       setOrderPage?.(prevPage.toString());
-      searchParams.set("page", prevPage.toString());
-      setSearchParams(searchParams);
     }
   };
 

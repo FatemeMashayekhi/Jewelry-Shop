@@ -2,7 +2,13 @@ import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 
 export default function Radio() {
-  const { setStatus } = useContext(DataContext);
+  const { setStatus, setOrderPage } = useContext(DataContext);
+
+  const handleRadioChange = (status: string) => {
+    setStatus?.(status);
+    setOrderPage?.("1");
+  };
+
   return (
     <div className="flex gap-x-10">
       <div className="form-control">
@@ -14,7 +20,7 @@ export default function Radio() {
             type="radio"
             name="radio-10"
             className="radio checked:bg-black"
-            onChange={() => setStatus && setStatus("false")}
+            onChange={() => handleRadioChange("false")}
           />
         </label>
       </div>
@@ -26,7 +32,7 @@ export default function Radio() {
             name="radio-10"
             className="radio checked:bg-black"
             defaultChecked
-            onChange={() => setStatus && setStatus("true")}
+            onChange={() => handleRadioChange("true")}
           />
         </label>
       </div>
