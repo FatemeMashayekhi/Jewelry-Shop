@@ -69,6 +69,7 @@ export const DataContextProvider = ({
     queryKey: ["getAllProducts", page],
     queryFn: async () => {
       const allProducts = await dataService.getAllProducts(page);
+      console.log(allProducts);
       setTotalPages(allProducts.total_pages);
       setAllProducts(allProducts.data.products);
       return allProducts.data.products;
@@ -238,22 +239,22 @@ export const DataContextProvider = ({
   const [orders, setOrders] = useState<OrdersEntity[]>();
   const [orderPage, setOrderPage] = useState<string>("1");
   const [orderTotalPages, setOrderTotalPages] = useState<string>("1");
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (status) {
-        try {
-          const orders = await dataService.getAllOrders(
-            String(status),
-            orderPage
-          );
-          setOrders(orders.data.orders);
-          setOrderTotalPages(orders.total_pages);
-        } catch (error) {
-          console.error("Failed to fetch orders:", error);
-        }
+  const fetchOrders = async () => {
+    if (status) {
+      try {
+        const orders = await dataService.getAllOrders(
+          String(status),
+          orderPage
+        );
+        setOrders(orders.data.orders);
+        setOrderTotalPages(orders.total_pages);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     fetchOrders();
   }, [status, orderPage]);
 
@@ -323,6 +324,7 @@ export const DataContextProvider = ({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getAllOrders"] });
       toast.success("وضعیت سفارش با موفقیت به روز شد");
+      fetchOrders();
     },
   });
 
@@ -341,7 +343,7 @@ export const DataContextProvider = ({
     },
   });
   console.log(GetProducts);
-  console.log(getAllProducts.data);
+  console.log(getAllProducts);
 
   return (
     <DataContext.Provider
