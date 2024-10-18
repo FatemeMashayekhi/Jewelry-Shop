@@ -5,6 +5,8 @@ import DateObject from "react-date-object";
 
 export default function Timing() {
   const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
   const handleDateChange = (value: DateObject | null) => {
     if (value) {
@@ -37,6 +39,7 @@ export default function Timing() {
             locale={persian_fa}
             calendarPosition="bottom-right"
             minDate={today}
+            value={tomorrow}
             onChange={handleDateChange}
           />
         </div>
