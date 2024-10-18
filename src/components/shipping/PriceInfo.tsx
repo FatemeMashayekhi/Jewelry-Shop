@@ -28,7 +28,7 @@ export default function PriceInfo() {
         <p>{NumberConverter(totalDiscount)} تومان</p>
       </div>
       <button
-        className="btn btn-wide rounded-lg"
+        className="btn btn-wide rounded-lg bg-green-700 text-white"
         onClick={() => (window.location.href = "http://localhost:7000/")}
       >
         پرداخت
