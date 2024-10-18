@@ -17,7 +17,7 @@ export default function PriceInfo() {
   return (
     <div
       id="price"
-      className="border-[1px] border-[#e5dfd7] p-4 flex flex-col gap-y-4 bg-white"
+      className="border-[1px] border-[#e5dfd7] p-4 flex flex-col gap-y-4 h-2/5"
     >
       <div className="flex justify-between">
         <p>جمع سبد خرید</p>
